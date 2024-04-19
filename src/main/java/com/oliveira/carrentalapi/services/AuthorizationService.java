@@ -12,7 +12,11 @@ import com.oliveira.carrentalapi.repositories.UserRepository;
 public class AuthorizationService implements UserDetailsService {
 
   @Autowired
-  UserRepository repository;
+  UserRepository userRepository;
+
+  public AuthorizationService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   /*
    * Spring Security search here the users
@@ -20,8 +24,8 @@ public class AuthorizationService implements UserDetailsService {
    * same in a Database table
    */
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return repository.findByLogin(username);
+  public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    return userRepository.findByLogin(login);
   }
 
 }

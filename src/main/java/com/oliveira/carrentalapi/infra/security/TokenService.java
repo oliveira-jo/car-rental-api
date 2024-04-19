@@ -73,7 +73,7 @@ public class TokenService {
    * Two hours add with the instant in time zone specific
    */
   private Instant getExpirationDate() {
-    return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00"));
   }
 
 }

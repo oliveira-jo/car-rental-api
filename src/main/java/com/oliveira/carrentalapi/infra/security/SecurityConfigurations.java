@@ -1,6 +1,5 @@
 package com.oliveira.carrentalapi.infra.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,8 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurations {
 
-  @Autowired
-  SecurityFilter securityFilter;
+  private final SecurityFilter securityFilter;
+
+  public SecurityConfigurations(SecurityFilter securityFilter) {
+    this.securityFilter = securityFilter;
+  }
 
   /*
    * Security Silter Chain
@@ -39,12 +41,14 @@ public class SecurityConfigurations {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
             // just to test, normaly we need to create a admin user in the database
             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+            .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
-            .requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.GET, "/ping").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
+
+            .requestMatchers(HttpMethod.GET, "/ping").permitAll()
+
             // all others need auth
             .anyRequest().authenticated())
 

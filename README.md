@@ -25,11 +25,21 @@ Facilitate the presentation of the company and it's services to the customer thr
 
 
 ## Features Under Development
-+ Project Struture
-+ Spring Security 
-+ User, Roles
-+ Jwp token 
-
++ ✅ Initialize the project (Web + security + data + mysql)
++ ✅ Create entities (User with Role)
++ ✅ Create repositories
++ ✅ Configure the spring security for token JWT
++ ✅ Generate key token
++ ✅ [PUBLIC] Create login
++ ✅ Admin user automation
++ ✅ [PUBLIC] Register a new user
++ ✅ [ADMIN] List all user
++ ✅ [PRIVATE] Update user 
++ ✅ [PRIVATE] Delete user 
++    [ADMIN] Crud categories
++    [ADMIN] Crud vehicles
++    [PUBLIC] List all categories
++    [PUBLIC] List all vehicles
 
 ## Entities
 

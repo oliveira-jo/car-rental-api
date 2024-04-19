@@ -2,6 +2,7 @@ package com.oliveira.carrentalapi.domain.user;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,17 +16,19 @@ import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "USERS")
 @Entity(name = "USERS")
 @Getter
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  private String id;
+  private UUID id;
   private String login;
   private String password;
   private UserRole role;
@@ -34,7 +37,6 @@ public class User implements UserDetails {
     this.login = login;
     this.role = role;
     this.password = password;
-
   }
 
   /*
