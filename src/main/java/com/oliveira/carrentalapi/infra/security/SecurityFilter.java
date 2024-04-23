@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.oliveira.carrentalapi.domain.exceptions.UserNotFoundException;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.impl.TokenServiceImpl;
 
@@ -36,6 +37,10 @@ public class SecurityFilter extends OncePerRequestFilter {
     if (token != null) {
       var login = tokenService.validateToken(token);
       UserDetails user = userRepository.findByLogin(login);
+
+      if (user == null) {
+        throw new UserNotFoundException("User not logged in!!!");
+      }
 
       // User Verifications
       var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

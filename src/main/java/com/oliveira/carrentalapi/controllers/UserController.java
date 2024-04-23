@@ -26,55 +26,100 @@ public class UserController {
   private final UserService userService;
 
   public UserController(UserService userService) {
+
     this.userService = userService;
+
   }
 
   @GetMapping
   public ResponseEntity<List<User>> getAllUsers() {
-    List<User> users = this.userService.findAllUsers();
+
+    List<User> users = userService.findAllUsers();
+
     return ResponseEntity.ok().body(users);
+
+  }
+
+  @GetMapping("/me")
+  public ResponseEntity<UserDto> getUserLogged() {
+
+    var userAuth = getPrincipal();
+
+    if (userAuth != null) {
+      return ResponseEntity.ok().body(new UserDto(userAuth.getLogin(), userAuth.getPassword(), userAuth.getRole()));
+
+    } else {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+    }
 
   }
 
   @PutMapping
   public ResponseEntity<UserDto> update(@Valid @RequestBody UserDto userDate) {
 
-    try {
+    var userAuth = getPrincipal();
 
-      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (userAuth != null) {
 
-      User newUserAuth = (User) auth.getPrincipal();
+      var newUser = new UserDto(userDate.login(), userDate.password(), userAuth.getRole());
 
-      var newUser = new UserDto(userDate.login(), userDate.password(), newUserAuth.getRole());
-
-      this.userService.update(newUserAuth.getId(), newUser);
+      userService.update(userAuth.getId(), newUser);
 
       return ResponseEntity.ok().body(newUser);
 
-    } catch (Exception e) {
+    } else {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
+
+    // try {
+    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // User newUserAuth = (User) auth.getPrincipal();
+    // var newUser = new UserDto(userDate.login(), userDate.password(),
+    // newUserAuth.getRole());
+    // this.userService.update(newUserAuth.getId(), newUser);
+    // return ResponseEntity.ok().body(newUser);
+    // } catch (Exception e) {
+    // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    // }
 
   }
 
   @DeleteMapping
-  public ResponseEntity delete() {
+  public ResponseEntity<UserDto> delete() {
 
-    try {
+    var userAuth = getPrincipal();
 
-      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (userAuth != null) {
 
-      User newUserAuth = (User) auth.getPrincipal();
-
-      this.userService.delete(newUserAuth.getId());
+      userService.delete(userAuth.getId());
 
       return ResponseEntity.ok().build();
 
-    } catch (Exception e) {
+    } else {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
+
+    // try {
+    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // User newUserAuth = (User) auth.getPrincipal();
+    // this.userService.delete(newUserAuth.getId());
+    // return ResponseEntity.ok().build();
+    // } catch (Exception e) {
+    // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    // }
+
+  }
+
+  private User getPrincipal() {
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    User newUserAuth = (User) auth.getPrincipal();
+
+    return newUserAuth;
 
   }
 
