@@ -73,17 +73,6 @@ public class UserController {
 
     }
 
-    // try {
-    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    // User newUserAuth = (User) auth.getPrincipal();
-    // var newUser = new UserDto(userDate.login(), userDate.password(),
-    // newUserAuth.getRole());
-    // this.userService.update(newUserAuth.getId(), newUser);
-    // return ResponseEntity.ok().body(newUser);
-    // } catch (Exception e) {
-    // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    // }
-
   }
 
   @DeleteMapping
@@ -101,15 +90,6 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
-
-    // try {
-    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    // User newUserAuth = (User) auth.getPrincipal();
-    // this.userService.delete(newUserAuth.getId());
-    // return ResponseEntity.ok().build();
-    // } catch (Exception e) {
-    // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    // }
 
   }
 
