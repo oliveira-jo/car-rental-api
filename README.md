@@ -43,19 +43,53 @@ Facilitate the presentation of the company and it's services to the customer thr
 
 ## Entities
 
-Vehicle |
----------------------
-Model : String 
-Vehicle : Vehicle 
-Value : Float 
-Datails : String 
+<table>
+  <tr>
+    <th>User</th>
+  </tr>
+  <tr>
+    <td>
+      Name : String <br>
+      License : String <br>
+      Email : String <br>
+      Password: String <br>
+    </td>
+  </tr>
+</table>    
 
-User |
----------------------
-Name : String 
-License : String 
-Email : String 
-Password: String 
+<table>
+  <tr>
+    <th>Category</th>
+  </tr>
+  <tr>
+    <td>
+      datails : String <br>
+      numBigSuitCases : int <br>
+      numSmallSuitCases : int <br>
+      numOfPeople : int <br>
+      complete: boolean <br>
+      value: float
+    </td>
+  </tr>
+</table>    
+
+<table>
+  <tr>
+    <th>Vehicle</th>
+  </tr>
+  <tr>
+    <td>
+      model : String <br>
+      plate : String <br>
+      color : String <br>
+      complete : boolean <br>
+      mileage : int <br>
+      numPassengers : int <br>
+      ative : boolean <br>
+    </td>
+  </tr>
+</table>    
+
 
 
 ## Desired Operations
