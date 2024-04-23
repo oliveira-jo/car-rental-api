@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.domain.user;
+package com.oliveira.carrentalapi.domain.models;
 
 import java.util.Collection;
 import java.util.List;

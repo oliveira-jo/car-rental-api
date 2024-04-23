@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.oliveira.carrentalapi.domain.user.UserRole;
+import com.oliveira.carrentalapi.domain.models.UserRole;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 
 import lombok.var;
@@ -30,7 +30,7 @@ public class AdminUserConfig implements CommandLineRunner {
     var userAdmin = userRepository.findByLogin("admin");
 
     if (userAdmin == null) {
-      var user = new com.oliveira.carrentalapi.domain.user.User();
+      var user = new com.oliveira.carrentalapi.domain.models.User();
       user.setLogin("admin");
       user.setPassword(passwordEncoder.encode("admin"));
       user.setRole(UserRole.ADMIN);
