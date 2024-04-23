@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.services;
+package com.oliveira.carrentalapi.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 
 @Service
-public class AuthorizationService implements UserDetailsService {
+public class AuthorizationServiceImpl implements UserDetailsService {
 
   @Autowired
   UserRepository userRepository;
 
-  public AuthorizationService(UserRepository userRepository) {
+  public AuthorizationServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 

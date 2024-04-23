@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.infra.security;
+package com.oliveira.carrentalapi.services.impl;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.oliveira.carrentalapi.domain.user.User;
 
 @Service
-public class TokenService {
+public class TokenServiceImpl {
 
   // Only the consul application have the secret
   // a plus param to pass for the algorithn

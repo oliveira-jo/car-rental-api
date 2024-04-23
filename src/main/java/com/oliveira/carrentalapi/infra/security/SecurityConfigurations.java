@@ -38,6 +38,7 @@ public class SecurityConfigurations {
 
     return httpSecurity
         .csrf(csrf -> csrf.disable())
+        // Server don't save status. Need to pass all in the requisition
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
         .authorizeHttpRequests(authorize -> authorize

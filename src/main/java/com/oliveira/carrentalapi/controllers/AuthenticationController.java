@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oliveira.carrentalapi.domain.user.UserDto;
 import com.oliveira.carrentalapi.domain.user.UserRole;
-import com.oliveira.carrentalapi.domain.user.auth.AuthenticationDto;
-import com.oliveira.carrentalapi.domain.user.auth.LoginResponseDto;
-import com.oliveira.carrentalapi.infra.security.TokenService;
+import com.oliveira.carrentalapi.domain.dtos.AuthenticationDto;
+import com.oliveira.carrentalapi.domain.dtos.LoginResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.UserDto;
 import com.oliveira.carrentalapi.domain.user.User;
 import com.oliveira.carrentalapi.services.UserService;
+import com.oliveira.carrentalapi.services.impl.TokenServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -25,10 +25,10 @@ public class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
   private final UserService userService;
-  private final TokenService tokenService;
+  private final TokenServiceImpl tokenService;
 
   public AuthenticationController(AuthenticationManager authenticationManager, UserService userService,
-      TokenService tokenService) {
+      TokenServiceImpl tokenService) {
     this.authenticationManager = authenticationManager;
     this.userService = userService;
     this.tokenService = tokenService;

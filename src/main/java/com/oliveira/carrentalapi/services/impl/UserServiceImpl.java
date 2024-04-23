@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.services;
+package com.oliveira.carrentalapi.services.impl;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,11 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.oliveira.carrentalapi.domain.dtos.UserDto;
+import com.oliveira.carrentalapi.domain.exceptions.UserNotFoundException;
 import com.oliveira.carrentalapi.domain.user.User;
-import com.oliveira.carrentalapi.domain.user.UserDto;
 import com.oliveira.carrentalapi.domain.user.UserRole;
-import com.oliveira.carrentalapi.domain.user.exceptions.UserNotFoundException;
 import com.oliveira.carrentalapi.repositories.UserRepository;
+import com.oliveira.carrentalapi.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

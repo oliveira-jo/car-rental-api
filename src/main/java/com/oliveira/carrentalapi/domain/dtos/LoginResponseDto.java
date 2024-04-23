@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.domain.user.auth;
+package com.oliveira.carrentalapi.domain.dtos;
 
 public record LoginResponseDto(String token) { // Long expiresIn
 

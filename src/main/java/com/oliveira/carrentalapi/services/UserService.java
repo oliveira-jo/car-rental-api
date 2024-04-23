@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.oliveira.carrentalapi.domain.dtos.UserDto;
 import com.oliveira.carrentalapi.domain.user.User;
-import com.oliveira.carrentalapi.domain.user.UserDto;
 
 public interface UserService {
 

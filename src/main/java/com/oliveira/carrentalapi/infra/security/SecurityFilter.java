@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.oliveira.carrentalapi.repositories.UserRepository;
+import com.oliveira.carrentalapi.services.impl.TokenServiceImpl;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,10 +19,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-  private final TokenService tokenService;
+  private final TokenServiceImpl tokenService;
   private final UserRepository userRepository;
 
-  public SecurityFilter(TokenService tokenService, UserRepository userRepository) {
+  public SecurityFilter(TokenServiceImpl tokenService, UserRepository userRepository) {
     this.tokenService = tokenService;
     this.userRepository = userRepository;
   }

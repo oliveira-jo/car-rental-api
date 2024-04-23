@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oliveira.carrentalapi.domain.dtos.UserDto;
 import com.oliveira.carrentalapi.domain.user.User;
-import com.oliveira.carrentalapi.domain.user.UserDto;
 import com.oliveira.carrentalapi.services.UserService;
 
 import jakarta.validation.Valid;
