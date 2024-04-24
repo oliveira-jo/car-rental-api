@@ -1,6 +1,7 @@
 package com.oliveira.carrentalapi.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -23,42 +24,48 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public CategoryDto insert(CategoryDto date) {
+  public Category save(CategoryDto categoryData) {
 
-    var existCategory = this.categoryRepository.findByCategoryName(date.categoryName());
-
-    if (existCategory == null)
-      throw new CategoryNotFoundException(" * Category Already exists! * ");
-
-    Category newCategory = new Category(date.categoryName(), date.datails(), date.numBigSuitCases(),
-        date.numSmallSuitCases(),
-        date.numOfPeople(), date.complete(), date.value());
+    Category newCategory = new Category(categoryData);
 
     this.categoryRepository.save(newCategory);
 
-    return new CategoryDto(newCategory.getCategoryName(), newCategory.getDatails(),
-        newCategory.getNumBigSuitCases(), newCategory.getNumSmallSuitCases(), newCategory.getNumOfPeople(),
-        newCategory.isComplete(), newCategory.getValue());
+    return newCategory;
 
   }
 
   @Override
-  public CategoryDto update(UUID id, CategoryDto date) {
+  public Category update(UUID id, CategoryDto categoryData) {
 
-    var existCategory = this.categoryRepository.findById(id);
+    // Exists?
+    Category category = this.categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
 
-    if (existCategory == null)
-      throw new CategoryNotFoundException(" * Category not found! * ");
+    // Test
+    if (!categoryData.categoryName().isEmpty())
+      category.setCategoryName(categoryData.categoryName());
 
-    Category newCategory = new Category(date.categoryName(), date.datails(), date.numBigSuitCases(),
-        date.numSmallSuitCases(),
-        date.numOfPeople(), date.complete(), date.value());
+    if (!categoryData.datails().isEmpty())
+      category.setDatails(categoryData.datails());
 
-    this.categoryRepository.save(newCategory);
+    if (Optional.ofNullable(categoryData.numBigSuitCases()).orElse(0) != 0)
+      category.setNumBigSuitCases(categoryData.numBigSuitCases());
 
-    return new CategoryDto(newCategory.getCategoryName(), newCategory.getDatails(),
-        newCategory.getNumBigSuitCases(), newCategory.getNumSmallSuitCases(), newCategory.getNumOfPeople(),
-        newCategory.isComplete(), newCategory.getValue());
+    if (Optional.ofNullable(categoryData.numSmallSuitCases()).orElse(0) != 0)
+      category.setNumSmallSuitCases(categoryData.numSmallSuitCases());
+
+    if (Optional.ofNullable(categoryData.numOfPeople()).orElse(0) != 0)
+      category.setNumOfPeople(categoryData.numOfPeople());
+
+    if (categoryData.complete() != null)
+      category.setComplete(categoryData.complete());
+
+    if (categoryData.value() != null)
+      category.setValue(categoryData.value());
+
+    // Update
+    this.categoryRepository.save(category);
+
+    return category;
   }
 
   @Override
@@ -78,16 +85,11 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public CategoryDto findByName(String name) {
+  public Category findByName(String name) {
 
-    var existCategory = this.categoryRepository.findByCategoryName(name);
+    var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(CategoryNotFoundException::new);
 
-    if (existCategory == null)
-      throw new CategoryNotFoundException(" * Category Already exists! * ");
-
-    return new CategoryDto(existCategory.getCategoryName(), existCategory.getDatails(),
-        existCategory.getNumBigSuitCases(), existCategory.getNumSmallSuitCases(), existCategory.getNumOfPeople(),
-        existCategory.isComplete(), existCategory.getValue());
+    return existCategory;
   }
 
 }

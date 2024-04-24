@@ -36,9 +36,9 @@ Facilitate the presentation of the company and it's services to the customer thr
 + ✅ [ADMIN] List all user
 + ✅ [PRIVATE] Update user 
 + ✅ [PRIVATE] Delete user 
-+    [ADMIN] Crud categories
++ ✅ [ADMIN] Crud categories
++ ✅ [PUBLIC] List all categories
 +    [ADMIN] Crud vehicles
-+    [PUBLIC] List all categories
 +    [PUBLIC] List all vehicles
 
 ## Entities

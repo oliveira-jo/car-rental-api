@@ -46,6 +46,11 @@ public class SecurityConfigurations {
             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
+            .requestMatchers(HttpMethod.GET, "/category").permitAll()
+            .requestMatchers(HttpMethod.POST, "/category").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.PUT, "/category").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.DELETE, "/category").hasRole("ADMIN")
+
             .requestMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
 
             .requestMatchers(HttpMethod.GET, "/ping").permitAll()

@@ -1,13 +1,13 @@
 package com.oliveira.carrentalapi.domain.dtos;
 
 public record CategoryDto(
-                String categoryName,
-                String datails,
-                int numBigSuitCases,
-                int numSmallSuitCases,
-                int numOfPeople,
-                boolean complete,
-                Float value
+        String categoryName,
+        String datails,
+        Integer numBigSuitCases,
+        Integer numSmallSuitCases,
+        Integer numOfPeople,
+        Boolean complete,
+        Float value
 
 ) {
 

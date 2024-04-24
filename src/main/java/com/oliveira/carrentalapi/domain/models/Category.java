@@ -2,6 +2,8 @@ package com.oliveira.carrentalapi.domain.models;
 
 import java.util.UUID;
 
+import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,22 +25,20 @@ public class Category {
   private UUID id;
   private String categoryName;
   private String datails;
-  private int numBigSuitCases;
-  private int numSmallSuitCases;
-  private int numOfPeople;
-  private boolean complete;
+  private Integer numBigSuitCases;
+  private Integer numSmallSuitCases;
+  private Integer numOfPeople;
+  private Boolean complete;
   private Float value;
 
-  public Category(String categoryName, String datails, int numBigSuitCases, int numSmallSuitCases, int numOfPeople,
-      boolean complete, Float value) {
-    this.categoryName = categoryName;
-    this.datails = datails;
-    this.numBigSuitCases = numBigSuitCases;
-    this.numSmallSuitCases = numSmallSuitCases;
-    this.numOfPeople = numOfPeople;
-    this.complete = complete;
-    this.value = value;
-
+  public Category(CategoryDto categoryDate) {
+    this.categoryName = categoryDate.categoryName();
+    this.datails = categoryDate.datails();
+    this.numBigSuitCases = categoryDate.numBigSuitCases();
+    this.numSmallSuitCases = categoryDate.numSmallSuitCases();
+    this.numOfPeople = categoryDate.numOfPeople();
+    this.complete = categoryDate.complete();
+    this.value = categoryDate.value();
   }
 
 }
