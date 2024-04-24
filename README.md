@@ -84,7 +84,6 @@ Facilitate the presentation of the company and it's services to the customer thr
       color : String <br>
       complete : boolean <br>
       mileage : int <br>
-      numPassengers : int <br>
       ative : boolean <br>
     </td>
   </tr>
