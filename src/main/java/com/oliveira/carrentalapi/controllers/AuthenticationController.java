@@ -64,7 +64,7 @@ public class AuthenticationController {
      * For security, save manually in database a user ADMIN
      */
     var newUser = new UserDto(data.login(), data.password(), UserRole.USER);
-    this.userService.insert(newUser);
+    this.userService.save(newUser);
 
     return ResponseEntity.ok().build();
 

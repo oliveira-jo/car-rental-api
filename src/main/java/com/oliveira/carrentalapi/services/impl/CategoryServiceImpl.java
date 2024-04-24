@@ -37,10 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public Category update(UUID id, CategoryDto categoryData) {
 
-    // Exists?
     Category category = this.categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
 
-    // Test
     if (!categoryData.categoryName().isEmpty())
       category.setCategoryName(categoryData.categoryName());
 
@@ -62,7 +60,6 @@ public class CategoryServiceImpl implements CategoryService {
     if (categoryData.value() != null)
       category.setValue(categoryData.value());
 
-    // Update
     this.categoryRepository.save(category);
 
     return category;
@@ -90,6 +87,7 @@ public class CategoryServiceImpl implements CategoryService {
     var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(CategoryNotFoundException::new);
 
     return existCategory;
+
   }
 
 }

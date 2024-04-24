@@ -5,6 +5,10 @@ import java.util.UUID;
 import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +20,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Vehicle {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
   private String model;
   private String plate;
@@ -23,6 +30,8 @@ public class Vehicle {
   private Boolean complete;
   private Integer mileage;
   private Boolean ative;
+  @OneToOne
+  private Category category;
 
   public Vehicle(VehicleDto vehicleData) {
     this.model = vehicleData.model();
@@ -31,6 +40,6 @@ public class Vehicle {
     this.complete = vehicleData.complete();
     this.mileage = vehicleData.mileage();
     this.ative = vehicleData.ative();
-
+    this.category = vehicleData.category();
   }
 }

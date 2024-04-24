@@ -85,6 +85,7 @@ Facilitate the presentation of the company and it's services to the customer thr
       complete : boolean <br>
       mileage : int <br>
       ative : boolean <br>
+      Category : category <br>
     </td>
   </tr>
 </table>    

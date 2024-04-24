@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User insert(UserDto userData) {
+  public User save(UserDto userData) {
 
     // Test if exist user before create
     if (this.userRepository.findByLogin(userData.login()) != null)

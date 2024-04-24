@@ -10,7 +10,7 @@ import com.oliveira.carrentalapi.domain.models.User;
 
 public interface UserService {
 
-  public User insert(UserDto userData);
+  public User save(UserDto userData);
 
   public User update(UUID id, UserDto userData);
 
@@ -19,4 +19,5 @@ public interface UserService {
   public List<User> findAllUsers();
 
   public UserDetails findByLogin(String login);
+
 }
