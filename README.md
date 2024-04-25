@@ -38,8 +38,8 @@ Facilitate the presentation of the company and it's services to the customer thr
 + ✅ [PRIVATE] Delete user 
 + ✅ [ADMIN] Crud categories
 + ✅ [PUBLIC] List all categories
-+    [ADMIN] Crud vehicles
-+    [PUBLIC] List all vehicles
++ ✅ [ADMIN] Crud vehicles
++ ✅ [PUBLIC] List all vehicles
 
 ## Entities
 
@@ -91,7 +91,7 @@ Facilitate the presentation of the company and it's services to the customer thr
 </table>    
 
 ## Dadabase Association
-CATEGORYES  1 <-> N  VEHICLE
+( Category )  1 <-> N  ( Vehicle )
 
 ## Desired Operations
 * Register User
