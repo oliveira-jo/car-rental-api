@@ -1,5 +1,6 @@
 package com.oliveira.carrentalapi.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,22 +30,32 @@ public class VehicleServiceImpl implements VehicleService {
   }
 
   @Override
-  public Vehicle save(VehicleDto vehicleData) {
+  public VehicleDto save(VehicleDto vehicleData) {
 
-    this.categoryRepository.findById(vehicleData.category().getId()).orElseThrow(CategoryNotFoundException::new);
+    UUID categoryId = UUID.fromString(vehicleData.category());
 
-    Vehicle newVehicle = new Vehicle(vehicleData);
+    var category = this.categoryRepository.findById(categoryId)
+        .orElseThrow(CategoryNotFoundException::new);
 
-    vehicleRepository.save(newVehicle);
+    Vehicle vehicle = new Vehicle(vehicleData);
 
-    return newVehicle;
+    vehicle.setCategory(category);
+
+    this.vehicleRepository.save(vehicle);
+
+    return new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
+        vehicle.getComplete(),
+        vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName());
 
   }
 
   @Override
-  public Vehicle update(UUID id, VehicleDto vehicleData) {
+  public VehicleDto update(UUID id, VehicleDto vehicleData) {
 
-    this.categoryRepository.findById(vehicleData.category().getId()).orElseThrow(CategoryNotFoundException::new);
+    UUID categoryId = UUID.fromString(vehicleData.category());
+
+    var category = this.categoryRepository.findById(categoryId)
+        .orElseThrow(CategoryNotFoundException::new);
 
     var vehicle = vehicleRepository.findById(id).orElseThrow(VehicleNotFoundException::new);
 
@@ -66,27 +77,41 @@ public class VehicleServiceImpl implements VehicleService {
     if (vehicleData.ative() != null)
       vehicle.setAtive(vehicleData.ative());
 
-    if (vehicleData.category() != null)
-      vehicle.setCategory(vehicleData.category());
+    if (!vehicleData.category().isEmpty())
+      vehicle.setCategory(category);
 
     vehicleRepository.save(vehicle);
 
-    return vehicle;
+    return new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
+        vehicle.getComplete(),
+        vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName());
   }
 
   @Override
-  public List<Vehicle> getAllVehicles() {
+  public List<VehicleDto> getAllVehicles() {
 
-    return vehicleRepository.findAll();
+    List<Vehicle> vehicles = this.vehicleRepository.findAll();
+    List<VehicleDto> newVehicles = new ArrayList<VehicleDto>();
+
+    for (Vehicle vehicle : vehicles) {
+      newVehicles.add(
+          new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
+              vehicle.getComplete(),
+              vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName()));
+    }
+
+    return newVehicles;
 
   }
 
   @Override
-  public Vehicle findById(UUID id) {
+  public VehicleDto findById(UUID id) {
 
     Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(VehicleNotFoundException::new);
 
-    return vehicle;
+    return new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
+        vehicle.getComplete(),
+        vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName());
 
   }
 

@@ -32,18 +32,18 @@ public class CategoryController {
   }
 
   @PostMapping
-  public ResponseEntity<Category> save(@RequestBody @Valid CategoryDto categoryDate) {
+  public ResponseEntity<CategoryDto> save(@RequestBody @Valid CategoryDto categoryDate) {
 
-    var newCategory = categoryService.save(categoryDate);
+    var newCategory = this.categoryService.save(categoryDate);
 
     return ResponseEntity.ok().body(newCategory);
 
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Category> update(@PathVariable("id") UUID id, @RequestBody @Valid CategoryDto categoryDate) {
+  public ResponseEntity<CategoryDto> update(@PathVariable("id") UUID id, @RequestBody @Valid CategoryDto categoryDate) {
 
-    var updateCategory = categoryService.update(id, categoryDate);
+    var updateCategory = this.categoryService.update(id, categoryDate);
 
     return ResponseEntity.ok().body(updateCategory);
 
@@ -52,16 +52,16 @@ public class CategoryController {
   @DeleteMapping("/{id}")
   public ResponseEntity<CategoryDto> delete(@PathVariable("id") UUID id) {
 
-    categoryService.delete(id);
+    this.categoryService.delete(id);
 
     return ResponseEntity.ok().build();
 
   }
 
   @GetMapping
-  public ResponseEntity<List<Category>> getCategory() {
+  public ResponseEntity<List<CategoryDto>> getCategory() {
 
-    var categories = categoryService.findAllCategories();
+    var categories = this.categoryService.findAllCategories();
 
     return ResponseEntity.ok().body(categories);
 

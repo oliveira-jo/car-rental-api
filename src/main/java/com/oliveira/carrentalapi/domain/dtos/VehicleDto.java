@@ -1,13 +1,14 @@
 package com.oliveira.carrentalapi.domain.dtos;
 
-import com.oliveira.carrentalapi.domain.models.Category;
+import java.util.UUID;
 
 public record VehicleDto(
-                String model,
-                String plate,
-                String color,
-                Boolean complete,
-                Integer mileage,
-                Boolean ative,
-                Category category) {
+        UUID id,
+        String model,
+        String plate,
+        String color,
+        Boolean complete,
+        Integer mileage,
+        Boolean ative,
+        String category) {
 }

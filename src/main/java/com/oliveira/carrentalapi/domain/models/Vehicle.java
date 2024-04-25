@@ -8,7 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,8 @@ public class Vehicle {
   private Boolean complete;
   private Integer mileage;
   private Boolean ative;
-  @OneToOne
+  @ManyToOne
+  @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 
   public Vehicle(VehicleDto vehicleData) {
@@ -40,6 +42,5 @@ public class Vehicle {
     this.complete = vehicleData.complete();
     this.mileage = vehicleData.mileage();
     this.ative = vehicleData.ative();
-    this.category = vehicleData.category();
   }
 }

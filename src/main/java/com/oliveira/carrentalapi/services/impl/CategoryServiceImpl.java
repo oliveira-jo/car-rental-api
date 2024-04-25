@@ -1,5 +1,6 @@
 package com.oliveira.carrentalapi.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,18 +25,20 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public Category save(CategoryDto categoryData) {
+  public CategoryDto save(CategoryDto categoryData) {
 
     Category newCategory = new Category(categoryData);
 
     this.categoryRepository.save(newCategory);
 
-    return newCategory;
+    return new CategoryDto(newCategory.getId(), newCategory.getCategoryName(), newCategory.getDatails(),
+        newCategory.getNumBigSuitCases(), newCategory.getNumSmallSuitCases(), newCategory.getNumOfPeople(),
+        newCategory.getComplete(), newCategory.getValue());
 
   }
 
   @Override
-  public Category update(UUID id, CategoryDto categoryData) {
+  public CategoryDto update(UUID id, CategoryDto categoryData) {
 
     Category category = this.categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
 
@@ -62,7 +65,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     this.categoryRepository.save(category);
 
-    return category;
+    return new CategoryDto(category.getId(), category.getCategoryName(), category.getDatails(),
+        category.getNumBigSuitCases(), category.getNumSmallSuitCases(), category.getNumOfPeople(),
+        category.getComplete(), category.getValue());
   }
 
   @Override
@@ -75,18 +80,31 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public List<Category> findAllCategories() {
+  public List<CategoryDto> findAllCategories() {
 
-    return this.categoryRepository.findAll();
+    List<Category> categoriesDB = this.categoryRepository.findAll();
+    List<CategoryDto> newCategorys = new ArrayList<CategoryDto>();
+
+    for (Category category : categoriesDB) {
+
+      newCategorys.add(new CategoryDto(category.getId(), category.getCategoryName(), category.getDatails(),
+          category.getNumBigSuitCases(), category.getNumSmallSuitCases(), category.getNumOfPeople(),
+          category.getComplete(), category.getValue()));
+
+    }
+
+    return newCategorys;
 
   }
 
   @Override
-  public Category findByName(String name) {
+  public CategoryDto findByName(String name) {
 
     var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(CategoryNotFoundException::new);
 
-    return existCategory;
+    return new CategoryDto(existCategory.getId(), existCategory.getCategoryName(), existCategory.getDatails(),
+        existCategory.getNumBigSuitCases(), existCategory.getNumSmallSuitCases(), existCategory.getNumOfPeople(),
+        existCategory.getComplete(), existCategory.getValue());
 
   }
 
