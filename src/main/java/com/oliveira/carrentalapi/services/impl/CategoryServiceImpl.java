@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
 import com.oliveira.carrentalapi.domain.exceptions.CategoryNotFoundException;
+import com.oliveira.carrentalapi.domain.mapper.CategoryMapper;
 import com.oliveira.carrentalapi.domain.models.Category;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.services.CategoryService;
@@ -17,10 +18,12 @@ import com.oliveira.carrentalapi.services.CategoryService;
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
+  private final CategoryMapper categoryMapper;
 
-  public CategoryServiceImpl(CategoryRepository categoryRepository) {
+  public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
 
     this.categoryRepository = categoryRepository;
+    this.categoryMapper = categoryMapper;
 
   }
 
@@ -31,9 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     this.categoryRepository.save(newCategory);
 
-    return new CategoryDto(newCategory.getId(), newCategory.getCategoryName(), newCategory.getDatails(),
-        newCategory.getNumBigSuitCases(), newCategory.getNumSmallSuitCases(), newCategory.getNumOfPeople(),
-        newCategory.getComplete(), newCategory.getValue());
+    return categoryMapper.categoryToCategoryDto(newCategory);
+
+    // new CategoryDto(newCategory.getId(), newCategory.getCategoryName(),
+    // newCategory.getDatails(),
+    // newCategory.getNumBigSuitCases(), newCategory.getNumSmallSuitCases(),
+    // newCategory.getNumOfPeople(),
+    // newCategory.getComplete(), newCategory.getValue());
 
   }
 
@@ -65,9 +72,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     this.categoryRepository.save(category);
 
-    return new CategoryDto(category.getId(), category.getCategoryName(), category.getDatails(),
-        category.getNumBigSuitCases(), category.getNumSmallSuitCases(), category.getNumOfPeople(),
-        category.getComplete(), category.getValue());
+    return categoryMapper.categoryToCategoryDto(category);
+
+    // new CategoryDto(category.getId(), category.getCategoryName(),
+    // category.getDatails(),
+    // category.getNumBigSuitCases(), category.getNumSmallSuitCases(),
+    // category.getNumOfPeople(),
+    // category.getComplete(), category.getValue());
   }
 
   @Override
@@ -87,9 +98,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     for (Category category : categoriesDB) {
 
-      newCategorys.add(new CategoryDto(category.getId(), category.getCategoryName(), category.getDatails(),
-          category.getNumBigSuitCases(), category.getNumSmallSuitCases(), category.getNumOfPeople(),
-          category.getComplete(), category.getValue()));
+      newCategorys.add(categoryMapper.categoryToCategoryDto(category));
+      // newCategorys.add(new CategoryDto(category.getId(),
+      // category.getCategoryName(), category.getDatails(),
+      // category.getNumBigSuitCases(), category.getNumSmallSuitCases(),
+      // category.getNumOfPeople(),
+      // category.getComplete(), category.getValue()));
 
     }
 
@@ -102,9 +116,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(CategoryNotFoundException::new);
 
-    return new CategoryDto(existCategory.getId(), existCategory.getCategoryName(), existCategory.getDatails(),
-        existCategory.getNumBigSuitCases(), existCategory.getNumSmallSuitCases(), existCategory.getNumOfPeople(),
-        existCategory.getComplete(), existCategory.getValue());
+    return categoryMapper.categoryToCategoryDto(existCategory);
+
+    // new CategoryDto(existCategory.getId(), existCategory.getCategoryName(),
+    // existCategory.getDatails(),
+    // existCategory.getNumBigSuitCases(), existCategory.getNumSmallSuitCases(),
+    // existCategory.getNumOfPeople(),
+    // existCategory.getComplete(), existCategory.getValue());
 
   }
 

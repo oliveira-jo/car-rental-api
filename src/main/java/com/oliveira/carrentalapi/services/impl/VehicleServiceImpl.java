@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
 import com.oliveira.carrentalapi.domain.exceptions.CategoryNotFoundException;
 import com.oliveira.carrentalapi.domain.exceptions.VehicleNotFoundException;
+import com.oliveira.carrentalapi.domain.mapper.VehicleMapper;
 import com.oliveira.carrentalapi.domain.models.Vehicle;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.repositories.VehicleRepository;
@@ -20,19 +21,21 @@ public class VehicleServiceImpl implements VehicleService {
 
   private final VehicleRepository vehicleRepository;
   private final CategoryRepository categoryRepository;
+  private final VehicleMapper vehicleMapper;
 
-  public VehicleServiceImpl(VehicleRepository vehicleRepository, CategoryRepository categoryRepository) {
+  public VehicleServiceImpl(VehicleRepository vehicleRepository, CategoryRepository categoryRepository,
+      VehicleMapper vehicleMapper) {
 
     this.vehicleRepository = vehicleRepository;
-
     this.categoryRepository = categoryRepository;
+    this.vehicleMapper = vehicleMapper;
 
   }
 
   @Override
   public VehicleDto save(VehicleDto vehicleData) {
 
-    UUID categoryId = UUID.fromString(vehicleData.category());
+    UUID categoryId = UUID.fromString(vehicleData.categoryName());
 
     var category = this.categoryRepository.findById(categoryId)
         .orElseThrow(CategoryNotFoundException::new);
@@ -43,16 +46,20 @@ public class VehicleServiceImpl implements VehicleService {
 
     this.vehicleRepository.save(vehicle);
 
-    return new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
-        vehicle.getComplete(),
-        vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName());
+    return vehicleMapper.vehicleToVehicleDto(vehicle);
+
+    // return new VehicleDto(vehicle.getId(), vehicle.getModel(),
+    // vehicle.getPlate(), vehicle.getColor(),
+    // vehicle.getComplete(),
+    // vehicle.getMileage(), vehicle.getAtive(),
+    // vehicle.getCategory().getCategoryName());
 
   }
 
   @Override
   public VehicleDto update(UUID id, VehicleDto vehicleData) {
 
-    UUID categoryId = UUID.fromString(vehicleData.category());
+    UUID categoryId = UUID.fromString(vehicleData.categoryName());
 
     var category = this.categoryRepository.findById(categoryId)
         .orElseThrow(CategoryNotFoundException::new);
@@ -77,14 +84,18 @@ public class VehicleServiceImpl implements VehicleService {
     if (vehicleData.ative() != null)
       vehicle.setAtive(vehicleData.ative());
 
-    if (!vehicleData.category().isEmpty())
+    if (!vehicleData.categoryName().isEmpty())
       vehicle.setCategory(category);
 
     vehicleRepository.save(vehicle);
 
-    return new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
-        vehicle.getComplete(),
-        vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName());
+    return vehicleMapper.vehicleToVehicleDto(vehicle);
+
+    // return new VehicleDto(vehicle.getId(), vehicle.getModel(),
+    // vehicle.getPlate(), vehicle.getColor(),
+    // vehicle.getComplete(),
+    // vehicle.getMileage(), vehicle.getAtive(),
+    // vehicle.getCategory().getCategoryName());
   }
 
   @Override
@@ -94,10 +105,15 @@ public class VehicleServiceImpl implements VehicleService {
     List<VehicleDto> newVehicles = new ArrayList<VehicleDto>();
 
     for (Vehicle vehicle : vehicles) {
-      newVehicles.add(
-          new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
-              vehicle.getComplete(),
-              vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName()));
+
+      newVehicles.add(vehicleMapper.vehicleToVehicleDto(vehicle));
+
+      // newVehicles.add(
+      // new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(),
+      // vehicle.getColor(),
+      // vehicle.getComplete(),
+      // vehicle.getMileage(), vehicle.getAtive(),
+      // vehicle.getCategory().getCategoryName()));
     }
 
     return newVehicles;
@@ -109,9 +125,13 @@ public class VehicleServiceImpl implements VehicleService {
 
     Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(VehicleNotFoundException::new);
 
-    return new VehicleDto(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getColor(),
-        vehicle.getComplete(),
-        vehicle.getMileage(), vehicle.getAtive(), vehicle.getCategory().getCategoryName());
+    return vehicleMapper.vehicleToVehicleDto(vehicle);
+
+    // return new VehicleDto(vehicle.getId(), vehicle.getModel(),
+    // vehicle.getPlate(), vehicle.getColor(),
+    // vehicle.getComplete(),
+    // vehicle.getMileage(), vehicle.getAtive(),
+    // vehicle.getCategory().getCategoryName());
 
   }
 

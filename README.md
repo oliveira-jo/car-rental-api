@@ -40,6 +40,7 @@ Facilitate the presentation of the company and it's services to the customer thr
 + ✅ [PUBLIC] List all categories
 + ✅ [ADMIN] Crud vehicles
 + ✅ [PUBLIC] List all vehicles
++ ✅ Mapping Entities to dto with MapStruct
 
 ## Entities
 
@@ -122,6 +123,7 @@ Delete a vehicle in the api passing the identification
 * MySQL Driver
 * Spring Boot Starter Security
 * Java Docks
+* MapStruct
 
 
 ## Configuring the Database
