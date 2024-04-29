@@ -13,7 +13,6 @@ import com.oliveira.carrentalapi.domain.dtos.AuthenticationDto;
 import com.oliveira.carrentalapi.domain.dtos.LoginResponseDto;
 import com.oliveira.carrentalapi.domain.dtos.UserDto;
 import com.oliveira.carrentalapi.domain.models.User;
-import com.oliveira.carrentalapi.domain.models.UserRole;
 import com.oliveira.carrentalapi.services.UserService;
 import com.oliveira.carrentalapi.services.impl.TokenServiceImpl;
 
@@ -63,7 +62,7 @@ public class AuthenticationController {
      * Allways initialize user role as a normal user
      * For security, save manually in database a user ADMIN
      */
-    var newUser = new UserDto(data.login(), data.password(), UserRole.USER);
+    var newUser = new UserDto(data.login(), data.password());
     this.userService.save(newUser);
 
     return ResponseEntity.ok().build();
