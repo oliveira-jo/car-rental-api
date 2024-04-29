@@ -137,21 +137,32 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 ```
 
-### SQP Roles for the users
-```
-INSERT INTO ROLE (rolename) VALUES("SELECT");
-INSERT INTO ROLE (rolename) VALUES("INSERT");
-INSERT INTO ROLE (rolename) VALUES("UPDATE");
-INSERT INTO ROLE (rolename) VALUES("DELETE");
-```
-
 ## API Endpoints
 The API provides the following endpoints:
 
 ```markdown
-POST /auth/login - Login into the App
+[public] POST /auth/login - Login into the App
 
-POST /auth/register - Register a new user into the App
+[public] POST /auth/register - Register a new user into the App 
+
+[admin] GET /user - Show all users to Admin access 
+
+[public] GET /vehicle - Show all vehicles
+
+[admin] POST /vehicle - Register a new vehicle 
+
+[admin] PUT /vehicle - Update a vehicle 
+
+[admin] DELETE /vehicle - Delete a vehicle
+
+[public] GET /gategory - Show all categories
+
+[admin] POST /gategory - Register a new category in the app
+
+[admin] PUT /gategory - Update a category
+
+[admin] DELETE /gategory - Delete a category
+
 ```
 
 
