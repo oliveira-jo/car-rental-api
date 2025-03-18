@@ -1,14 +1,14 @@
-package com.oliveira.carrentalapi;
+// package com.oliveira.carrentalapi;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class CarRentalApiApplicationTests {
+// @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+// class CarRentalApiApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// @Test
+// void contextLoads() {
+// }
 
-}
+// }

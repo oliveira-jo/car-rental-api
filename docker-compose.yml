@@ -1,0 +1,35 @@
+services:
+
+  db:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: car-rental-api
+    ports:
+      # computer:container
+      - "3305:3306"
+    volumes:
+      - devjoliveira_data:/var/lib/mysql
+    mem_limit: 512m
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    # app:
+    #   build: .
+    #   container_name: car-rental-api
+    #   depends_on:
+    #     - mysql
+    #   environment:
+    #     SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
+    #     SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
+    #     SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+    #   ports:
+    #     #computer:container 
+    #     - "8000:8080"
+volumes:
+  devjoliveira_data:
