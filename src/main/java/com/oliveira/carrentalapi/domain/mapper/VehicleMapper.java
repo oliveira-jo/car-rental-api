@@ -10,7 +10,7 @@ import com.oliveira.carrentalapi.domain.models.Vehicle;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface VehicleMapper {
 
-  @Mapping(source = "category.categoryName", target = "categoryName")
+  @Mapping(source = "category.id", target = "categoryId")
   VehicleDto vehicleToVehicleDto(Vehicle vehicle);
 
 }

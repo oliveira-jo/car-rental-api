@@ -10,5 +10,5 @@ public record VehicleDto(
     Boolean complete,
     Integer mileage,
     Boolean ative,
-    String categoryName) {
+    String categoryId) {
 }

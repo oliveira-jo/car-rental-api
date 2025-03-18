@@ -3,6 +3,7 @@ package com.oliveira.carrentalapi.controllers;
 import java.util.UUID;
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
 import com.oliveira.carrentalapi.services.CategoryService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping(value = "/category", produces = { "application/json" })
+@Tag(name = "CategoryController")
 public class CategoryController {
 
   private CategoryService categoryService;
@@ -30,7 +36,15 @@ public class CategoryController {
 
   }
 
-  @PostMapping
+  @Operation(summary = "Save an user with all date is okay", method = "POST")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CategoryDto> save(@RequestBody @Valid CategoryDto categoryDate) {
 
     var newCategory = this.categoryService.save(categoryDate);
@@ -39,8 +53,16 @@ public class CategoryController {
 
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<CategoryDto> update(@PathVariable("id") UUID id, @RequestBody @Valid CategoryDto categoryDate) {
+  @Operation(summary = "Update a category by id", method = "PUT")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<CategoryDto> update(@PathVariable UUID id, @RequestBody @Valid CategoryDto categoryDate) {
 
     var updateCategory = this.categoryService.update(id, categoryDate);
 
@@ -48,8 +70,16 @@ public class CategoryController {
 
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<CategoryDto> delete(@PathVariable("id") UUID id) {
+  @Operation(summary = "Delete a category by id", method = "DELETE")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<CategoryDto> delete(@PathVariable UUID id) {
 
     this.categoryService.delete(id);
 
@@ -57,7 +87,15 @@ public class CategoryController {
 
   }
 
-  @GetMapping
+  @Operation(summary = "Get All Cagegories", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @GetMapping()
   public ResponseEntity<List<CategoryDto>> getCategory() {
 
     var categories = this.categoryService.findAllCategories();

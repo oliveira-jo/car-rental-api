@@ -36,12 +36,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     return categoryMapper.categoryToCategoryDto(newCategory);
 
-    // new CategoryDto(newCategory.getId(), newCategory.getCategoryName(),
-    // newCategory.getDatails(),
-    // newCategory.getNumBigSuitCases(), newCategory.getNumSmallSuitCases(),
-    // newCategory.getNumOfPeople(),
-    // newCategory.getComplete(), newCategory.getValue());
-
   }
 
   @Override
@@ -74,11 +68,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     return categoryMapper.categoryToCategoryDto(category);
 
-    // new CategoryDto(category.getId(), category.getCategoryName(),
-    // category.getDatails(),
-    // category.getNumBigSuitCases(), category.getNumSmallSuitCases(),
-    // category.getNumOfPeople(),
-    // category.getComplete(), category.getValue());
   }
 
   @Override
@@ -99,11 +88,6 @@ public class CategoryServiceImpl implements CategoryService {
     for (Category category : categoriesDB) {
 
       newCategorys.add(categoryMapper.categoryToCategoryDto(category));
-      // newCategorys.add(new CategoryDto(category.getId(),
-      // category.getCategoryName(), category.getDatails(),
-      // category.getNumBigSuitCases(), category.getNumSmallSuitCases(),
-      // category.getNumOfPeople(),
-      // category.getComplete(), category.getValue()));
 
     }
 
@@ -117,12 +101,6 @@ public class CategoryServiceImpl implements CategoryService {
     var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(CategoryNotFoundException::new);
 
     return categoryMapper.categoryToCategoryDto(existCategory);
-
-    // new CategoryDto(existCategory.getId(), existCategory.getCategoryName(),
-    // existCategory.getDatails(),
-    // existCategory.getNumBigSuitCases(), existCategory.getNumSmallSuitCases(),
-    // existCategory.getNumOfPeople(),
-    // existCategory.getComplete(), existCategory.getValue());
 
   }
 

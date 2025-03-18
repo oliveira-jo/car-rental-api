@@ -19,10 +19,15 @@ import com.oliveira.carrentalapi.domain.mapper.UserMapper;
 import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", produces = { "application/json" })
+@Tag(name = "UserController")
 public class UserController {
 
   private final UserService userService;
@@ -35,7 +40,15 @@ public class UserController {
 
   }
 
-  @GetMapping
+  @Operation(summary = "Get All User - Just for admin", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @GetMapping()
   public ResponseEntity<List<UserDto>> getAllUsers() {
 
     List<User> users = userService.findAllUsers();
@@ -49,7 +62,12 @@ public class UserController {
 
   }
 
-  @GetMapping("/me")
+  @Operation(summary = "Get User Logged in the present section", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @GetMapping(value = "/me")
   public ResponseEntity<UserDto> getUserLogged() {
 
     var userAuth = getPrincipal();
@@ -64,6 +82,14 @@ public class UserController {
 
   }
 
+  @Operation(summary = "Update a user", method = "PUT")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
   @PutMapping
   public ResponseEntity<UserDto> update(@Valid @RequestBody UserDto userDate) {
 
@@ -84,6 +110,14 @@ public class UserController {
 
   }
 
+  @Operation(summary = "Delete a user", method = "DELETE")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
   @DeleteMapping
   public ResponseEntity<UserDto> delete() {
 
