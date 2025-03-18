@@ -4,6 +4,27 @@ server:
   servlet:
     context-path: "/car-rental"
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health, info, metrics, swagger-ui"
+  endpoint:
+    health:
+      show-details: always
+  metrics: 
+    enable:
+      all: true
+info: 
+  env:
+    enabled: true 
+  app: 
+    name: Car Rental API
+    version: 0.0.1-SNAPSHOT
+    description: "API for Rent your a car"
+  metrics: 
+    tags: rental-car-api
+
 spring:
   application:
     name: car-rental-api
