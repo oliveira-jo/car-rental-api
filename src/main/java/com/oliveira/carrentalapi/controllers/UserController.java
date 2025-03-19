@@ -48,7 +48,7 @@ public class UserController {
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  @GetMapping()
+  @GetMapping(value = "/all")
   public ResponseEntity<List<UserDto>> getAllUsers() {
 
     List<User> users = userService.findAllUsers();

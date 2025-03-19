@@ -16,15 +16,25 @@ The objective of this project is the development of an API to meet the demands o
 Facilitate the presentation of the company and it's services to the customer throrgh the platform. CRUD of vehicles and customers
 
 
-## Project Tamplate MVC
+## Project Structure
 + CLIENT / UI (DTO's)
 + CONTROLLERS (DTO's)
 + SERVICES (DTO's)
 + REPOSITORIES (Entities)
 + MODELS (Entities)
 
+## Clone Project and Run Using Docker
+Clone the project
+```bash
+  git clone https://link-para-o-projeto
+```
 
-## Features Under Development
+Enter the project diretory
+```bash
+  docker-compose up --build
+```
+
+## Features Developmented
 + ✅ Initialize the project (Web + security + data + mysql)
 + ✅ Create entities (User with Role)
 + ✅ Create repositories
@@ -43,7 +53,6 @@ Facilitate the presentation of the company and it's services to the customer thr
 + ✅ Mapping Entities to dto with MapStruct
 
 ## Entities
-
 <table>
   <tr>
     <th>User</th>
@@ -126,44 +135,148 @@ Delete a vehicle in the api passing the identification
 * MapStruct
 
 
-## Configuring the Database
-### In the file Application.properties
+## API Documentations
 
+### Endpoints Users:
+
+```http
+  POST /auth/login
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/car-rental 
-spring.datasource.username=YOUR-USER
-spring.datasource.password=YOUR-PASSWORD
-spring.jpa.hibernate.ddl-auto=update 
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `login` | `string` | **Required**. User login |
+| `password` | `string` | **Required**. User password |
+
+
+```http
+  POST /auth/register
 ```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `login` | `string` | **Required**. User login |
+| `password` | `string` | **Required**. User password |
 
-## API Endpoints
-The API provides the following endpoints:
 
-```markdown
-[public] POST /auth/login - Login into the App
-
-[public] POST /auth/register - Register a new user into the App 
-
-[admin] GET /user - Show all users to Admin access 
-
-[public] GET /vehicle - Show all vehicles
-
-[admin] POST /vehicle - Register a new vehicle 
-
-[admin] PUT /vehicle - Update a vehicle 
-
-[admin] DELETE /vehicle - Delete a vehicle
-
-[public] GET /gategory - Show all categories
-
-[admin] POST /gategory - Register a new category in the app
-
-[admin] PUT /gategory - Update a category
-
-[admin] DELETE /gategory - Delete a category
-
+```http
+  GET /user/all
 ```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+
+
+```http
+  GET /user/me
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+
+
+```http
+  PUT /user
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+
+
+### Endpoints Vehicle:
+```http
+  GET /vehicle
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+
+
+```http
+  POST /vehicle
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `model` | `string` | **Required**. Vehicle model |
+| `plate` | `string` | **Required**. Vehicle plate |
+| `color` | `string` | **Required**. Vehicle color |
+| `complete` | `boolean` | **Required**. Vehicle is complete? |
+| `mileage` | `integer` | **Required**. Vehicle mileage |
+| `ative` | `boolean` | **Required**. Vehicle is active? |
+| `categoryId` | `string` | **Required**. Category UUID |
+
+
+```http
+  PUT /vehicle/{id}
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id` | `string` | **Required**. Vehicle UUID |
+| `model` | `string` | **Required**. Vehicle model |
+| `plate` | `string` | **Required**. Vehicle plate |
+| `color` | `string` | **Required**. Vehicle color |
+| `complete` | `boolean` | **Required**. Vehicle is complete? |
+| `mileage` | `integer` | **Required**. Vehicle mileage |
+| `ative` | `boolean` | **Required**. Vehicle is active? |
+| `categoryId` | `string` | **Required**. Category UUID |
+
+
+```http
+  DELETE /vehicle/{id}
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id`      | `string` | **Required**. Vehicle UUID |
+
+
+### Endpoints Category:
+```http
+  GET /category
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+
+
+```http
+  POST /category
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `categoryName` | `string` | **Obrigatório**. Token retornado pelo login |
+| `datails` | `string` | **Required**. Vehicle model |
+| `numBigSuitCases` | `integer` | **Required**. Vehicle plate |
+| `numSmallSuitCases` | `integer` | **Required**. Vehicle color |
+| `numOfPeople` | `integer` | **Required**. Vehicle is complete? |
+| `complete` | `boolean` | **Required**. Vehicle mileage |
+| `value` | `float` | **Required**. Vehicle is active? |
+
+
+```http
+  PUT /category/{id}
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id`      | `string` | **Required**. Category UUID  |
+| `categoryName` | `string` | **Obrigatório**. Token retornado pelo login |
+| `datails` | `string` | **Required**. Vehicle model |
+| `numBigSuitCases` | `integer` | **Required**. Vehicle plate |
+| `numSmallSuitCases` | `integer` | **Required**. Vehicle color |
+| `numOfPeople` | `integer` | **Required**. Vehicle is complete? |
+| `complete` | `boolean` | **Required**. Vehicle mileage |
+| `value` | `float` | **Required**. Vehicle is active? |
+
+
+```http
+  DELETE /category/{id}
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id`      | `string` | **Required**. Category UUID  |
 
 
 

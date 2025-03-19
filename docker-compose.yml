@@ -1,5 +1,4 @@
 services:
-
   db:
     image: mysql
     container_name: mysql
@@ -19,17 +18,19 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    # app:
-    #   build: .
-    #   container_name: car-rental-api
-    #   depends_on:
-    #     - mysql
-    #   environment:
-    #     SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
-    #     SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
-    #     SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
-    #   ports:
-    #     #computer:container 
-    #     - "8000:8080"
+
+  app:
+    build: .
+    container_name: car-rental-api
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: ${DATABASE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      #computer:container 
+      - "8000:8080"
+
 volumes:
   devjoliveira_data:

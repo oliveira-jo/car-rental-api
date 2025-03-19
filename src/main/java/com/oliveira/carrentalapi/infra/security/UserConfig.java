@@ -14,8 +14,8 @@ import com.oliveira.carrentalapi.repositories.UserRepository;
 @Component
 public class UserConfig {
 
-  private UserRepository userRepository;
-  private BCryptPasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final BCryptPasswordEncoder passwordEncoder;
 
   public UserConfig(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
