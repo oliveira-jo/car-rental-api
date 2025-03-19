@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "9d9c37af-0c36-4724-82f7-dc0cb955f90f",
+		"name": "Car-rental-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28475730"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "UPDATE User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\" : \"teste25\", \n    \"password\" : \"teste24\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/user"
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/user"
+					},
+					"response": []
+				},
+				{
+					"name": "GET LOGGED IN",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/user/me"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/user"
+					},
+					"response": []
+				},
+				{
+					"name": "POST User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\" : \"teste24\", \n    \"password\" : \"teste24\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN USER",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// let res = JSON.parse(responseBody);",
+									"// pm.environment.set(\"token\", res.token);",
+									"",
+									"pm.test(\"Set a variable\", () => {",
+									"    const jsonData = pm.response.json();",
+									"    // const token = jsonData.token;",
+									"    pm.environment.set(\"tokenCarRental\", jsonData.token)",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"followOriginalHttpMethod": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\" : \"admin\", \n    \"password\" : \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}:8000/car-rental/auth/login",
+							"host": [
+								"{{url-local}}"
+							],
+							"port": "8000",
+							"path": [
+								"car-rental",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "GET Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/category"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/category/6de6ae2a-87ef-4509-ad07-1899486204bc"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryName\": \"XXXXX\", \n    \"datails\": \"SUV\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 329.9\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/category"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"categoryName\": \"B\",\n        \"datails\": \"Economico Completo\",\n        \"numBigSuitCases\": 2,\n        \"numSmallSuitCases\": 2,\n        \"numOfPeople\": 4,\n        \"complete\": true,\n        \"value\": 199.9\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/category/be890cc5-6c7f-4c90-b8de-4095ada59e23"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "GET Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/vehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/vehicle/29387b57-e7f2-42a4-a182-9c5e9485e5b0"
+					},
+					"response": []
+				},
+				{
+					"name": "POST Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"model\": \"X100\",\n  \"plate\": \"AAAQ200\",\n  \"color\": \"Azul\",\n  \"complete\": true,\n  \"mileage\": 80000,\n  \"ative\": true,\n  \"categoryId\": \"014bbe03-4d01-46a8-bd2e-34d240b5f4f1\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/vehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"X200\",\n    \"plate\": \"AAAQ200\",\n    \"color\": \"Azul\",\n    \"complete\": true,\n    \"mileage\": 80000,\n    \"ative\": true,\n    \"categoryId\": \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/vehicle/29387b57-e7f2-42a4-a182-9c5e9485e5b0"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-local",
+			"value": "http://localhost",
+			"type": "default"
+		}
+	]
+}
