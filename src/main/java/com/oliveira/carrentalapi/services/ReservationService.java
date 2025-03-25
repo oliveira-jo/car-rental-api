@@ -15,6 +15,8 @@ public interface ReservationService {
 
   public List<ReservationResponseDto> getAllReservations();
 
+  public ReservationResponseDto getReservationsByID(UUID id);
+
   public VehicleDto cancel(UUID id);
 
 }

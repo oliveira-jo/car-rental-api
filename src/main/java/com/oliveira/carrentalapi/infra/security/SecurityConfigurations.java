@@ -67,6 +67,7 @@ public class SecurityConfigurations {
             // -> RESERVATION
             .requestMatchers(HttpMethod.POST, "/reservation").hasAnyRole("ADMIN", "SUPPORT", "USER")
             .requestMatchers(HttpMethod.GET, "/reservation").hasAnyRole("ADMIN", "SUPPORT")
+            .requestMatchers(HttpMethod.GET, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "USER")
             // -> ANY
             .anyRequest().authenticated())
 

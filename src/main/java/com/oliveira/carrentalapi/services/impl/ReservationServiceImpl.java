@@ -95,6 +95,13 @@ public class ReservationServiceImpl implements ReservationService {
   }
 
   @Override
+  public ReservationResponseDto getReservationsByID(UUID id) {
+    return this.reservationRepository.findById(id)
+        .map(reservationMapper::toReservationResponseDto)
+        .orElseThrow(() -> new BusinessException("Reservation not found with provided id"));
+  }
+
+  @Override
   public VehicleDto cancel(UUID id) {
     return null;
   }

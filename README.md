@@ -323,6 +323,17 @@ Delete a vehicle in the api passing the identification
 * return all reservations, just for ADMIN
 
 
+
+```http
+  GET /reservation/{id}
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id` | `string` | **Required**. Reservation UUID |
+* return a reservations
+
+
 ```http
   POST /reservation
 ```

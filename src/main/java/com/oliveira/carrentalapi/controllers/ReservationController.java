@@ -68,6 +68,21 @@ public class ReservationController {
 
   }
 
+  @GetMapping(value = "/{id}")
+  @Operation(summary = "Return a reservations by a provided id ", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  public ResponseEntity<ReservationResponseDto> getReservationsByID(@PathVariable UUID id) {
+    return ResponseEntity.ok().body(
+        reservationService.getReservationsByID(id));
+
+  }
+
   @DeleteMapping(value = "/{id}")
   public ReservationResponseDto cancel(@PathVariable UUID id) {
     return null;
