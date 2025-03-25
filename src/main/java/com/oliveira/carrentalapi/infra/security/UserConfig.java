@@ -46,7 +46,7 @@ public class UserConfig {
       var user = new com.oliveira.carrentalapi.domain.models.User();
       user.setLogin("suport");
       user.setPassword(passwordEncoder.encode("suport"));
-      user.setRole(UserRole.SUPPORT_ATTENDANT);
+      user.setRole(UserRole.SUPPORT);
       userRepository.save(user);
       userAdmin = this.userRepository.findByLogin("suport");
       userSuport = this.userRepository.findByLogin("suport");

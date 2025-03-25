@@ -315,6 +315,15 @@ Delete a vehicle in the api passing the identification
 
 
 ```http
+  GET /reservation
+```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login |
+* return all reservations, just for ADMIN
+
+
+```http
   POST /reservation
 ```
 | Parâmetro   | Tipo       | Descrição                                   |
