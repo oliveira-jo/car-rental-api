@@ -1,4 +1,4 @@
-# CAR RENTAL PROJECT
+# PROJECT CAR RENTAL
 
 > Status: Developing 
 
@@ -51,6 +51,9 @@ Enter the project diretory
 + ✅ [ADMIN] Crud vehicles
 + ✅ [PUBLIC] List all vehicles
 + ✅ Mapping Entities to dto with MapStruct
++  [PUBLIC] Vehicle search reservation
++  [PUBLIC] Vehicle select group
++  [PRIVATE] Vehicle confirm reservation
 
 ## Entities
 <table>
@@ -100,8 +103,24 @@ Enter the project diretory
   </tr>
 </table>    
 
+<table>
+  <tr>
+    <th>Reservation</th>
+  </tr>
+  <tr>
+    <td>
+      pichUpData : StLocalDateTimering <br>
+      returnDate : LocalDateTime <br>
+      categoryId : UUID <br>
+      days : Integer <br>
+      totalValue : Floate
+    </td>
+  </tr>
+</table>    
+
 ## Dadabase Association
 ( Category )  1 <-> N  ( Vehicle )
+( User )  1 <-> 1  ( Reservation )
 
 ## Desired Operations
 * Register User
@@ -122,6 +141,8 @@ Update a vehicle in the api passang the identification
 * Delete Vehicle
 Delete a vehicle in the api passing the identification
 
+* Register a Reservation
+* Cancel a Reservation
 
 ## Technologies Used
 * Java
@@ -133,7 +154,6 @@ Delete a vehicle in the api passing the identification
 * Spring Boot Starter Security
 * Java Docks
 * MapStruct
-
 
 ## API Documentations
 
@@ -279,8 +299,32 @@ Delete a vehicle in the api passing the identification
 | `id`      | `string` | **Required**. Category UUID  |
 
 
+### Endpoints Reservation:
+
+```http
+  GET /reservation
+```
+| Parâmetro   | Tipo       | Descrição                                |
+| :---------- | :--------- | :--------------------------------------- |
+| `token` | `string` | **Required**. Token retornado pelo login       |
+| `pickUpDate` | `LocalDateTime` | **Required**. Vehicle pick-up date |
+| `returnDate` | `LocalDateTime` | **Required**. Vehicle return date  |
+| `categoryId` | `String` | **Required**. Category UUID  |
+* PRÉ AUTORIZAÇÃO
+* return (data retirada, data entrega, grupo, quantidade de diárioas, valor total das diárias) 
 
 
-
+```http
+  POST /reservation
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `pickUpDate` | `LocalDateTime` | **Required**. Vehicle pick-up date |
+| `returnDate` | `LocalDateTime` | **Required**. Vehicle return date  |
+| `categoryId` | `String` | **Required**. Category UUID  |
+| `totalValue` | `Float` | **Required**. Category UUID  |
+* CONFIRMANDO RESERVA
+* return se a reserva foi confirmada 
 
 

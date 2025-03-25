@@ -1,5 +1,6 @@
 package com.oliveira.carrentalapi.repositories;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,5 +11,7 @@ import com.oliveira.carrentalapi.domain.models.User;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
   UserDetails findByLogin(String login);
+
+  Optional<User> getUserByLogin(String login);
 
 }

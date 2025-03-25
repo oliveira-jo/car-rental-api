@@ -1,6 +1,7 @@
 package com.oliveira.carrentalapi.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,5 +20,7 @@ public interface UserService {
   public List<User> findAllUsers();
 
   public UserDetails findByLogin(String login);
+
+  public Optional<User> getUserByLogin(String login);
 
 }
