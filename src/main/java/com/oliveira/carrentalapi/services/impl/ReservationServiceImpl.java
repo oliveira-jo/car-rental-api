@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,6 +85,13 @@ public class ReservationServiceImpl implements ReservationService {
     return reservationMapper.toReservationResponseDto(
         reservationRepository.save(reservation));
 
+  }
+
+  @Override
+  public List<ReservationResponseDto> getAllReservations() {
+    return this.reservationRepository.findAll().stream()
+        .map(reservationMapper::toReservationResponseDto)
+        .toList();
   }
 
   @Override

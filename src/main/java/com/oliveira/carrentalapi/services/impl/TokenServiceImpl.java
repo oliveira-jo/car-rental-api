@@ -3,6 +3,7 @@ package com.oliveira.carrentalapi.services.impl;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class TokenServiceImpl {
           .withIssuer("car-rental-api")
           // how was the user that receive the token
           .withSubject(user.getLogin())
+          // when the token was created
+          .withIssuedAt(new Date())
           // time to expire
           .withExpiresAt(getExpirationDate())
           // do the final assign
