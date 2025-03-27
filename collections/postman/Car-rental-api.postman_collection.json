@@ -44,7 +44,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/user"
+						"url": "{{url-local}}:8000/car-rental/user/all"
 					},
 					"response": []
 				},
@@ -100,7 +100,7 @@
 					"response": []
 				},
 				{
-					"name": "LOGIN USER",
+					"name": "LOGIN User",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -347,6 +347,113 @@
 							}
 						},
 						"url": "{{url-local}}:8000/car-rental/vehicle/29387b57-e7f2-42a4-a182-9c5e9485e5b0"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "POST reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pickUpDate\" : \"2025-04-20T12:34:57\",\n    \"returnDate\" : \"2025-04-25T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/reservation"
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Reservations",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/reservation"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Reservations By id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/reservation/60349f59-6df4-42f9-9e00-3f17d9760469"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Reservations By id Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}:8000/car-rental/reservation/60349f59-6df4-42f9-9e00-3f17d9760469"
 					},
 					"response": []
 				}
