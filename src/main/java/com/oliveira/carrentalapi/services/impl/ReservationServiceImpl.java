@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.oliveira.carrentalapi.domain.dtos.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
+import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
 import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
 import com.oliveira.carrentalapi.domain.exceptions.CategoryNotFoundException;
 import com.oliveira.carrentalapi.domain.exceptions.UserNotFoundException;
@@ -44,8 +44,8 @@ public class ReservationServiceImpl implements ReservationService {
   @Override
   public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UserDetails userLogged) {
 
-    Optional<User> user = userRepository.getUserByLogin(userLogged.getUsername());
-    if (!user.isPresent()) {
+    Optional<User> userFomDB = userRepository.getUserByLogin(userLogged.getUsername());
+    if (!userFomDB.isPresent()) {
       throw new UserNotFoundException("User not found with provide id");
     }
 
@@ -78,9 +78,12 @@ public class ReservationServiceImpl implements ReservationService {
     reservation.setQtdDays(qtdReservation);
     reservation.setDailyRentalValue(category.get().getValue());
     reservation.setTotalValue(totalValue);
-    reservation.setUser(user.get());
+    reservation.setUser(userFomDB.get());
     reservation.setCategory(category.get());
+
     reservation.setCreatedAt(LocalDateTime.now());
+    reservation.setCreateBy(userFomDB.get().getId());
+    reservation.setStatus(ReservationStatus.CONFIRMED);
 
     return reservationMapper.toReservationResponseDto(
         reservationRepository.save(reservation));
@@ -88,22 +91,39 @@ public class ReservationServiceImpl implements ReservationService {
   }
 
   @Override
-  public List<ReservationResponseDto> getAllReservations() {
+  public ReservationResponseDto cancel(UUID id, UserDetails userLogged) {
+
+    Optional<User> userFomDB = userRepository.getUserByLogin(userLogged.getUsername());
+    if (!userFomDB.isPresent()) {
+      throw new UserNotFoundException("User not found with provide id");
+    }
+
+    Optional<Reservation> resercation = reservationRepository.getReservationById(id);
+    if (!resercation.isPresent()) {
+      throw new CategoryNotFoundException("Reservation not found with a provide id");
+    }
+
+    resercation.get().setStatus(ReservationStatus.CANCELED);
+    resercation.get().setUpdateAt(LocalDateTime.now());
+    resercation.get().setUpdateBy(userFomDB.get().getId());
+
+    return reservationMapper.toReservationResponseDto(
+        this.reservationRepository.save(resercation.get()));
+
+  }
+
+  @Override
+  public List<ReservationResponseDto> getAll() {
     return this.reservationRepository.findAll().stream()
         .map(reservationMapper::toReservationResponseDto)
         .toList();
   }
 
   @Override
-  public ReservationResponseDto getReservationsByID(UUID id) {
+  public ReservationResponseDto getByID(UUID id) {
     return this.reservationRepository.findById(id)
         .map(reservationMapper::toReservationResponseDto)
         .orElseThrow(() -> new BusinessException("Reservation not found with provided id"));
-  }
-
-  @Override
-  public VehicleDto cancel(UUID id) {
-    return null;
   }
 
 }

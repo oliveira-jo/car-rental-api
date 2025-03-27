@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.domain.models;
+package com.oliveira.carrentalapi.domain.enums;
 
 public enum UserRole {
 

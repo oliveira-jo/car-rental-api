@@ -3,8 +3,8 @@ package com.oliveira.carrentalapi.infra.security;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.oliveira.carrentalapi.domain.enums.UserRole;
 import com.oliveira.carrentalapi.domain.models.User;
-import com.oliveira.carrentalapi.domain.models.UserRole;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 
 /**

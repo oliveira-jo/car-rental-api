@@ -9,9 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.UserDto;
+import com.oliveira.carrentalapi.domain.enums.UserRole;
 import com.oliveira.carrentalapi.domain.exceptions.UserNotFoundException;
 import com.oliveira.carrentalapi.domain.models.User;
-import com.oliveira.carrentalapi.domain.models.UserRole;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.UserService;
 

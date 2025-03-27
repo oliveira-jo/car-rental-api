@@ -7,16 +7,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.oliveira.carrentalapi.domain.dtos.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
 
 public interface ReservationService {
 
   public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UserDetails userLogged);
 
-  public List<ReservationResponseDto> getAllReservations();
+  public List<ReservationResponseDto> getAll();
 
-  public ReservationResponseDto getReservationsByID(UUID id);
+  public ReservationResponseDto getByID(UUID id);
 
-  public VehicleDto cancel(UUID id);
+  public ReservationResponseDto cancel(UUID id, UserDetails userLogged);
 
 }

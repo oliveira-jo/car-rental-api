@@ -5,12 +5,16 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
 
 @Entity(name = "RESERVATION")
 @Table(name = "RESERVATION")
@@ -30,6 +34,17 @@ public class Reservation {
 
   private BigDecimal totalValue;
 
+  @Enumerated(EnumType.STRING)
+  private ReservationStatus status;
+
+  private LocalDateTime createdAt;
+
+  private LocalDateTime updateAt;
+
+  private UUID createBy;
+
+  private UUID updateBy;
+
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
@@ -37,8 +52,6 @@ public class Reservation {
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false)
   private Category category;
-
-  private LocalDateTime createdAt;
 
   public Reservation() {
   }
@@ -125,6 +138,38 @@ public class Reservation {
     this.category = category;
   }
 
+  public ReservationStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(ReservationStatus status) {
+    this.status = status;
+  }
+
+  public LocalDateTime getUpdateAt() {
+    return updateAt;
+  }
+
+  public void setUpdateAt(LocalDateTime updateAt) {
+    this.updateAt = updateAt;
+  }
+
+  public UUID getCreateBy() {
+    return createBy;
+  }
+
+  public void setCreateBy(UUID createBy) {
+    this.createBy = createBy;
+  }
+
+  public UUID getUpdateBy() {
+    return updateBy;
+  }
+
+  public void setUpdateBy(UUID updateBy) {
+    this.updateBy = updateBy;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -154,8 +199,7 @@ public class Reservation {
   public String toString() {
     return "Reservation [id=" + id + ", pickUpDate=" + pickUpDate + ", returnDate=" + returnDate + ", dailyRentalValue="
         + dailyRentalValue + ", qtdDays=" + qtdDays + ", totalValue=" + totalValue + ", user=" + user.getUsername()
-        + ", category="
-        + category.getCategoryName() + "]";
+        + ", category=" + category.getCategoryName() + ", status=" + status + "]";
   }
 
 }
