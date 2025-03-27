@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.UserDto;
 import com.oliveira.carrentalapi.domain.enums.UserRole;
-import com.oliveira.carrentalapi.domain.exceptions.UserNotFoundException;
+import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.UserService;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     // Test if exist user before create
     if (this.userRepository.findByLogin(userData.login()) != null)
-      throw new UserNotFoundException();
+      throw new ObjectNotFoundException("User not found with login: " + userData.login());
 
     String encryptedPassword = new BCryptPasswordEncoder().encode(userData.password());
 
@@ -45,7 +45,8 @@ public class UserServiceImpl implements UserService {
   public User update(UUID id, UserDto userData) {
 
     // Test if exist user before update
-    User newUser = this.userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    User newUser = this.userRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("User not found with id: " + id));
 
     // Encryp a new password
     String encryptedPassword = new BCryptPasswordEncoder().encode(userData.password());
@@ -63,7 +64,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void delete(UUID id) {
-    User user = this.userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    User user = this.userRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("User not found with id: " + id));
     this.userRepository.delete(user);
 
   }

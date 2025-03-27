@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
 import com.oliveira.carrentalapi.domain.dtos.VehicleResponseDto;
-import com.oliveira.carrentalapi.domain.exceptions.CategoryNotFoundException;
-import com.oliveira.carrentalapi.domain.exceptions.VehicleNotFoundException;
+import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.VehicleMapper;
 import com.oliveira.carrentalapi.domain.mapper.VehicleResponseMapper;
 import com.oliveira.carrentalapi.domain.models.Vehicle;
@@ -42,7 +41,7 @@ public class VehicleServiceImpl implements VehicleService {
     UUID categoryId = UUID.fromString(vehicleData.categoryId());
 
     var category = this.categoryRepository.findById(categoryId)
-        .orElseThrow(CategoryNotFoundException::new);
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + categoryId));
 
     Vehicle vehicle = new Vehicle(vehicleData);
 
@@ -60,9 +59,9 @@ public class VehicleServiceImpl implements VehicleService {
     UUID categoryId = UUID.fromString(vehicleData.categoryId());
 
     var category = this.categoryRepository.findById(categoryId)
-        .orElseThrow(CategoryNotFoundException::new);
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + categoryId));
 
-    var vehicle = vehicleRepository.findById(id).orElseThrow(VehicleNotFoundException::new);
+    var vehicle = vehicleRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
 
     if (!vehicleData.model().isEmpty())
       vehicle.setModel(vehicleData.model());
@@ -110,7 +109,8 @@ public class VehicleServiceImpl implements VehicleService {
   @Override
   public VehicleDto findById(UUID id) {
 
-    Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(VehicleNotFoundException::new);
+    Vehicle vehicle = vehicleRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
 
     return vehicleMapper.vehicleToVehicleDto(vehicle);
 
@@ -119,7 +119,8 @@ public class VehicleServiceImpl implements VehicleService {
   @Override
   public void delete(UUID id) {
 
-    Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(VehicleNotFoundException::new);
+    Vehicle vehicle = vehicleRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
 
     vehicleRepository.delete(vehicle);
 

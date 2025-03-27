@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -36,6 +38,13 @@ public class ReservationController {
 
   @PostMapping
   @Operation(summary = "Save a reservation with all date is okay", method = "POST")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
   public ResponseEntity<ReservationResponseDto> save(@RequestBody @Valid ReservationRequestDto request,
       @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -46,6 +55,12 @@ public class ReservationController {
 
   @GetMapping
   @Operation(summary = "Return a list of all reservations saved in database ", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
   public ResponseEntity<List<ReservationResponseDto>> getAll() {
     return ResponseEntity.ok().body(
         reservationService.getAll());
@@ -54,6 +69,13 @@ public class ReservationController {
 
   @GetMapping(value = "/{id}")
   @Operation(summary = "Return a reservations by a provided UUID ", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
   public ResponseEntity<ReservationResponseDto> getByID(@PathVariable UUID id) {
     return ResponseEntity.ok().body(
         reservationService.getByID(id));
@@ -62,6 +84,13 @@ public class ReservationController {
 
   @Operation(summary = "Cancel a reservation by a provide UUID", method = "DELETE")
   @DeleteMapping(value = "/{id}")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
   public ResponseEntity<ReservationResponseDto> cancel(@PathVariable UUID id,
       @AuthenticationPrincipal UserDetails userDetails) {
     return ResponseEntity.ok().body(

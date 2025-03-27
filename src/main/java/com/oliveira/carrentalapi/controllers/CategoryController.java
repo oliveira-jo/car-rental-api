@@ -39,9 +39,9 @@ public class CategoryController {
   @Operation(summary = "Save an user with all date is okay", method = "POST")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -56,9 +56,9 @@ public class CategoryController {
   @Operation(summary = "Update a category by id", method = "PUT")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -73,9 +73,9 @@ public class CategoryController {
   @Operation(summary = "Delete a category by id", method = "DELETE")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @DeleteMapping(value = "/{id}")
@@ -90,9 +90,9 @@ public class CategoryController {
   @Operation(summary = "Get All Cagegories", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()

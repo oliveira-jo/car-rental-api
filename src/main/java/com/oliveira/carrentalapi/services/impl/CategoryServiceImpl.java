@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
-import com.oliveira.carrentalapi.domain.exceptions.CategoryNotFoundException;
+import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.CategoryMapper;
 import com.oliveira.carrentalapi.domain.models.Category;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryDto update(UUID id, CategoryDto categoryData) {
 
-    Category category = this.categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
+    Category category = this.categoryRepository.findById(id).orElseThrow(ObjectNotFoundException::new);
 
     if (!categoryData.categoryName().isEmpty())
       category.setCategoryName(categoryData.categoryName());
@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public void delete(UUID id) {
 
-    Category category = this.categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
+    Category category = this.categoryRepository.findById(id).orElseThrow(ObjectNotFoundException::new);
 
     this.categoryRepository.delete(category);
 
@@ -98,7 +98,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryDto findByName(String name) {
 
-    var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(CategoryNotFoundException::new);
+    var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(ObjectNotFoundException::new);
 
     return categoryMapper.categoryToCategoryDto(existCategory);
 

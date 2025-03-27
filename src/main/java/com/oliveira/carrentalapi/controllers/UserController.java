@@ -43,9 +43,9 @@ public class UserController {
   @Operation(summary = "Get All User - Just for admin", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping(value = "/all")
@@ -64,6 +64,7 @@ public class UserController {
 
   @Operation(summary = "Get User Logged in the present section", method = "GET")
   @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
@@ -85,9 +86,9 @@ public class UserController {
   @Operation(summary = "Update a user", method = "PUT")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping
@@ -113,8 +114,6 @@ public class UserController {
   @Operation(summary = "Delete a user", method = "DELETE")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
-      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })

@@ -14,8 +14,7 @@ import com.oliveira.carrentalapi.domain.dtos.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
 import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
 import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
-import com.oliveira.carrentalapi.domain.exceptions.CategoryNotFoundException;
-import com.oliveira.carrentalapi.domain.exceptions.UserNotFoundException;
+import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.ReservationMapper;
 import com.oliveira.carrentalapi.domain.models.Category;
 import com.oliveira.carrentalapi.domain.models.Reservation;
@@ -46,12 +45,12 @@ public class ReservationServiceImpl implements ReservationService {
 
     Optional<User> userFomDB = userRepository.getUserByLogin(userLogged.getUsername());
     if (!userFomDB.isPresent()) {
-      throw new UserNotFoundException("User not found with provide id");
+      throw new ObjectNotFoundException("User not found with provide id");
     }
 
     Optional<Category> category = categoryRepository.findById(reservationRequestDto.groupID());
     if (!category.isPresent()) {
-      throw new CategoryNotFoundException("Category not found with a provide id");
+      throw new ObjectNotFoundException("Category not found with a provide id");
     }
 
     // VALIDATE DATE VALUES
@@ -95,12 +94,12 @@ public class ReservationServiceImpl implements ReservationService {
 
     Optional<User> userFomDB = userRepository.getUserByLogin(userLogged.getUsername());
     if (!userFomDB.isPresent()) {
-      throw new UserNotFoundException("User not found with provide id");
+      throw new ObjectNotFoundException("User not found with provide id");
     }
 
     Optional<Reservation> resercation = reservationRepository.getReservationById(id);
     if (!resercation.isPresent()) {
-      throw new CategoryNotFoundException("Reservation not found with a provide id");
+      throw new ObjectNotFoundException("Reservation not found with a provide id");
     }
 
     resercation.get().setStatus(ReservationStatus.CANCELED);
@@ -123,7 +122,7 @@ public class ReservationServiceImpl implements ReservationService {
   public ReservationResponseDto getByID(UUID id) {
     return this.reservationRepository.findById(id)
         .map(reservationMapper::toReservationResponseDto)
-        .orElseThrow(() -> new BusinessException("Reservation not found with provided id"));
+        .orElseThrow(() -> new ObjectNotFoundException("Reservation not found with provided id"));
   }
 
 }

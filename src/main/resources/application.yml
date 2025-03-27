@@ -1,8 +1,11 @@
-
 server:
   port: ${env.APPLICATION_PORT:8080}
   servlet:
     context-path: "/car-rental"
+  error:
+    include-message: always   # Include error messages in the response
+    include-binding-errors: always # Include binding errors in the response
+    include-stacktrace: on-param # Show stack trace if requested with a parameter (e.g., ?trace=true)
 
 management:
   endpoints:

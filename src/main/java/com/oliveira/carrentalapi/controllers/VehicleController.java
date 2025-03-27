@@ -40,9 +40,9 @@ public class VehicleController {
   @Operation(summary = "Save a vehicle with all date is okay", method = "POST")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -57,9 +57,9 @@ public class VehicleController {
   @Operation(summary = "Update a vehicle by id with all date is okay", method = "PUT")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -74,9 +74,9 @@ public class VehicleController {
   @Operation(summary = "Delete a vehicle by", method = "DELETE")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @DeleteMapping(value = "/{id}")
@@ -91,9 +91,9 @@ public class VehicleController {
   @Operation(summary = "Get all vehicle", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "422", description = "Invalid Dates!"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()

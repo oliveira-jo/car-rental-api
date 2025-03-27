@@ -2,12 +2,10 @@ package com.oliveira.carrentalapi.domain.exceptions;
 
 public class BusinessException extends RuntimeException {
 
-  public BusinessException() {
-    super();
-  }
+  private static final long serialVersionUID = 1L;
 
-  public BusinessException(String string) {
-    super(string);
+  public BusinessException(String error) {
+    super(error);
   }
 
 }
