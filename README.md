@@ -51,9 +51,9 @@ Enter the project diretory
 + ✅ [ADMIN] Crud vehicles
 + ✅ [PUBLIC] List all vehicles
 + ✅ Mapping Entities to dto with MapStruct
-+  [PUBLIC] Vehicle search reservation
-+  [PUBLIC] Vehicle select group
-+  [PRIVATE] Vehicle confirm reservation
++ ✅ [PUBLIC] Vehicle search reservation
++ ✅ [PUBLIC] Vehicle select group
++ ✅ [PRIVATE] Vehicle confirm reservation
 
 ## Entities
 <table>
@@ -62,10 +62,10 @@ Enter the project diretory
   </tr>
   <tr>
     <td>
-      Name : String <br>
-      License : String <br>
-      Email : String <br>
-      Password: String <br>
+      id : UUID <br>
+      login : String <br>
+      password : String <br>
+      role : UserRole <br>
     </td>
   </tr>
 </table>    
@@ -76,12 +76,14 @@ Enter the project diretory
   </tr>
   <tr>
     <td>
+      id : UUID <br>
+      categoryName : String <br>
       datails : String <br>
-      numBigSuitCases : int <br>
-      numSmallSuitCases : int <br>
-      numOfPeople : int <br>
-      complete: boolean <br>
-      value: float
+      numBigSuitCases : Integer <br>
+      numSmallSuitCases : Integer <br>
+      numOfPeople: Boolean <br>
+      complete: Boolean <br>
+      value: Float
     </td>
   </tr>
 </table>    
@@ -92,13 +94,14 @@ Enter the project diretory
   </tr>
   <tr>
     <td>
+      id : UUID <br>
       model : String <br>
       plate : String <br>
       color : String <br>
-      complete : boolean <br>
-      mileage : int <br>
-      ative : boolean <br>
-      Category : category <br>
+      complete : Boolean <br>
+      mileage : Integer <br>
+      ative : Boolean <br>
+      Category : Category <br>
     </td>
   </tr>
 </table>    
@@ -109,18 +112,25 @@ Enter the project diretory
   </tr>
   <tr>
     <td>
-      pichUpData : StLocalDateTimering <br>
+      id : UUID <br>
+      pichUpData : LocalDateTime <br>
       returnDate : LocalDateTime <br>
-      categoryId : UUID <br>
-      days : Integer <br>
-      totalValue : Floate
+      dailyRentalValue : Float <br>
+      qtdDays : Long <br>
+      totalValue : BigDecimal <br>
+      reservationStatus : ReservationStatus <br>
+      user : User <br>
+      category : Category <br>
     </td>
   </tr>
 </table>    
 
 ## Dadabase Association
+```
 ( Category )  1 <-> N  ( Vehicle )
-( User )  1 <-> 1  ( Reservation )
+( User )  1 <-> N  ( Reservation )
+( Category )  1 <-> N  ( resercation )
+```
 
 ## Desired Operations
 * Register User
@@ -302,26 +312,19 @@ Delete a vehicle in the api passing the identification
 ### Endpoints Reservation:
 
 ```http
-  GET /reservation
+  POST /reservation
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+
+
+```http
+  GET /reservation/all
 ```
 | Parâmetro   | Tipo       | Descrição                                |
 | :---------- | :--------- | :--------------------------------------- |
 | `token` | `string` | **Required**. Token retornado pelo login       |
-| `pickUpDate` | `LocalDateTime` | **Required**. Vehicle pick-up date |
-| `returnDate` | `LocalDateTime` | **Required**. Vehicle return date  |
-| `categoryId` | `String` | **Required**. Category UUID  |
-* PRÉ AUTORIZAÇÃO
-* return (data retirada, data entrega, grupo, quantidade de diárioas, valor total das diárias) 
-
-
-```http
-  GET /reservation
-```
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `token` | `string` | **Required**. Token retornado pelo login |
-* return all reservations, just for ADMIN
-
 
 
 ```http
@@ -330,21 +333,18 @@ Delete a vehicle in the api passing the identification
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `token` | `string` | **Required**. Token retornado pelo login |
-| `id` | `string` | **Required**. Reservation UUID |
-* return a reservations
+| `id`      | `string` | **Required**. Reservation UUID  |
 
 
 ```http
-  POST /reservation
+  DELETE /reservation/{id}
 ```
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
 | `token` | `string` | **Required**. Token retornado pelo login |
-| `pickUpDate` | `LocalDateTime` | **Required**. Vehicle pick-up date |
-| `returnDate` | `LocalDateTime` | **Required**. Vehicle return date  |
-| `categoryId` | `String` | **Required**. Category UUID  |
-| `totalValue` | `Float` | **Required**. Category UUID  |
-* CONFIRMANDO RESERVA
-* return se a reserva foi confirmada 
+| `id` | `string` | **Required**. Reservation UUID |
+
+
+
 
 

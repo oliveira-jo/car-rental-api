@@ -53,7 +53,7 @@ public class ReservationController {
 
   }
 
-  @GetMapping
+  @GetMapping(value = "/all")
   @Operation(summary = "Return a list of all reservations saved in database ", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),

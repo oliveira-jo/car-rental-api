@@ -368,7 +368,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"pickUpDate\" : \"2025-04-20T12:34:57\",\n    \"returnDate\" : \"2025-04-25T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
+							"raw": "{\n    \"pickUpDate\" : \"2025-04-21T12:34:57\",\n    \"returnDate\" : \"2025-04-25T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -402,7 +402,7 @@
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/reservation"
+						"url": "{{url-local}}:8000/car-rental/reservation/all"
 					},
 					"response": []
 				},
