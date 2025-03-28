@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.infra.security;
+package com.oliveira.carrentalapi.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

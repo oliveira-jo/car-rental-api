@@ -21,14 +21,13 @@ Facilitate the presentation of the company and it's services to the customer thr
 + SERVICES (Entities <-> DTO's)
   * Impl
 + REPOSITORIES (Entities)
++ Security (Config)
 + DOMAIN
   * DTOS
   * ENUMS
   * EXCEPTIONS
   * MAPPER
   * MODELS (Entities)
-+ Infra 
-  * Security
 
 
 ## Clone Project and Run Using Docker
