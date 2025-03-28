@@ -55,7 +55,7 @@ Enter the project diretory
 + ✅ CRUD a reservation
 
 ## Entities
-<img src="diagrams/ClassDiagramBasic.png" alt="Class Base Diagram">
+<img src="diagrams/class/ClassDiagramBasic.png" alt="Class Base Diagram">
  
 
 ## Desired Operations
