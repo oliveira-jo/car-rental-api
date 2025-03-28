@@ -17,11 +17,19 @@ Facilitate the presentation of the company and it's services to the customer thr
 
 
 ## Project Structure
-+ CLIENT / UI (DTO's)
 + CONTROLLERS (DTO's)
-+ SERVICES (DTO's)
++ SERVICES (Entities <-> DTO's)
+  * Impl
 + REPOSITORIES (Entities)
-+ MODELS (Entities)
++ DOMAIN
+  * DTOS
+  * ENUMS
+  * EXCEPTIONS
+  * MAPPER
+  * MODELS (Entities)
++ Infra 
+  * Security
+
 
 ## Clone Project and Run Using Docker
 Clone the project
@@ -35,126 +43,59 @@ Enter the project diretory
 ```
 
 ## Features Developmented
-+ ✅ Initialize the project (Web + security + data + mysql)
-+ ✅ Create entities (User with Role)
-+ ✅ Create repositories
-+ ✅ Configure the spring security for token JWT
-+ ✅ Generate key token
-+ ✅ [PUBLIC] Create login
-+ ✅ Admin user automation
-+ ✅ [PUBLIC] Register a new user
-+ ✅ [ADMIN] List all user
-+ ✅ [PRIVATE] Update user 
-+ ✅ [PRIVATE] Delete user 
-+ ✅ [ADMIN] Crud categories
-+ ✅ [PUBLIC] List all categories
-+ ✅ [ADMIN] Crud vehicles
-+ ✅ [PUBLIC] List all vehicles
-+ ✅ Mapping Entities to dto with MapStruct
-+ ✅ [PUBLIC] Vehicle search reservation
-+ ✅ [PUBLIC] Vehicle select group
-+ ✅ [PRIVATE] Vehicle confirm reservation
++ ✅ Project and it's structure
++ ✅ Modelos and entities
++ ✅ Configuration of database
++ ✅ Repositories
++ ✅ Configuration of Spring Security and JWT Token
++ ✅ CRUD a user
++ ✅ Automation of admin and attendent
++ ✅ User login
++ ✅ CRUD a vehicle
++ ✅ CRUD a categorie
++ ✅ CRUD a reservation
 
 ## Entities
-<table>
-  <tr>
-    <th>User</th>
-  </tr>
-  <tr>
-    <td>
-      id : UUID <br>
-      login : String <br>
-      password : String <br>
-      role : UserRole <br>
-    </td>
-  </tr>
-</table>    
-
-<table>
-  <tr>
-    <th>Category</th>
-  </tr>
-  <tr>
-    <td>
-      id : UUID <br>
-      categoryName : String <br>
-      datails : String <br>
-      numBigSuitCases : Integer <br>
-      numSmallSuitCases : Integer <br>
-      numOfPeople: Boolean <br>
-      complete: Boolean <br>
-      value: Float
-    </td>
-  </tr>
-</table>    
-
-<table>
-  <tr>
-    <th>Vehicle</th>
-  </tr>
-  <tr>
-    <td>
-      id : UUID <br>
-      model : String <br>
-      plate : String <br>
-      color : String <br>
-      complete : Boolean <br>
-      mileage : Integer <br>
-      ative : Boolean <br>
-      Category : Category <br>
-    </td>
-  </tr>
-</table>    
-
-<table>
-  <tr>
-    <th>Reservation</th>
-  </tr>
-  <tr>
-    <td>
-      id : UUID <br>
-      pichUpData : LocalDateTime <br>
-      returnDate : LocalDateTime <br>
-      dailyRentalValue : Float <br>
-      qtdDays : Long <br>
-      totalValue : BigDecimal <br>
-      reservationStatus : ReservationStatus <br>
-      user : User <br>
-      category : Category <br>
-    </td>
-  </tr>
-</table>    
-
-## Dadabase Association
-```
-( Category )  1 <-> N  ( Vehicle )
-( User )  1 <-> N  ( Reservation )
-( Category )  1 <-> N  ( resercation )
-```
+<img src="diagrams/ClassDiagramBasic.png" alt="Class Base Diagram">
+ 
 
 ## Desired Operations
-* Register User
-Register a user in the api passing datas through JSON 
-* Read User
+* Register User:
+Register a user in the api passing datas by JSON 
+* Read User:
 Read a user in the api, for name or list of users
-* Update User
-Update a user in the api passing the identification
-* Delete User
-Delete a user in the api passing the identification
+* Update User:
+Update a user in the api passing the identification id
+* Delete User:
+Delete a user in the api passing the identification id
 
-* Register Vehicle
-Register a vehicle in the api passing datas through JSON
-* Read Vehicle
-Read a vehicle in the api, for name or list of users
-* Update Vehicle
-Update a vehicle in the api passang the identification
-* Delete Vehicle
-Delete a vehicle in the api passing the identification
+* Register Vehicle:
+Register a Vehicle in the api passing datas by JSON 
+* Read Vehicle:
+Read a Vehicle in the api, for name or list of vehicles
+* Update Vehicle:
+Update a Vehicle in the api passing the identification id
+* Delete Vehicle:
+Delete a Vehicle in the api passing the identification id
 
-* Register a Reservation
-* Cancel a Reservation
+* Register Category:
+Register a Category in the api passing datas by JSON 
+* Read Category:
+Read a Category in the api, for name or list of categories
+* Update Category:
+Update a Category in the api passing the identification id
+* Delete Category:
+Delete a Category in the api passing the identification id
 
-## Technologies Used
+* Register Reservation:
+Register a Reservation in the api passing datas by JSON 
+* Read Reservation:
+Read a Reservation in the api, for name or list of resercations
+* Cancel a Reservation:
+Cancel a Reservation in the api passing the identification id
+
+
+## Technologies
 * Java
 * Spring Boot Starter Web
 * Spring Boot Devtools
@@ -166,6 +107,11 @@ Delete a vehicle in the api passing the identification
 * MapStruct
 
 ## API Documentations
+
+### Endpoints Using Swagger:
+````
+http://localhost:8000/car-rental/swagger-ui.html
+````
 
 ### Endpoints Users:
 
@@ -221,6 +167,15 @@ Delete a vehicle in the api passing the identification
 
 
 ```http
+  GET /vehicle/{id}
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id`      | `string` | **Required**. Vehicle UUID |
+
+
+```http
   POST /vehicle
 ```
 | Parâmetro   | Tipo       | Descrição                           |
@@ -267,6 +222,24 @@ Delete a vehicle in the api passing the identification
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `token` | `string` | **Required**. Token retornado pelo login |
+
+
+```http
+  GET /category/{id}
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id`      | `string` | **Required**. Category UUID  |
+
+
+```http
+  DELETE /category/{id}/vehicles
+```
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `token` | `string` | **Required**. Token retornado pelo login |
+| `id`      | `string` | **Required**. Category UUID  |
 
 
 ```http

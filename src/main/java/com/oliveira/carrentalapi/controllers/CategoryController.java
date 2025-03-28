@@ -104,7 +104,7 @@ public class CategoryController {
 
   }
 
-  @Operation(summary = "Get a Cagegorie by a provide id", method = "GET")
+  @Operation(summary = "Get the vehicles of a Cagegorie by a provide id", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),

@@ -1,7 +1,6 @@
 package com.oliveira.carrentalapi.domain.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import com.oliveira.carrentalapi.domain.dtos.CategoryResponseDto;
@@ -13,7 +12,6 @@ public interface CategoryMapper {
 
   CategoryResponseDto toCategoryResponseDto(Category category);
 
-  @Mapping(target = "vehicles.category", ignore = true)
   CategoryVehicleResponseDto toCategoryVehicleResponseDto(Category category);
 
 }
