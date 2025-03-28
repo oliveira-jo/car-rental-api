@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
 
 @Entity(name = "CATEGORYS")
 @Table(name = "CATEGORYS")
@@ -31,7 +31,7 @@ public class Category {
   public Category() {
   }
 
-  public Category(CategoryDto categoryDate) {
+  public Category(CategoryRequestDto categoryDate) {
     this.categoryName = categoryDate.categoryName();
     this.datails = categoryDate.datails();
     this.numBigSuitCases = categoryDate.numBigSuitCases();

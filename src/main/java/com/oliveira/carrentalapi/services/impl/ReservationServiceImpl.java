@@ -119,7 +119,7 @@ public class ReservationServiceImpl implements ReservationService {
   }
 
   @Override
-  public ReservationResponseDto getByID(UUID id) {
+  public ReservationResponseDto findById(UUID id) {
     return this.reservationRepository.findById(id)
         .map(reservationMapper::toReservationResponseDto)
         .orElseThrow(() -> new ObjectNotFoundException("Reservation not found with provided id"));

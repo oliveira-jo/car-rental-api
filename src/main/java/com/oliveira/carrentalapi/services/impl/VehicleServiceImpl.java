@@ -7,11 +7,10 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
+import com.oliveira.carrentalapi.domain.dtos.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.VehicleResponseDto;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.VehicleMapper;
-import com.oliveira.carrentalapi.domain.mapper.VehicleResponseMapper;
 import com.oliveira.carrentalapi.domain.models.Vehicle;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.repositories.VehicleRepository;
@@ -23,20 +22,18 @@ public class VehicleServiceImpl implements VehicleService {
   private final VehicleRepository vehicleRepository;
   private final CategoryRepository categoryRepository;
   private final VehicleMapper vehicleMapper;
-  private final VehicleResponseMapper vehicleResponseMapper;
 
   public VehicleServiceImpl(VehicleRepository vehicleRepository, CategoryRepository categoryRepository,
-      VehicleMapper vehicleMapper, VehicleResponseMapper vehicleResponseMapper) {
+      VehicleMapper vehicleMapper) {
 
     this.vehicleRepository = vehicleRepository;
     this.categoryRepository = categoryRepository;
     this.vehicleMapper = vehicleMapper;
-    this.vehicleResponseMapper = vehicleResponseMapper;
 
   }
 
   @Override
-  public VehicleResponseDto save(VehicleDto vehicleData) {
+  public VehicleResponseDto save(VehicleRequestDto vehicleData) {
 
     UUID categoryId = UUID.fromString(vehicleData.categoryId());
 
@@ -49,12 +46,12 @@ public class VehicleServiceImpl implements VehicleService {
 
     this.vehicleRepository.save(vehicle);
 
-    return vehicleResponseMapper.vehicleResponseToVehicleDto(vehicle);
+    return vehicleMapper.toVehicleResponseDto(vehicle);
 
   }
 
   @Override
-  public VehicleDto update(UUID id, VehicleDto vehicleData) {
+  public VehicleResponseDto update(UUID id, VehicleRequestDto vehicleData) {
 
     UUID categoryId = UUID.fromString(vehicleData.categoryId());
 
@@ -86,33 +83,30 @@ public class VehicleServiceImpl implements VehicleService {
 
     vehicleRepository.save(vehicle);
 
-    return vehicleMapper.vehicleToVehicleDto(vehicle);
+    return vehicleMapper.toVehicleResponseDto(vehicle);
 
   }
 
   @Override
-  public List<VehicleResponseDto> getAllVehicles() {
+  public List<VehicleResponseDto> getAll() {
 
     List<Vehicle> vehicles = this.vehicleRepository.findAll();
     List<VehicleResponseDto> newVehicles = new ArrayList<VehicleResponseDto>();
 
-    for (Vehicle vehicle : vehicles) {
-
-      newVehicles.add(vehicleResponseMapper.vehicleResponseToVehicleDto(vehicle));
-
-    }
+    for (Vehicle vehicle : vehicles)
+      newVehicles.add(vehicleMapper.toVehicleResponseDto(vehicle));
 
     return newVehicles;
 
   }
 
   @Override
-  public VehicleDto findById(UUID id) {
+  public VehicleResponseDto findById(UUID id) {
 
     Vehicle vehicle = vehicleRepository.findById(id)
         .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
 
-    return vehicleMapper.vehicleToVehicleDto(vehicle);
+    return vehicleMapper.toVehicleResponseDto(vehicle);
 
   }
 

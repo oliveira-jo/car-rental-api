@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
+import com.oliveira.carrentalapi.domain.dtos.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.VehicleResponseDto;
 import com.oliveira.carrentalapi.services.VehicleService;
 
@@ -46,7 +46,7 @@ public class VehicleController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<VehicleResponseDto> save(@RequestBody @Valid VehicleDto vehicleData) {
+  public ResponseEntity<VehicleResponseDto> save(@RequestBody @Valid VehicleRequestDto vehicleData) {
 
     var newVehicle = vehicleService.save(vehicleData);
 
@@ -63,11 +63,11 @@ public class VehicleController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<VehicleDto> update(@PathVariable UUID id, @RequestBody @Valid VehicleDto vehicleData) {
+  public ResponseEntity<VehicleResponseDto> update(@PathVariable UUID id,
+      @RequestBody @Valid VehicleRequestDto vehicleData) {
 
-    var updateVehicle = this.vehicleService.update(id, vehicleData);
-
-    return ResponseEntity.ok().body(updateVehicle);
+    return ResponseEntity.ok().body(
+        this.vehicleService.update(id, vehicleData));
 
   }
 
@@ -80,11 +80,27 @@ public class VehicleController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<VehicleDto> delete(@PathVariable UUID id) {
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
 
     this.vehicleService.delete(id);
 
     return ResponseEntity.ok().build();
+
+  }
+
+  @Operation(summary = "Get vehicle by a provide id", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<VehicleResponseDto> findById(@PathVariable UUID id) {
+
+    return ResponseEntity.ok().body(
+        this.vehicleService.findById(id));
 
   }
 
@@ -97,11 +113,10 @@ public class VehicleController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()
-  public ResponseEntity<List<VehicleResponseDto>> getVehicles() {
+  public ResponseEntity<List<VehicleResponseDto>> getAll() {
 
-    var vehicles = this.vehicleService.getAllVehicles();
-
-    return ResponseEntity.ok().body(vehicles);
+    return ResponseEntity.ok().body(
+        this.vehicleService.getAll());
 
   }
 

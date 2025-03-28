@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
-import com.oliveira.carrentalapi.services.CategoryService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
+import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryVehicleResponseDto;
+import com.oliveira.carrentalapi.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/category", produces = { "application/json" })
@@ -45,11 +47,10 @@ public class CategoryController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<CategoryDto> save(@RequestBody @Valid CategoryDto categoryDate) {
+  public ResponseEntity<CategoryResponseDto> save(@RequestBody @Valid CategoryRequestDto categoryDate) {
 
-    var newCategory = this.categoryService.save(categoryDate);
-
-    return ResponseEntity.ok().body(newCategory);
+    return ResponseEntity.ok().body(
+        this.categoryService.save(categoryDate));
 
   }
 
@@ -62,11 +63,11 @@ public class CategoryController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<CategoryDto> update(@PathVariable UUID id, @RequestBody @Valid CategoryDto categoryDate) {
+  public ResponseEntity<CategoryResponseDto> update(@PathVariable UUID id,
+      @RequestBody @Valid CategoryRequestDto categoryDate) {
 
-    var updateCategory = this.categoryService.update(id, categoryDate);
-
-    return ResponseEntity.ok().body(updateCategory);
+    return ResponseEntity.ok().body(
+        this.categoryService.update(id, categoryDate));
 
   }
 
@@ -79,11 +80,43 @@ public class CategoryController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<CategoryDto> delete(@PathVariable UUID id) {
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
 
     this.categoryService.delete(id);
 
     return ResponseEntity.ok().build();
+
+  }
+
+  @Operation(summary = "Get a Cagegorie by a provide id", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<CategoryResponseDto> findById(@PathVariable UUID id) {
+
+    return ResponseEntity.ok().body(
+        this.categoryService.findById(id));
+
+  }
+
+  @Operation(summary = "Get a Cagegorie by a provide id", method = "GET")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
+      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
+      @ApiResponse(responseCode = "404", description = "Not Found in the System"),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
+  })
+  @GetMapping(value = "/{id}/vehicles")
+  public ResponseEntity<CategoryVehicleResponseDto> findVehiclesByCategoryId(@PathVariable UUID id) {
+
+    return ResponseEntity.ok().body(
+        this.categoryService.findVehiclesByCategoryId(id));
 
   }
 
@@ -96,11 +129,10 @@ public class CategoryController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()
-  public ResponseEntity<List<CategoryDto>> getCategory() {
+  public ResponseEntity<List<CategoryResponseDto>> getAll() {
 
-    var categories = this.categoryService.findAllCategories();
-
-    return ResponseEntity.ok().body(categories);
+    return ResponseEntity.ok().body(
+        this.categoryService.getAll());
 
   }
 

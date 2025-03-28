@@ -3,18 +3,24 @@ package com.oliveira.carrentalapi.services;
 import java.util.List;
 import java.util.UUID;
 
-import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryVehicleResponseDto;
 
 public interface CategoryService {
 
-  public CategoryDto save(CategoryDto categoryDate);
+  public CategoryResponseDto save(CategoryRequestDto categoryDate);
 
-  public CategoryDto update(UUID id, CategoryDto categoryDate);
+  public CategoryResponseDto update(UUID id, CategoryRequestDto categoryDate);
 
   public void delete(UUID id);
 
-  public List<CategoryDto> findAllCategories();
+  public List<CategoryResponseDto> getAll();
 
-  public CategoryDto findByName(String name);
+  public CategoryResponseDto findById(UUID id);
+
+  public CategoryVehicleResponseDto findVehiclesByCategoryId(UUID id);
+
+  public CategoryResponseDto findByName(String name);
 
 }

@@ -78,7 +78,7 @@ public class ReservationController {
   })
   public ResponseEntity<ReservationResponseDto> getByID(@PathVariable UUID id) {
     return ResponseEntity.ok().body(
-        reservationService.getByID(id));
+        reservationService.findById(id));
 
   }
 

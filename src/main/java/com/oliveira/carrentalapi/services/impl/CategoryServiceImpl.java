@@ -7,7 +7,9 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.oliveira.carrentalapi.domain.dtos.CategoryDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.CategoryVehicleResponseDto;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.CategoryMapper;
 import com.oliveira.carrentalapi.domain.models.Category;
@@ -28,20 +30,21 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public CategoryDto save(CategoryDto categoryData) {
+  public CategoryResponseDto save(CategoryRequestDto categoryData) {
 
     Category newCategory = new Category(categoryData);
 
     this.categoryRepository.save(newCategory);
 
-    return categoryMapper.categoryToCategoryDto(newCategory);
+    return categoryMapper.toCategoryResponseDto(newCategory);
 
   }
 
   @Override
-  public CategoryDto update(UUID id, CategoryDto categoryData) {
+  public CategoryResponseDto update(UUID id, CategoryRequestDto categoryData) {
 
-    Category category = this.categoryRepository.findById(id).orElseThrow(ObjectNotFoundException::new);
+    Category category = this.categoryRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
 
     if (!categoryData.categoryName().isEmpty())
       category.setCategoryName(categoryData.categoryName());
@@ -66,41 +69,60 @@ public class CategoryServiceImpl implements CategoryService {
 
     this.categoryRepository.save(category);
 
-    return categoryMapper.categoryToCategoryDto(category);
+    return categoryMapper.toCategoryResponseDto(category);
 
   }
 
   @Override
   public void delete(UUID id) {
 
-    Category category = this.categoryRepository.findById(id).orElseThrow(ObjectNotFoundException::new);
+    Category category = this.categoryRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
 
     this.categoryRepository.delete(category);
 
   }
 
   @Override
-  public List<CategoryDto> findAllCategories() {
+  public List<CategoryResponseDto> getAll() {
 
     List<Category> categoriesDB = this.categoryRepository.findAll();
-    List<CategoryDto> newCategorys = new ArrayList<CategoryDto>();
+    List<CategoryResponseDto> newCategorys = new ArrayList<CategoryResponseDto>();
 
-    for (Category category : categoriesDB) {
-
-      newCategorys.add(categoryMapper.categoryToCategoryDto(category));
-
-    }
+    for (Category category : categoriesDB)
+      newCategorys.add(categoryMapper.toCategoryResponseDto(category));
 
     return newCategorys;
 
   }
 
   @Override
-  public CategoryDto findByName(String name) {
+  public CategoryResponseDto findById(UUID id) {
 
-    var existCategory = this.categoryRepository.findByCategoryName(name).orElseThrow(ObjectNotFoundException::new);
+    var existCategory = this.categoryRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
 
-    return categoryMapper.categoryToCategoryDto(existCategory);
+    return categoryMapper.toCategoryResponseDto(existCategory);
+
+  }
+
+  @Override
+  public CategoryVehicleResponseDto findVehiclesByCategoryId(UUID id) {
+
+    var existCategory = this.categoryRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+
+    return categoryMapper.toCategoryVehicleResponseDto(existCategory);
+
+  }
+
+  @Override
+  public CategoryResponseDto findByName(String name) {
+
+    var existCategory = this.categoryRepository.findByCategoryName(name)
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+
+    return categoryMapper.toCategoryResponseDto(existCategory);
 
   }
 

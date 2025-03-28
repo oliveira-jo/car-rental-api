@@ -9,7 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import com.oliveira.carrentalapi.domain.dtos.VehicleDto;
+import com.oliveira.carrentalapi.domain.dtos.VehicleRequestDto;
 
 @Entity(name = "VEHICLES")
 @Table(name = "VEHICLES")
@@ -31,7 +31,7 @@ public class Vehicle {
   public Vehicle() {
   }
 
-  public Vehicle(VehicleDto vehicleData) {
+  public Vehicle(VehicleRequestDto vehicleData) {
     this.model = vehicleData.model();
     this.plate = vehicleData.plate();
     this.color = vehicleData.color();
