@@ -20,9 +20,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.CategoryResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.CategoryVehicleResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.response.CategoryVehicleResponseDto;
 import com.oliveira.carrentalapi.services.CategoryService;
 
 @RestController

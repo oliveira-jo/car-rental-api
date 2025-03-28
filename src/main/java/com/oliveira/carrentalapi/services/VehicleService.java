@@ -3,8 +3,8 @@ package com.oliveira.carrentalapi.services;
 import java.util.List;
 import java.util.UUID;
 
-import com.oliveira.carrentalapi.domain.dtos.VehicleRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.VehicleResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
 
 public interface VehicleService {
 

@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.oliveira.carrentalapi.domain.dtos.ReservationRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
 
 public interface ReservationService {
 

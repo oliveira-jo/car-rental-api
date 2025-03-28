@@ -1,6 +1,9 @@
 package com.oliveira.carrentalapi.domain.models;
 
 import java.util.UUID;
+
+import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,8 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import com.oliveira.carrentalapi.domain.dtos.VehicleRequestDto;
 
 @Entity(name = "VEHICLES")
 @Table(name = "VEHICLES")

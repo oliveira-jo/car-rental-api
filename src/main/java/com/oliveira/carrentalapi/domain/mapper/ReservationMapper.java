@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
 import com.oliveira.carrentalapi.domain.models.Reservation;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

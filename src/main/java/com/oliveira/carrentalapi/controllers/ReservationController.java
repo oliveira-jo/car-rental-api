@@ -20,8 +20,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-import com.oliveira.carrentalapi.domain.dtos.ReservationRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
 import com.oliveira.carrentalapi.services.ReservationService;
 
 @RestController

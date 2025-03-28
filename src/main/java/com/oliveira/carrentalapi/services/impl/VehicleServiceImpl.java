@@ -7,8 +7,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.oliveira.carrentalapi.domain.dtos.VehicleRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.VehicleResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.VehicleMapper;
 import com.oliveira.carrentalapi.domain.models.Vehicle;

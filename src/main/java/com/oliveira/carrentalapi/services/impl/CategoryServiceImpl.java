@@ -7,9 +7,9 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.CategoryResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.CategoryVehicleResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.response.CategoryVehicleResponseDto;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.CategoryMapper;
 import com.oliveira.carrentalapi.domain.models.Category;

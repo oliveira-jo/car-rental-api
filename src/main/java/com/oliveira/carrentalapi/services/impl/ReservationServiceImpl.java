@@ -10,8 +10,9 @@ import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import com.oliveira.carrentalapi.domain.dtos.ReservationRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.ReservationResponseDto;
+
+import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
 import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
 import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;

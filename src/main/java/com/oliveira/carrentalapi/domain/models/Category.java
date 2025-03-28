@@ -2,14 +2,15 @@ package com.oliveira.carrentalapi.domain.models;
 
 import java.util.List;
 import java.util.UUID;
+
+import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import com.oliveira.carrentalapi.domain.dtos.CategoryRequestDto;
 
 @Entity(name = "CATEGORYS")
 @Table(name = "CATEGORYS")
