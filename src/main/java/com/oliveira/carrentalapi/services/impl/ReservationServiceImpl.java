@@ -25,6 +25,8 @@ import com.oliveira.carrentalapi.repositories.ReservationRepository;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.ReservationService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
@@ -41,6 +43,7 @@ public class ReservationServiceImpl implements ReservationService {
     this.reservationMapper = reservationMapper;
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UserDetails userLogged) {
 
@@ -61,8 +64,8 @@ public class ReservationServiceImpl implements ReservationService {
     } else if (reservationRequestDto.pickUpDate().isBefore(LocalDateTime.now())) {
       throw new BusinessException("The pickUpDate can't be before now");
 
-    } else if (reservationRequestDto.pickUpDate().isAfter(LocalDateTime.now().plusMonths(6))) {
-      throw new BusinessException("You can't do reservation after six months later!");
+    } else if (reservationRequestDto.pickUpDate().isAfter(LocalDateTime.now().plusMonths(4))) {
+      throw new BusinessException("You can't do reservation after  months later!");
 
     }
 
@@ -90,6 +93,7 @@ public class ReservationServiceImpl implements ReservationService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public ReservationResponseDto cancel(UUID id, UserDetails userLogged) {
 

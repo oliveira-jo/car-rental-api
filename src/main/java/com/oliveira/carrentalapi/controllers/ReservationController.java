@@ -46,10 +46,10 @@ public class ReservationController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   public ResponseEntity<ReservationResponseDto> save(@RequestBody @Valid ReservationRequestDto request,
-      @AuthenticationPrincipal UserDetails userDetails) {
+      @AuthenticationPrincipal UserDetails userLogged) {
 
     return ResponseEntity.ok().body(
-        reservationService.save(request, userDetails));
+        reservationService.save(request, userLogged));
 
   }
 

@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfigurations {
+public class SecurityConfig {
 
   private final SecurityFilter securityFilter;
 
@@ -23,7 +23,7 @@ public class SecurityConfigurations {
       "/api/v1/auth/**", "/v3/api-docs/**", "/v3/api-docs/yaml",
       "/swagger-ui/**", "/swagger-ui.html", "/actuator/**" };
 
-  public SecurityConfigurations(SecurityFilter securityFilter) {
+  public SecurityConfig(SecurityFilter securityFilter) {
     this.securityFilter = securityFilter;
   }
 
@@ -53,7 +53,7 @@ public class SecurityConfigurations {
             .requestMatchers(HttpMethod.DELETE, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
             // -> RESERVATION
             .requestMatchers(HttpMethod.POST, "/reservation").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
-            .requestMatchers(HttpMethod.GET, "/reservation/all").hasAnyRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/reservation/all").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.GET, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             .requestMatchers(HttpMethod.DELETE, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             // -> ANY

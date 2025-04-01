@@ -18,6 +18,8 @@ import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.UserService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -30,6 +32,7 @@ public class UserServiceImpl implements UserService {
     this.userMapper = userMapper;
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public UserResponseDto save(UserRequestDto request) {
 
@@ -64,6 +67,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public UserResponseDto update(UUID id, UserRequestDto request) {
 
@@ -97,6 +101,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public void delete(UUID id) {
     User user = this.userRepository.findById(id)

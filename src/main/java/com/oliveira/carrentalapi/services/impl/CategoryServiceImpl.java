@@ -16,6 +16,8 @@ import com.oliveira.carrentalapi.domain.models.Category;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.services.CategoryService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -29,6 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public CategoryResponseDto save(CategoryRequestDto categoryData) {
 
@@ -40,6 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public CategoryResponseDto update(UUID id, CategoryRequestDto categoryData) {
 
@@ -73,6 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public void delete(UUID id) {
 

@@ -16,6 +16,8 @@ import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.repositories.VehicleRepository;
 import com.oliveira.carrentalapi.services.VehicleService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
@@ -32,6 +34,7 @@ public class VehicleServiceImpl implements VehicleService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public VehicleResponseDto save(VehicleRequestDto vehicleData) {
 
@@ -50,6 +53,7 @@ public class VehicleServiceImpl implements VehicleService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public VehicleResponseDto update(UUID id, VehicleRequestDto vehicleData) {
 
@@ -110,6 +114,7 @@ public class VehicleServiceImpl implements VehicleService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public void delete(UUID id) {
 
