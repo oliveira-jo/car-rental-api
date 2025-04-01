@@ -37,10 +37,11 @@ public class SecurityConfig {
             .requestMatchers(AUTH_WHITELIST).permitAll()
             .requestMatchers(HttpMethod.GET, "/index.html").permitAll()
             // -> USER
-            // just to test, normaly we need to create a admin user in the database
             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-            .requestMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/user/all").hasAnyRole("ADMIN", "SUPPORT")
+            .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
+            .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             // -> CATEGORY
             .requestMatchers(HttpMethod.GET, "/category").permitAll()
             .requestMatchers(HttpMethod.POST, "/category").hasAnyRole("ADMIN", "SUPPORT")

@@ -1,12 +1,13 @@
 package com.oliveira.carrentalapi.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,12 +60,8 @@ public class UserController {
   @GetMapping(value = "/me")
   public ResponseEntity<UserResponseDto> getUserLogged(Authentication auth) {
 
-    User userAuth = (User) auth.getPrincipal();
-    if (userAuth == null)
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
     return ResponseEntity.ok().body(
-        this.userService.getUserByLogin(userAuth.getLogin()));
+        this.userService.getUserByLogin(((User) auth.getPrincipal()).getLogin()));
 
   }
 
@@ -76,16 +73,12 @@ public class UserController {
       @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  @PutMapping
+  @PutMapping(value = "/{id}")
   public ResponseEntity<UserResponseDto> update(@RequestBody @Valid UserRequestDto request,
-      Authentication auth) {
-
-    User newUserAuth = (User) auth.getPrincipal();
-    if (newUserAuth == null)
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+      @PathVariable UUID id) {
 
     return ResponseEntity.ok().body(
-        this.userService.update(newUserAuth.getId(), request));
+        this.userService.update(id, request));
   }
 
   @Operation(summary = "Delete a user", method = "DELETE")
@@ -94,14 +87,10 @@ public class UserController {
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  @DeleteMapping
-  public ResponseEntity<Void> delete(Authentication auth) {
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
 
-    User userAuth = (User) auth.getPrincipal();
-    if (userAuth == null)
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
-    this.userService.delete(userAuth.getId());
+    this.userService.delete(id);
 
     return ResponseEntity.ok().build();
 

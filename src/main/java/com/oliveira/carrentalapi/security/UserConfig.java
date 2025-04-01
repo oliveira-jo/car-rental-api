@@ -34,7 +34,7 @@ public class UserConfig {
 
       user.setEmail("admin@admin.com");
       user.setUsername("administrator");
-      user.setPhone("00000000000");
+      user.setPhone("(54)98181-5555");
       user.setCnh("00000000000");
       user.setBirthDate(LocalDate.now());
 
@@ -56,7 +56,7 @@ public class UserConfig {
 
       user.setEmail("support@support.com");
       user.setUsername("support attendant");
-      user.setPhone("00000000000");
+      user.setPhone("(54)98181-4444");
       user.setCnh("00000000000");
       user.setBirthDate(LocalDate.now());
 
