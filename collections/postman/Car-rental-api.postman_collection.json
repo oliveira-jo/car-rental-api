@@ -10,7 +10,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "UPDATE User",
+					"name": "Update User",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -34,7 +34,7 @@
 					"response": []
 				},
 				{
-					"name": "GET All Users",
+					"name": "All Users",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -49,7 +49,7 @@
 					"response": []
 				},
 				{
-					"name": "GET LOGGED IN",
+					"name": "Me",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -64,7 +64,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE User",
+					"name": "Delete User",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -79,7 +79,7 @@
 					"response": []
 				},
 				{
-					"name": "POST User",
+					"name": "Create User",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -88,7 +88,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\" : \"teste24\", \n    \"password\" : \"teste24\"\n}\n\n",
+							"raw": "{\n    \"email\" : \"lucilenemassoco@gmail.com\", \n    \"password\" : \"password\",\n    \"passwordConfirmation\" : \"password\",\n    \"username\" : \"Lucilene Massoco Oliveira\",\n    \"phone\" : \"(54)98181-5454\",\n    \"cnh\" : \"12345678917\",\n    \"birthDate\" : \"1990-10-10\"\n}\n\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -100,7 +100,7 @@
 					"response": []
 				},
 				{
-					"name": "LOGIN User",
+					"name": "Login",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -155,7 +155,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\" : \"admin\", \n    \"password\" : \"admin\"\n}",
+							"raw": "{\n    \"login\" : \"lucilenemassoco\", \n    \"password\" : \"password\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -190,7 +190,7 @@
 			"name": "Category",
 			"item": [
 				{
-					"name": "GET Categories",
+					"name": "All Categories",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -205,7 +205,22 @@
 					"response": []
 				},
 				{
-					"name": "DELETE Category",
+					"name": "Categories by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -215,12 +230,12 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/category/6de6ae2a-87ef-4509-ad07-1899486204bc"
+						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c"
 					},
 					"response": []
 				},
 				{
-					"name": "POST Category",
+					"name": "Create Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -232,7 +247,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"categoryName\": \"XXXXX\", \n    \"datails\": \"SUV\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 329.9\n}\n",
+							"raw": "{\n    \"categoryName\": \"TESTE_CATEGORY\", \n    \"datails\": \"TEST\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 99.9\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -244,7 +259,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Category",
+					"name": "Update Category",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -256,14 +271,29 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\n        \"categoryName\": \"B\",\n        \"datails\": \"Economico Completo\",\n        \"numBigSuitCases\": 2,\n        \"numSmallSuitCases\": 2,\n        \"numOfPeople\": 4,\n        \"complete\": true,\n        \"value\": 199.9\n    }",
+							"raw": "{\n    \"categoryName\": \"TESTE_CATEGORY\", \n    \"datails\": \"TEST-UPDATE\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 99.9\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/category/be890cc5-6c7f-4c90-b8de-4095ada59e23"
+						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c"
+					},
+					"response": []
+				},
+				{
+					"name": "Vehicles by a category id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c/vehicles"
 					},
 					"response": []
 				}
@@ -273,7 +303,7 @@
 			"name": "Vehicle",
 			"item": [
 				{
-					"name": "GET Vehicle",
+					"name": "All Vehicle",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -288,7 +318,22 @@
 					"response": []
 				},
 				{
-					"name": "DELETE Vehicle",
+					"name": "Vehicle by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{tokenCarRental}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{url-local}}:8000/car-rental/vehicle/7e0a291f-71d1-4134-bc7e-f0e5c56111b6"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vehicle",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -298,12 +343,12 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/vehicle/29387b57-e7f2-42a4-a182-9c5e9485e5b0"
+						"url": "{{url-local}}:8000/car-rental/vehicle/7e0a291f-71d1-4134-bc7e-f0e5c56111b6"
 					},
 					"response": []
 				},
 				{
-					"name": "POST Vehicle",
+					"name": "Create Vehicle",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -315,7 +360,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"model\": \"X100\",\n  \"plate\": \"AAAQ200\",\n  \"color\": \"Azul\",\n  \"complete\": true,\n  \"mileage\": 80000,\n  \"ative\": true,\n  \"categoryId\": \"014bbe03-4d01-46a8-bd2e-34d240b5f4f1\"\n}\n",
+							"raw": "{\n  \"model\": \"TESTE\",\n  \"plate\": \"AAAQ200\",\n  \"color\": \"Azul\",\n  \"complete\": true,\n  \"mileage\": 80000,\n  \"ative\": true,\n  \"categoryId\": \"014bbe03-4d01-46a8-bd2e-34d240b5f4f1\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -327,7 +372,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Vehicle",
+					"name": "Update Vehicle",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -339,14 +384,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"model\": \"X200\",\n    \"plate\": \"AAAQ200\",\n    \"color\": \"Azul\",\n    \"complete\": true,\n    \"mileage\": 80000,\n    \"ative\": true,\n    \"categoryId\": \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
+							"raw": "{\n  \"model\": \"TESTE-UPDATE\",\n  \"plate\": \"AAAQ200\",\n  \"color\": \"BLACK\",\n  \"complete\": true,\n  \"mileage\": 80000,\n  \"ative\": true,\n  \"categoryId\": \"014bbe03-4d01-46a8-bd2e-34d240b5f4f1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/vehicle/29387b57-e7f2-42a4-a182-9c5e9485e5b0"
+						"url": "{{url-local}}:8000/car-rental/vehicle/7e0a291f-71d1-4134-bc7e-f0e5c56111b6"
 					},
 					"response": []
 				}
@@ -356,7 +401,7 @@
 			"name": "Reservation",
 			"item": [
 				{
-					"name": "POST reservation",
+					"name": "Create Reservation",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -368,7 +413,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"pickUpDate\" : \"2025-04-21T12:34:57\",\n    \"returnDate\" : \"2025-04-25T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
+							"raw": "{\n    \"pickUpDate\" : \"2025-06-06T12:34:57\",\n    \"returnDate\" : \"2025-06-10T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -380,7 +425,7 @@
 					"response": []
 				},
 				{
-					"name": "GET All Reservations",
+					"name": "All Reservations",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -407,7 +452,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Reservations By id",
+					"name": "Reservations By id",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -429,12 +474,12 @@
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/reservation/60349f59-6df4-42f9-9e00-3f17d9760469"
+						"url": "{{url-local}}:8000/car-rental/reservation/b25c399a-2801-4dbf-9e7a-33c8d318a948"
 					},
 					"response": []
 				},
 				{
-					"name": "GET Reservations By id Copy",
+					"name": "Cancel Reservation",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -453,7 +498,7 @@
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/reservation/60349f59-6df4-42f9-9e00-3f17d9760469"
+						"url": "{{url-local}}:8000/car-rental/reservation/b25c399a-2801-4dbf-9e7a-33c8d318a948"
 					},
 					"response": []
 				}
