@@ -2,6 +2,7 @@ package com.oliveira.carrentalapi.security;
 
 import java.io.IOException;
 
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,9 +30,8 @@ public class SecurityFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request,
-      @SuppressWarnings("null") HttpServletResponse response,
-      @SuppressWarnings("null") FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+      @NonNull FilterChain filterChain) throws ServletException, IOException {
 
     var token = this.recoverToken(request);
 
@@ -43,7 +43,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         throw new ObjectNotFoundException("User not logged in!!!");
       }
 
-      // User Verifications
       var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
       // Save in the context of this request for spring user after
       SecurityContextHolder.getContext().setAuthentication(authentication);

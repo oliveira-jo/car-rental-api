@@ -27,24 +27,12 @@ public class SecurityConfigurations {
     this.securityFilter = securityFilter;
   }
 
-  /*
-   * Security Filter Chain
-   * Methods to validations filters and security to the applications
-   * Validations users and with it's able to access
-   * 
-   * auth STATFULL -> sava informations of user active session
-   * auth STATELESS -> don't save sessions, but pass a token to user,
-   * more use with standard rest
-   * 
-   */
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
     return httpSecurity
         .csrf(csrf -> csrf.disable())
-        // Server don't save status. Need to pass all in the requisition
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(AUTH_WHITELIST).permitAll()
             .requestMatchers(HttpMethod.GET, "/index.html").permitAll()
@@ -64,10 +52,10 @@ public class SecurityConfigurations {
             .requestMatchers(HttpMethod.PUT, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.DELETE, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
             // -> RESERVATION
-            .requestMatchers(HttpMethod.POST, "/reservation").hasAnyRole("ADMIN", "SUPPORT", "USER")
-            .requestMatchers(HttpMethod.GET, "/reservation").hasAnyRole("ADMIN", "SUPPORT")
-            .requestMatchers(HttpMethod.GET, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "USER")
-            .requestMatchers(HttpMethod.DELETE, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "USER")
+            .requestMatchers(HttpMethod.POST, "/reservation").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
+            .requestMatchers(HttpMethod.GET, "/reservation/all").hasAnyRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
+            .requestMatchers(HttpMethod.DELETE, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             // -> ANY
             .anyRequest().authenticated())
 
@@ -84,10 +72,6 @@ public class SecurityConfigurations {
     return authenticationConfiguration.getAuthenticationManager();
   }
 
-  /*
-   * Will save the password in database encrypted
-   * point to spring that it's need to do this transformations
-   */
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

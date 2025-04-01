@@ -1,5 +1,7 @@
 package com.oliveira.carrentalapi.security;
 
+import java.time.LocalDate;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,13 @@ public class UserConfig {
     var userAdmin = this.userRepository.findByLogin("admin");
     if (userAdmin == null) {
       var user = new User();
+
+      user.setEmail("admin@admin.com");
+      user.setUsername("administrator");
+      user.setPhone("00000000000");
+      user.setCnh("00000000000");
+      user.setBirthDate(LocalDate.now());
+
       user.setLogin("admin");
       user.setPassword(passwordEncoder.encode("admin"));
       user.setRole(UserRole.ADMIN);
@@ -41,15 +50,21 @@ public class UserConfig {
 
     }
 
-    var userSuport = this.userRepository.findByLogin("suport");
+    var userSuport = this.userRepository.findByLogin("support");
     if (userSuport == null) {
-      var user = new com.oliveira.carrentalapi.domain.models.User();
-      user.setLogin("suport");
-      user.setPassword(passwordEncoder.encode("suport"));
+      var user = new User();
+
+      user.setEmail("support@support.com");
+      user.setUsername("support attendant");
+      user.setPhone("00000000000");
+      user.setCnh("00000000000");
+      user.setBirthDate(LocalDate.now());
+
+      user.setLogin("support");
+      user.setPassword(passwordEncoder.encode("support"));
       user.setRole(UserRole.SUPPORT);
       userRepository.save(user);
-      userAdmin = this.userRepository.findByLogin("suport");
-      userSuport = this.userRepository.findByLogin("suport");
+      userSuport = this.userRepository.findByLogin("support");
       System.out.println("------------------------- SUPORT USER CREATE AND SAVE IN BD ------------------------- "
           + userSuport.getUsername());
     } else {

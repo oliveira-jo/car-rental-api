@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oliveira.carrentalapi.domain.dtos.AuthenticationDto;
-import com.oliveira.carrentalapi.domain.dtos.UserDto;
+import com.oliveira.carrentalapi.domain.dtos.request.AuthenticationRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.LoginResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
 import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.services.UserService;
 import com.oliveira.carrentalapi.services.impl.TokenServiceImpl;
@@ -48,7 +49,7 @@ public class AuthenticationController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PostMapping(value = "/login")
-  public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationDto data) {
+  public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid AuthenticationRequestDto data) {
 
     var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
 
@@ -73,21 +74,10 @@ public class AuthenticationController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserDto> register(@RequestBody @Valid UserDto data) {
+  public ResponseEntity<UserResponseDto> register(@RequestBody @Valid UserRequestDto request) {
 
-    if (this.userService.findByLogin(data.login()) != null)
-      return ResponseEntity.badRequest().build();
-    if (data.password() == null)
-      return ResponseEntity.badRequest().build();
-
-    /*
-     * Allways initialize user role as a normal user
-     * For security, save manually in database a user ADMIN
-     */
-    var newUser = new UserDto(data.login(), data.password());
-    this.userService.save(newUser);
-
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok().body(
+        this.userService.save(request));
 
   }
 

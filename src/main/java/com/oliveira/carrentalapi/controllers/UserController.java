@@ -1,6 +1,5 @@
 package com.oliveira.carrentalapi.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oliveira.carrentalapi.domain.dtos.UserDto;
-import com.oliveira.carrentalapi.domain.mapper.UserMapper;
+import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
 import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.services.UserService;
 
@@ -31,13 +30,9 @@ import jakarta.validation.Valid;
 public class UserController {
 
   private final UserService userService;
-  private final UserMapper userMapper;
 
-  public UserController(UserService userService, UserMapper userMapper) {
-
+  public UserController(UserService userService) {
     this.userService = userService;
-    this.userMapper = userMapper;
-
   }
 
   @Operation(summary = "Get All User - Just for admin", method = "GET")
@@ -49,16 +44,10 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping(value = "/all")
-  public ResponseEntity<List<UserDto>> getAllUsers() {
+  public ResponseEntity<List<UserResponseDto>> getAllUsers() {
 
-    List<User> users = userService.findAllUsers();
-    List<UserDto> usersDto = new ArrayList<>();
-
-    for (User user : users) {
-      usersDto.add(this.userMapper.userToUserDto(user));
-    }
-
-    return ResponseEntity.ok().body(usersDto);
+    return ResponseEntity.ok().body(
+        userService.findAllUsers());
 
   }
 
@@ -69,17 +58,14 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping(value = "/me")
-  public ResponseEntity<UserDto> getUserLogged() {
+  public ResponseEntity<UserResponseDto> getUserLogged() {
 
     var userAuth = getPrincipal();
-
-    if (userAuth != null) {
-      return ResponseEntity.ok().body(new UserDto(userAuth.getLogin(), userAuth.getPassword()));
-
-    } else {
+    if (userAuth == null)
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-    }
+    return ResponseEntity.ok().body(
+        this.userService.getUserByLogin(userAuth.getLogin()));
 
   }
 
@@ -92,23 +78,14 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping
-  public ResponseEntity<UserDto> update(@Valid @RequestBody UserDto userDate) {
+  public ResponseEntity<UserResponseDto> update(@RequestBody @Valid UserRequestDto request) {
 
     var userAuth = getPrincipal();
-
-    if (userAuth != null) {
-
-      var newUser = new UserDto(userDate.login(), userDate.password());
-
-      userService.update(userAuth.getId(), newUser);
-
-      return ResponseEntity.ok().body(newUser);
-
-    } else {
+    if (userAuth == null)
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-    }
-
+    return ResponseEntity.ok().body(
+        this.userService.update(userAuth.getId(), request));
   }
 
   @Operation(summary = "Delete a user", method = "DELETE")
@@ -118,20 +95,15 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @DeleteMapping
-  public ResponseEntity<UserDto> delete() {
+  public ResponseEntity<Void> delete() {
 
     var userAuth = getPrincipal();
-
-    if (userAuth != null) {
-
-      userService.delete(userAuth.getId());
-
-      return ResponseEntity.ok().build();
-
-    } else {
+    if (userAuth == null)
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-    }
+    this.userService.delete(userAuth.getId());
+
+    return ResponseEntity.ok().build();
 
   }
 

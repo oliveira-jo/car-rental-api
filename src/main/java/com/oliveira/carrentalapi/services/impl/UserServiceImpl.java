@@ -8,9 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.oliveira.carrentalapi.domain.dtos.UserDto;
+import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
 import com.oliveira.carrentalapi.domain.enums.UserRole;
+import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
+import com.oliveira.carrentalapi.domain.mapper.UserMapper;
 import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.UserService;
@@ -20,45 +23,77 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
 
-  public UserServiceImpl(UserRepository userRepository) {
+  private final UserMapper userMapper;
+
+  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
     this.userRepository = userRepository;
+    this.userMapper = userMapper;
   }
 
   @Override
-  public User save(UserDto userData) {
+  public UserResponseDto save(UserRequestDto request) {
 
-    // Test if exist user before create
-    if (this.userRepository.findByLogin(userData.login()) != null)
-      throw new ObjectNotFoundException("User not found with login: " + userData.login());
+    // Test if password and password confirmation is equal and encrypt
+    if (!request.password().equals(request.passwordConfirmation()))
+      throw new BusinessException("Password and password confirmation are different");
 
-    String encryptedPassword = new BCryptPasswordEncoder().encode(userData.password());
+    String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
 
-    User newUser = new User(userData.login(), encryptedPassword, UserRole.USER);
+    // Test if already exist user with this login in database
+    String login = request.email().split("@")[0];
+    Optional<User> userFromDB = this.userRepository.getUserByLogin(login);
 
-    this.userRepository.save(newUser);
+    if (userFromDB.isPresent())
+      throw new BusinessException("The user with provide login is already sabedin DataBase: " + login);
 
-    return newUser;
+    // Create a new user
+    User userToBeSaved = new User();
+
+    userToBeSaved.setLogin(login);
+    userToBeSaved.setPassword(encryptedPassword);
+    userToBeSaved.setRole(UserRole.CLIENT);
+    userToBeSaved.setUsername(request.username());
+    userToBeSaved.setEmail(request.email());
+    userToBeSaved.setPhone(request.phone());
+    userToBeSaved.setCnh(request.cnh());
+    userToBeSaved.setBirthDate(request.birthDate());
+
+    // Save user in database, converto to dto and retur to controller
+    return this.userMapper.toUserDto(
+        this.userRepository.save(userToBeSaved));
 
   }
 
   @Override
-  public User update(UUID id, UserDto userData) {
+  public UserResponseDto update(UUID id, UserRequestDto request) {
 
     // Test if exist user before update
-    User newUser = this.userRepository.findById(id)
+    User userToBeUpdated = this.userRepository.findById(id)
         .orElseThrow(() -> new ObjectNotFoundException("User not found with id: " + id));
 
-    // Encryp a new password
-    String encryptedPassword = new BCryptPasswordEncoder().encode(userData.password());
+    // Test if password and password confirmation is equal and encrypt
+    if (!request.password().equals(request.passwordConfirmation()))
+      throw new BusinessException("Password and password confirmation are different");
 
-    if (!newUser.getLogin().isEmpty())
-      newUser.setLogin(userData.login());
-    if (!newUser.getPassword().isEmpty())
-      newUser.setPassword(encryptedPassword);
+    // encrypt password
+    String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
+    // Generate the login from email
+    String login = request.email().split("@")[0];
 
-    this.userRepository.save(newUser);
+    // don't do all tests because this is make in dto by validation
+    // if (!request.getLogin().isEmpty())
+    userToBeUpdated.setLogin(login);
+    userToBeUpdated.setPassword(encryptedPassword);
+    userToBeUpdated.setRole(UserRole.CLIENT);
+    userToBeUpdated.setUsername(request.username());
+    userToBeUpdated.setEmail(request.email());
+    userToBeUpdated.setPhone(request.phone());
+    userToBeUpdated.setCnh(request.cnh());
+    userToBeUpdated.setBirthDate(request.birthDate());
 
-    return newUser;
+    // Update user in database, convert to dto and return to controller
+    return this.userMapper.toUserDto(
+        this.userRepository.save(userToBeUpdated));
 
   }
 
@@ -70,16 +105,25 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  public List<User> findAllUsers() {
-    return this.userRepository.findAll();
+  public List<UserResponseDto> findAllUsers() {
+
+    return this.userMapper.toUserDto(
+        this.userRepository.findAll());
+
   }
 
   public UserDetails findByLogin(String login) {
+
     return this.userRepository.findByLogin(login);
+
   }
 
-  public Optional<User> getUserByLogin(String login) {
-    return this.userRepository.getUserByLogin(login);
+  public UserResponseDto getUserByLogin(String login) {
+
+    return this.userMapper.toUserDto(
+        this.userRepository.getUserByLogin(login)
+            .orElseThrow(() -> new ObjectNotFoundException("User not found with login: " + login)));
+
   }
 
 }
