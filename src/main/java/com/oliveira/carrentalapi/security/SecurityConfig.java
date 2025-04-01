@@ -45,13 +45,13 @@ public class SecurityConfig {
             // -> CATEGORY
             .requestMatchers(HttpMethod.GET, "/category").permitAll()
             .requestMatchers(HttpMethod.POST, "/category").hasAnyRole("ADMIN", "SUPPORT")
-            .requestMatchers(HttpMethod.PUT, "/category").hasAnyRole("ADMIN", "SUPPORT")
-            .requestMatchers(HttpMethod.DELETE, "/category").hasAnyRole("ADMIN", "SUPPORT")
+            .requestMatchers(HttpMethod.PUT, "/category/{id}").hasAnyRole("ADMIN", "SUPPORT")
+            .requestMatchers(HttpMethod.DELETE, "/category/{id}").hasAnyRole("ADMIN", "SUPPORT")
             // -> VEHICLE
             .requestMatchers(HttpMethod.GET, "/vehicle").permitAll()
             .requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
-            .requestMatchers(HttpMethod.PUT, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
-            .requestMatchers(HttpMethod.DELETE, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
+            .requestMatchers(HttpMethod.PUT, "/vehicle/{id}").hasAnyRole("ADMIN", "SUPPORT")
+            .requestMatchers(HttpMethod.DELETE, "/vehicle/{id}").hasAnyRole("ADMIN", "SUPPORT")
             // -> RESERVATION
             .requestMatchers(HttpMethod.POST, "/reservation").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             .requestMatchers(HttpMethod.GET, "/reservation/all").hasAnyRole("ADMIN", "SUPPORT")
