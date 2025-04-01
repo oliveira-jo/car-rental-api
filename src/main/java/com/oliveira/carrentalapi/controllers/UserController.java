@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,9 +57,9 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping(value = "/me")
-  public ResponseEntity<UserResponseDto> getUserLogged() {
+  public ResponseEntity<UserResponseDto> getUserLogged(Authentication auth) {
 
-    var userAuth = getPrincipal();
+    User userAuth = (User) auth.getPrincipal();
     if (userAuth == null)
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
@@ -78,14 +77,15 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @PutMapping
-  public ResponseEntity<UserResponseDto> update(@RequestBody @Valid UserRequestDto request) {
+  public ResponseEntity<UserResponseDto> update(@RequestBody @Valid UserRequestDto request,
+      Authentication auth) {
 
-    var userAuth = getPrincipal();
-    if (userAuth == null)
+    User newUserAuth = (User) auth.getPrincipal();
+    if (newUserAuth == null)
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     return ResponseEntity.ok().body(
-        this.userService.update(userAuth.getId(), request));
+        this.userService.update(newUserAuth.getId(), request));
   }
 
   @Operation(summary = "Delete a user", method = "DELETE")
@@ -95,25 +95,15 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @DeleteMapping
-  public ResponseEntity<Void> delete() {
+  public ResponseEntity<Void> delete(Authentication auth) {
 
-    var userAuth = getPrincipal();
+    User userAuth = (User) auth.getPrincipal();
     if (userAuth == null)
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     this.userService.delete(userAuth.getId());
 
     return ResponseEntity.ok().build();
-
-  }
-
-  private User getPrincipal() {
-
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-    User newUserAuth = (User) auth.getPrincipal();
-
-    return newUserAuth;
 
   }
 

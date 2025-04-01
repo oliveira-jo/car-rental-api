@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
@@ -45,9 +44,9 @@ public class ReservationServiceImpl implements ReservationService {
 
   @Transactional(rollbackOn = Exception.class)
   @Override
-  public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UserDetails userLogged) {
+  public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UUID userId) {
 
-    Optional<User> userFomDB = userRepository.getUserByLogin(userLogged.getUsername());
+    Optional<User> userFomDB = userRepository.findById(userId);
     if (!userFomDB.isPresent()) {
       throw new ObjectNotFoundException("User not found with provide id");
     }
@@ -95,14 +94,16 @@ public class ReservationServiceImpl implements ReservationService {
 
   @Transactional(rollbackOn = Exception.class)
   @Override
-  public ReservationResponseDto cancel(UUID id, UserDetails userLogged) {
+  public ReservationResponseDto cancel(UUID reservationId, UUID userId) {
 
-    Optional<User> userFomDB = userRepository.getUserByLogin(userLogged.getUsername());
+    // Optional<User> userFomDB =
+    // userRepository.getUserByLogin(userLogged.getLogin());
+    Optional<User> userFomDB = userRepository.findById(userId);
     if (!userFomDB.isPresent()) {
       throw new ObjectNotFoundException("User not found with provide id");
     }
 
-    Optional<Reservation> resercation = reservationRepository.getReservationById(id);
+    Optional<Reservation> resercation = reservationRepository.getReservationById(reservationId);
     if (!resercation.isPresent()) {
       throw new ObjectNotFoundException("Reservation not found with a provide id");
     }

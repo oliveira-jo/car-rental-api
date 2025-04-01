@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +21,7 @@ import jakarta.validation.Valid;
 
 import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
+import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.services.ReservationService;
 
 @RestController
@@ -46,11 +46,9 @@ public class ReservationController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   public ResponseEntity<ReservationResponseDto> save(@RequestBody @Valid ReservationRequestDto request,
-      @AuthenticationPrincipal UserDetails userLogged) {
-
+      Authentication auth) {
     return ResponseEntity.ok().body(
-        reservationService.save(request, userLogged));
-
+        reservationService.save(request, ((User) auth.getPrincipal()).getId()));
   }
 
   @GetMapping(value = "/all")
@@ -64,7 +62,6 @@ public class ReservationController {
   public ResponseEntity<List<ReservationResponseDto>> getAll() {
     return ResponseEntity.ok().body(
         reservationService.getAll());
-
   }
 
   @GetMapping(value = "/{id}")
@@ -79,7 +76,6 @@ public class ReservationController {
   public ResponseEntity<ReservationResponseDto> getByID(@PathVariable UUID id) {
     return ResponseEntity.ok().body(
         reservationService.findById(id));
-
   }
 
   @Operation(summary = "Cancel a reservation by a provide UUID", method = "DELETE")
@@ -92,9 +88,9 @@ public class ReservationController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   public ResponseEntity<ReservationResponseDto> cancel(@PathVariable UUID id,
-      @AuthenticationPrincipal UserDetails userDetails) {
+      Authentication auth) {
     return ResponseEntity.ok().body(
-        reservationService.cancel(id, userDetails));
+        reservationService.cancel(id, ((User) auth.getPrincipal()).getId()));
   }
 
 }
