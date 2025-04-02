@@ -56,8 +56,12 @@ Enter the project diretory
 + ✅ Docker app (Dockerfile)
 + ✅ Docker with database (docker-compose)
 
-## Entities
-<img src="diagrams/class/ClassDiagramBasic.png" alt="Class Base Diagram">
+## Packages Diagram
+<img src="diagrams/Package.drawio.png" alt="Class Base Diagram">
+
+
+## Class Diagram
+<img src="diagrams/Class.drawio.png" alt="Class Base Diagram">
  
 
 ## Desired Operations
@@ -110,7 +114,7 @@ Cancel a Reservation in the api passing the identification id
 ## API Documentations
 
 ### Endpoints Using Swagger:
-<img src="diagrams/swagger/principal.png" alt="Swagger Principal">
+<img src="diagrams/swagger.png" alt="Swagger Principal">
 
 ### Endpoints Users:
 
