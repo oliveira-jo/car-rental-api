@@ -52,16 +52,19 @@ public class ReservationController {
   }
 
   @GetMapping(value = "/all")
-  @Operation(summary = "Return a list of all reservations saved in database ", method = "GET")
+  @Operation(summary = "Return all reservations for admin or support", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
+      @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
       @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
       @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  public ResponseEntity<List<ReservationResponseDto>> getAll() {
+  public ResponseEntity<List<ReservationResponseDto>> getAllReservations(Authentication auth) {
+
     return ResponseEntity.ok().body(
-        reservationService.getAll());
+        reservationService.getAll(auth));
+
   }
 
   @GetMapping(value = "/{id}")

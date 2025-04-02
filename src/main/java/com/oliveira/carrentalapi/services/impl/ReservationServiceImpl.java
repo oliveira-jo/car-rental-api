@@ -4,15 +4,18 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
 import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
+import com.oliveira.carrentalapi.domain.enums.UserRole;
 import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.ReservationMapper;
@@ -118,10 +121,25 @@ public class ReservationServiceImpl implements ReservationService {
   }
 
   @Override
-  public List<ReservationResponseDto> getAll() {
-    return this.reservationRepository.findAll().stream()
-        .map(reservationMapper::toReservationResponseDto)
-        .toList();
+  public List<ReservationResponseDto> getAll(Authentication auth) {
+
+    User userLogged = (User) auth.getPrincipal();
+
+    if (userLogged.getRole().equals(UserRole.CLIENT)) {
+      return this.reservationRepository.getAllByUserId(userLogged.getId()).stream()
+          .map(reservationMapper::toReservationResponseDto)
+          .toList();
+
+    } else if (userLogged.getRole().equals(UserRole.ADMIN) || userLogged.getRole().equals(UserRole.SUPPORT)) {
+      return this.reservationRepository.findAll().stream()
+          .map(reservationMapper::toReservationResponseDto)
+          .toList();
+
+    } else {
+      return new ArrayList<ReservationResponseDto>();
+
+    }
+
   }
 
   @Override

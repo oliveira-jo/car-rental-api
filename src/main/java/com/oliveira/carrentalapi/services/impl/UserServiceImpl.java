@@ -108,6 +108,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Transactional(rollbackOn = Exception.class)
   @Override
   public void delete(UUID id) {
 

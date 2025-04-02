@@ -30,7 +30,7 @@ public class UserConfig {
 
     var userAdmin = this.userRepository.findByLogin("admin");
     if (userAdmin == null) {
-      var user = new User();
+      User user = new User();
 
       user.setEmail("admin@admin.com");
       user.setUsername("administrator");
@@ -41,12 +41,12 @@ public class UserConfig {
       user.setLogin("admin");
       user.setPassword(passwordEncoder.encode("admin"));
       user.setRole(UserRole.ADMIN);
-      userRepository.save(user);
-      userAdmin = this.userRepository.findByLogin("admin");
-      System.out.println("------------------------- ADMINISTRATOR CREATE AND SAVE IN BD ------------------------- "
-          + userAdmin.getUsername());
+
+      var userFromBd = userRepository.save(user);
+      System.out.println("--------------------< ADMINISTRATOR CREATE AND SAVE IN BD >-------------------- "
+          + userFromBd.getLogin());
     } else {
-      System.out.println("------------------------- ADMINISTRATOR ALREADY EXIST IN BD -------------------------");
+      System.out.println("--------------------< ADMINISTRATOR ALREADY EXIST IN BD >--------------------");
 
     }
 
@@ -63,12 +63,11 @@ public class UserConfig {
       user.setLogin("support");
       user.setPassword(passwordEncoder.encode("support"));
       user.setRole(UserRole.SUPPORT);
-      userRepository.save(user);
-      userSuport = this.userRepository.findByLogin("support");
-      System.out.println("------------------------- SUPORT USER CREATE AND SAVE IN BD ------------------------- "
-          + userSuport.getUsername());
+      var userFromBd = userRepository.save(user);
+      System.out.println("--------------------< SUPORT USER CREATE AND SAVE IN BD >-------------------- "
+          + userFromBd.getLogin());
     } else {
-      System.out.println("------------------------- SUPORT USER ALREADY EXIST IN BD -------------------------");
+      System.out.println("--------------------< SUPORT USER ALREADY EXIST IN BD >--------------------");
 
     }
 

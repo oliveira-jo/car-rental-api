@@ -22,14 +22,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\" : \"teste25\", \n    \"password\" : \"teste24\"\n}\n",
+							"raw": "{\n    \"email\" : \"testuser@gmail.com\", \n    \"password\" : \"password\",\n    \"passwordConfirmation\" : \"password\",\n    \"username\" : \"Teste User UPDATE2\",\n    \"phone\" : \"(54)98181-5454\",\n    \"cnh\" : \"12345678917\",\n    \"birthDate\" : \"1990-10-10\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/user"
+						"url": "{{url-local}}:8000/car-rental/user/b3b3fb5e-3f52-4c32-ad32-089657307f02"
 					},
 					"response": []
 				},
@@ -74,7 +74,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/user"
+						"url": "{{url-local}}:8000/car-rental/user/b3b3fb5e-3f52-4c32-ad32-089657307f02"
 					},
 					"response": []
 				},
@@ -88,7 +88,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\" : \"lucilenemassoco@gmail.com\", \n    \"password\" : \"password\",\n    \"passwordConfirmation\" : \"password\",\n    \"username\" : \"Lucilene Massoco Oliveira\",\n    \"phone\" : \"(54)98181-5454\",\n    \"cnh\" : \"12345678917\",\n    \"birthDate\" : \"1990-10-10\"\n}\n\n",
+							"raw": "{\n    \"email\" : \"testuser@gmail.com\", \n    \"password\" : \"password\",\n    \"passwordConfirmation\" : \"password\",\n    \"username\" : \"Test User\",\n    \"phone\" : \"(54)98181-2222\",\n    \"cnh\" : \"12345678917\",\n    \"birthDate\" : \"1990-10-10\"\n}\n\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,7 +155,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\" : \"lucilenemassoco\", \n    \"password\" : \"password\"\n}",
+							"raw": "{\n    \"login\" : \"support\", \n    \"password\" : \"support\"\n}s",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -230,7 +230,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c"
+						"url": "{{url-local}}:8000/car-rental/category/0f1bbf41-e09b-48ac-8e8c-66c759aff5da"
 					},
 					"response": []
 				},
@@ -247,7 +247,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"categoryName\": \"TESTE_CATEGORY\", \n    \"datails\": \"TEST\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 99.9\n}\n",
+							"raw": "{\n    \"categoryName\": \"TESTE_CATEGORY_4\", \n    \"datails\": \"TEST_4\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 99.9\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -271,14 +271,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"categoryName\": \"TESTE_CATEGORY\", \n    \"datails\": \"TEST-UPDATE\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": true, \n    \"value\": 99.9\n}\n",
+							"raw": "{\n    \"categoryName\": \"D\", \n    \"datails\": \"Simple\", \n    \"numBigSuitCases\": 2, \n    \"numSmallSuitCases\": 4, \n    \"numOfPeople\": 5, \n    \"complete\": false, \n    \"value\": 99.9\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c"
+						"url": "{{url-local}}:8000/car-rental/category/014bbe03-4d01-46a8-bd2e-34d240b5f4f1"
 					},
 					"response": []
 				},
@@ -293,7 +293,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/category/dd7b8d4d-84fd-4693-965b-c324036bed1c/vehicles"
+						"url": "{{url-local}}:8000/car-rental/category/0f1bbf41-e09b-48ac-8e8c-66c759aff5da/vehicles"
 					},
 					"response": []
 				}
@@ -328,7 +328,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/vehicle/7e0a291f-71d1-4134-bc7e-f0e5c56111b6"
+						"url": "{{url-local}}:8000/car-rental/vehicle/1e7d2931-7993-455a-9bfd-a6ae01c1aa51"
 					},
 					"response": []
 				},
@@ -343,7 +343,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/vehicle/7e0a291f-71d1-4134-bc7e-f0e5c56111b6"
+						"url": "{{url-local}}:8000/car-rental/vehicle/1e7d2931-7993-455a-9bfd-a6ae01c1aa51"
 					},
 					"response": []
 				},
@@ -360,7 +360,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"model\": \"TESTE\",\n  \"plate\": \"AAAQ200\",\n  \"color\": \"Azul\",\n  \"complete\": true,\n  \"mileage\": 80000,\n  \"ative\": true,\n  \"categoryId\": \"014bbe03-4d01-46a8-bd2e-34d240b5f4f1\"\n}\n",
+							"raw": "{\n  \"model\": \"TESTE_NEW\",\n  \"plate\": \"AAAQ200\",\n  \"color\": \"Azul\",\n  \"complete\": true,\n  \"mileage\": 80000,\n  \"ative\": true,\n  \"categoryId\": \"014bbe03-4d01-46a8-bd2e-34d240b5f4f1\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -391,7 +391,7 @@
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/vehicle/7e0a291f-71d1-4134-bc7e-f0e5c56111b6"
+						"url": "{{url-local}}:8000/car-rental/vehicle/1e7d2931-7993-455a-9bfd-a6ae01c1aa51"
 					},
 					"response": []
 				}
@@ -474,7 +474,7 @@
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/reservation/b25c399a-2801-4dbf-9e7a-33c8d318a948"
+						"url": "{{url-local}}:8000/car-rental/reservation/ea57366d-3e5e-49fd-86be-dfecd2232fa3"
 					},
 					"response": []
 				},
@@ -498,7 +498,7 @@
 								}
 							}
 						},
-						"url": "{{url-local}}:8000/car-rental/reservation/b25c399a-2801-4dbf-9e7a-33c8d318a948"
+						"url": "{{url-local}}:8000/car-rental/reservation/5ea490fe-9ac3-4fcc-96d5-c98acc84b16c"
 					},
 					"response": []
 				}
