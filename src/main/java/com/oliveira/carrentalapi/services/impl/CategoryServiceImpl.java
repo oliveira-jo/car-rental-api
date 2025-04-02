@@ -1,6 +1,5 @@
 package com.oliveira.carrentalapi.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +10,7 @@ import jakarta.transaction.Transactional;
 import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
 import com.oliveira.carrentalapi.domain.dtos.response.CategoryVehicleResponseDto;
+import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.CategoryMapper;
 import com.oliveira.carrentalapi.domain.models.Category;
@@ -33,11 +33,13 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryResponseDto save(CategoryRequestDto categoryData) {
 
-    Category newCategory = new Category(categoryData);
+    Optional<Category> fromDB = this.categoryRepository.findByCategoryName(categoryData.categoryName());
+    if (fromDB.isPresent())
+      throw new BusinessException(
+          "Category alreay exists in db with provide name:" + categoryData.categoryName());
 
-    this.categoryRepository.save(new Category(categoryData));
-
-    return categoryMapper.toCategoryResponseDto(newCategory);
+    return categoryMapper.toCategoryResponseDto(
+        this.categoryRepository.save(new Category(categoryData)));
 
   }
 
@@ -47,9 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     Category category = this.categoryRepository.findById(id)
         .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
-
-    if (!categoryData.categoryName().isEmpty())
-      category.setCategoryName(categoryData.categoryName());
 
     if (!categoryData.datails().isEmpty())
       category.setDatails(categoryData.datails());
@@ -69,9 +68,8 @@ public class CategoryServiceImpl implements CategoryService {
     if (categoryData.value() != null)
       category.setValue(categoryData.value());
 
-    this.categoryRepository.save(category);
-
-    return categoryMapper.toCategoryResponseDto(category);
+    return categoryMapper.toCategoryResponseDto(
+        this.categoryRepository.save(category));
 
   }
 
@@ -89,43 +87,32 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<CategoryResponseDto> getAll() {
 
-    List<Category> categoriesDB = this.categoryRepository.findAll();
-    List<CategoryResponseDto> newCategorys = new ArrayList<CategoryResponseDto>();
-
-    for (Category category : categoriesDB)
-      newCategorys.add(categoryMapper.toCategoryResponseDto(category));
-
-    return newCategorys;
+    return this.categoryRepository.findAll().stream()
+        .map(categoryMapper::toCategoryResponseDto).toList();
 
   }
 
   @Override
   public CategoryResponseDto findById(UUID id) {
 
-    var existCategory = this.categoryRepository.findById(id)
+    return this.categoryRepository.findById(id).map(categoryMapper::toCategoryResponseDto)
         .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
-
-    return categoryMapper.toCategoryResponseDto(existCategory);
 
   }
 
   @Override
   public CategoryVehicleResponseDto findVehiclesByCategoryId(UUID id) {
 
-    var existCategory = this.categoryRepository.findById(id)
+    return this.categoryRepository.findById(id).map(categoryMapper::toCategoryVehicleResponseDto)
         .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
-
-    return categoryMapper.toCategoryVehicleResponseDto(existCategory);
 
   }
 
   @Override
   public CategoryResponseDto findByName(String name) {
 
-    var existCategory = this.categoryRepository.findByCategoryName(name)
-        .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
-
-    return categoryMapper.toCategoryResponseDto(existCategory);
+    return this.categoryRepository.findByCategoryName(name).map(categoryMapper::toCategoryResponseDto).orElseThrow(
+        () -> new ObjectNotFoundException("Category not found with provide name"));
 
   }
 

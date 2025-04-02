@@ -14,7 +14,7 @@ public interface ReservationService {
 
   public List<ReservationResponseDto> getAll(Authentication auth);
 
-  public ReservationResponseDto findById(UUID id);
+  public ReservationResponseDto findById(Authentication auth, UUID id);
 
   public ReservationResponseDto cancel(UUID reservationId, UUID userId);
 

@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     Optional<User> userFromDB = this.userRepository.getUserByLogin(login);
 
     if (userFromDB.isPresent())
-      throw new BusinessException("The user with provide login is already sabedin DataBase: " + login);
+      throw new BusinessException("The user already in DataBase with provide login: " + login);
 
     // CREATE
     User userToBeSaved = new User();
@@ -125,16 +125,15 @@ public class UserServiceImpl implements UserService {
 
     User user = (User) auth.getPrincipal();
 
-    if (user.getRole().equals(UserRole.CLIENT)) {
+    if (user.getRole().equals(UserRole.CLIENT))
       return List.of(this.userMapper.toUserDto(user));
 
-    } else if (user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.SUPPORT)) {
-      return this.userMapper.toUserDto(
-          this.userRepository.findAll());
+    else if (user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.SUPPORT))
+      return this.userRepository.findAll().stream()
+          .map(userMapper::toUserDto).toList();
 
-    } else {
+    else
       throw new BusinessException("User not found with provide id: " + user.getId());
-    }
 
   }
 
@@ -152,9 +151,8 @@ public class UserServiceImpl implements UserService {
     this.userRepository.getUserByLogin(login)
         .orElseThrow(() -> new ObjectNotFoundException("User not found with login: " + login));
 
-    return this.userMapper.toUserDto(
-        this.userRepository.getUserByLogin(login)
-            .orElseThrow(() -> new ObjectNotFoundException("User not found with login: " + login)));
+    return this.userRepository.getUserByLogin(login).map(userMapper::toUserDto)
+        .orElseThrow(() -> new ObjectNotFoundException("User not found with login: " + login));
 
   }
 

@@ -140,10 +140,27 @@ public class ReservationServiceImpl implements ReservationService {
   }
 
   @Override
-  public ReservationResponseDto findById(UUID id) {
-    return this.reservationRepository.findById(id)
-        .map(reservationMapper::toReservationResponseDto)
-        .orElseThrow(() -> new ObjectNotFoundException("Reservation not found with provided id"));
+  public ReservationResponseDto findById(Authentication auth, UUID id) {
+
+    User userLogged = (User) auth.getPrincipal();
+
+    Optional<Reservation> reservationFromDB = this.reservationRepository.findById(id);
+
+    if (userLogged.getRole().equals(UserRole.ADMIN) || userLogged.getRole().equals(UserRole.SUPPORT)) {
+
+      return reservationFromDB.map(reservationMapper::toReservationResponseDto)
+          .orElseThrow(() -> new ObjectNotFoundException("Reservation not found with provided id"));
+
+    } else if (userLogged.getRole().equals(UserRole.CLIENT)
+        && reservationFromDB.get().getUser().getId().equals(userLogged.getId())) {
+
+      return reservationFromDB.map(reservationMapper::toReservationResponseDto).get();
+
+    } else {
+      throw new BusinessException("UNAUTHORIZED Access to resercation id: " + id);
+
+    }
+
   }
 
 }

@@ -76,9 +76,9 @@ public class ReservationController {
       @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  public ResponseEntity<ReservationResponseDto> getByID(@PathVariable UUID id) {
+  public ResponseEntity<ReservationResponseDto> getByID(@PathVariable UUID id, Authentication auth) {
     return ResponseEntity.ok().body(
-        reservationService.findById(id));
+        reservationService.findById(auth, id));
   }
 
   @Operation(summary = "Cancel a reservation by a provide UUID", method = "DELETE")

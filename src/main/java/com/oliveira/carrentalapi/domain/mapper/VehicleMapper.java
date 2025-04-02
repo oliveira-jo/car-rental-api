@@ -1,5 +1,7 @@
 package com.oliveira.carrentalapi.domain.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -10,5 +12,7 @@ import com.oliveira.carrentalapi.domain.models.Vehicle;
 public interface VehicleMapper {
 
   VehicleResponseDto toVehicleResponseDto(Vehicle vehicle);
+
+  List<VehicleResponseDto> toVehicleResponseDto(List<Vehicle> vehicles);
 
 }

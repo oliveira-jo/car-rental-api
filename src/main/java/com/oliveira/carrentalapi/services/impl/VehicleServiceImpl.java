@@ -1,6 +1,5 @@
 package com.oliveira.carrentalapi.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,12 +41,10 @@ public class VehicleServiceImpl implements VehicleService {
         .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + categoryId));
 
     Vehicle vehicle = new Vehicle(vehicleData);
-
     vehicle.setCategory(category);
 
-    this.vehicleRepository.save(vehicle);
-
-    return vehicleMapper.toVehicleResponseDto(vehicle);
+    return vehicleMapper.toVehicleResponseDto(
+        this.vehicleRepository.save(vehicle));
 
   }
 
@@ -60,7 +57,8 @@ public class VehicleServiceImpl implements VehicleService {
     var category = this.categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + categoryId));
 
-    var vehicle = vehicleRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
+    var vehicle = vehicleRepository.findById(id)
+        .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found with provided id: " + id));
 
     if (!vehicleData.model().isEmpty())
       vehicle.setModel(vehicleData.model());
@@ -83,32 +81,24 @@ public class VehicleServiceImpl implements VehicleService {
     if (!vehicleData.categoryId().isEmpty())
       vehicle.setCategory(category);
 
-    vehicleRepository.save(vehicle);
-
-    return vehicleMapper.toVehicleResponseDto(vehicle);
+    return vehicleMapper.toVehicleResponseDto(
+        vehicleRepository.save(vehicle));
 
   }
 
   @Override
   public List<VehicleResponseDto> getAll() {
 
-    List<Vehicle> vehicles = this.vehicleRepository.findAll();
-    List<VehicleResponseDto> newVehicles = new ArrayList<VehicleResponseDto>();
-
-    for (Vehicle vehicle : vehicles)
-      newVehicles.add(vehicleMapper.toVehicleResponseDto(vehicle));
-
-    return newVehicles;
+    return this.vehicleRepository.findAll().stream()
+        .map(vehicleMapper::toVehicleResponseDto).toList();
 
   }
 
   @Override
   public VehicleResponseDto findById(UUID id) {
 
-    Vehicle vehicle = vehicleRepository.findById(id)
-        .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
-
-    return vehicleMapper.toVehicleResponseDto(vehicle);
+    return this.vehicleRepository.findById(id).map(vehicleMapper::toVehicleResponseDto).orElseThrow(
+        () -> new ObjectNotFoundException("Vehicle not found with provide id"));
 
   }
 
@@ -116,10 +106,9 @@ public class VehicleServiceImpl implements VehicleService {
   @Override
   public void delete(UUID id) {
 
-    Vehicle vehicle = vehicleRepository.findById(id)
-        .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found"));
-
-    vehicleRepository.delete(vehicle);
+    vehicleRepository.delete(
+        vehicleRepository.findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException("Vehicle not found")));
 
   }
 
