@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
-import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.services.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +34,7 @@ public class UserController {
     this.userService = userService;
   }
 
-  @Operation(summary = "Get All User - Just for admin", method = "GET")
+  @Operation(summary = "If user is admin or support return All Users and if user client returns the client's data  ", method = "GET")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Success"),
       @ApiResponse(responseCode = "400", description = "Invalid Parameters"),
@@ -43,25 +42,11 @@ public class UserController {
       @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  @GetMapping(value = "/all")
-  public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+  @GetMapping()
+  public ResponseEntity<List<UserResponseDto>> getUser(Authentication auth) {
 
     return ResponseEntity.ok().body(
-        userService.findAllUsers());
-
-  }
-
-  @Operation(summary = "Get User Logged in the present section", method = "GET")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Success"),
-      @ApiResponse(responseCode = "401", description = "Unauthenticated User"),
-      @ApiResponse(responseCode = "500", description = "Server Internal Error"),
-  })
-  @GetMapping(value = "/me")
-  public ResponseEntity<UserResponseDto> getUserLogged(Authentication auth) {
-
-    return ResponseEntity.ok().body(
-        this.userService.getUserByLogin(((User) auth.getPrincipal()).getLogin()));
+        userService.findUsers(auth));
 
   }
 

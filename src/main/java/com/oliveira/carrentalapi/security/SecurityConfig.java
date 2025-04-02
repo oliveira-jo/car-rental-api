@@ -39,7 +39,6 @@ public class SecurityConfig {
             // -> USER
             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-            .requestMatchers(HttpMethod.GET, "/user/all").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             // -> CATEGORY
@@ -53,8 +52,6 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, "/vehicle/{id}").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.DELETE, "/vehicle/{id}").hasAnyRole("ADMIN", "SUPPORT")
             // -> RESERVATION
-            // .requestMatchers(HttpMethod.GET, "/reservation/all").hasAnyRole("ADMIN",
-            // "SUPPORT")
             .requestMatchers(HttpMethod.GET, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             .requestMatchers(HttpMethod.POST, "/reservation").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             .requestMatchers(HttpMethod.DELETE, "/reservation/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")

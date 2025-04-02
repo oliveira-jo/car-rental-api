@@ -34,7 +34,7 @@
 					"response": []
 				},
 				{
-					"name": "All Users",
+					"name": "Get Users",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -44,22 +44,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "{{url-local}}:8000/car-rental/user/all"
-					},
-					"response": []
-				},
-				{
-					"name": "Me",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{tokenCarRental}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{url-local}}:8000/car-rental/user/me"
+						"url": "{{url-local}}:8000/car-rental/user"
 					},
 					"response": []
 				},
@@ -155,7 +140,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\" : \"support\", \n    \"password\" : \"support\"\n}s",
+							"raw": "{\n    \"login\" : \"admin\", \n    \"password\" : \"admin\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -413,7 +398,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"pickUpDate\" : \"2025-06-06T12:34:57\",\n    \"returnDate\" : \"2025-06-10T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
+							"raw": "{\n    \"pickUpDate\" : \"2025-05-06T12:34:57\",\n    \"returnDate\" : \"2025-05-10T12:34:57\",\n    \"groupID\" : \"1592b6c8-74d2-4b77-a829-9ec0bc9aa4fe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

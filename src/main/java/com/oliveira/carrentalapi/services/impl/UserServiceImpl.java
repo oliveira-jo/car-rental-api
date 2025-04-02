@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -126,10 +127,18 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  public List<UserResponseDto> findAllUsers() {
+  public List<UserResponseDto> findUsers(Authentication auth) {
 
-    return this.userMapper.toUserDto(
-        this.userRepository.findAll());
+    User user = (User) auth.getPrincipal();
+
+    if (user.getRole().equals(UserRole.CLIENT)) {
+      return List.of(this.userMapper.toUserDto(user));
+    } else if (user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.SUPPORT)) {
+      return this.userMapper.toUserDto(
+          this.userRepository.findAll());
+    } else {
+      throw new BusinessException("User not found with provide id: " + user.getId());
+    }
 
   }
 
