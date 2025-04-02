@@ -16,9 +16,11 @@ import com.oliveira.carrentalapi.domain.models.User;
 
 @Service
 public class TokenServiceImpl {
-
-  // Only the consul application have the secret
-  // a plus param to pass for the algorithn
+  /*
+   * Secret key to generate the token
+   * this key is used to encrypt the token
+   * and decrypt the token
+   */
   @Value("${api.security.token.secret}")
   private String secret;
 

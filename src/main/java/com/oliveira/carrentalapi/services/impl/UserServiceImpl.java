@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
@@ -19,13 +20,10 @@ import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.UserService;
 
-import jakarta.transaction.Transactional;
-
 @Service
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-
   private final UserMapper userMapper;
 
   public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
@@ -37,22 +35,21 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponseDto save(UserRequestDto request) {
 
-    // Test if password and password confirmation is equal and encrypt
+    // TEST PASSWORD
     if (!request.password().equals(request.passwordConfirmation()))
       throw new BusinessException("Password and password confirmation are different");
 
     String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
 
-    // Test if already exist user with this login in database
+    // TEST IF USER ALREADY EXIST AND GENERATED LOGIN
     String login = request.email().split("@")[0];
     Optional<User> userFromDB = this.userRepository.getUserByLogin(login);
 
     if (userFromDB.isPresent())
       throw new BusinessException("The user with provide login is already sabedin DataBase: " + login);
 
-    // Create a new user
+    // CREATE
     User userToBeSaved = new User();
-
     userToBeSaved.setLogin(login);
     userToBeSaved.setPassword(encryptedPassword);
     userToBeSaved.setRole(UserRole.CLIENT);
@@ -62,7 +59,7 @@ public class UserServiceImpl implements UserService {
     userToBeSaved.setCnh(request.cnh());
     userToBeSaved.setBirthDate(request.birthDate());
 
-    // Save user in database, converto to dto and retur to controller
+    // SAVE
     return this.userMapper.toUserDto(
         this.userRepository.save(userToBeSaved));
 
@@ -72,28 +69,26 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponseDto update(UUID userId, UserRequestDto request) {
 
-    // Test if exist user before update
+    // TEST IF USER ALREADY EXIST
     User userToBeUpdated = this.userRepository.findById(userId).orElseThrow(
         () -> new ObjectNotFoundException("User not found with provide id: " + userId));
 
-    // Test if user is admin or support
+    // TEST IF IS ADMIN OR SUPPORT
     if (userToBeUpdated.getRole().equals(UserRole.ADMIN))
       throw new BusinessException("User is admin and can't be updated");
 
     if (userToBeUpdated.getRole().equals(UserRole.SUPPORT))
       throw new BusinessException("User is support and can't be updated");
 
-    // Test if password and password confirmation is equal and encrypt
+    // TEST PASSWORD
     if (!request.password().equals(request.passwordConfirmation()))
       throw new BusinessException("Password and password confirmation are different");
 
-    // encrypt password
+    // ENCRYPT PASSWORD AND GENERATE LOGIN
     String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
-    // Generate the login from email
     String login = request.email().split("@")[0];
 
-    // don't do all tests because this is make in dto by validation
-    // if (!request.getLogin().isEmpty())
+    // UPDATE USER
     userToBeUpdated.setLogin(login);
     userToBeUpdated.setPassword(encryptedPassword);
     userToBeUpdated.setRole(UserRole.CLIENT);
@@ -103,7 +98,7 @@ public class UserServiceImpl implements UserService {
     userToBeUpdated.setCnh(request.cnh());
     userToBeUpdated.setBirthDate(request.birthDate());
 
-    // Update user in database, convert to dto and return to controller
+    // SAVE UPDATED USER
     return this.userMapper.toUserDto(
         this.userRepository.save(userToBeUpdated));
 
@@ -116,7 +111,6 @@ public class UserServiceImpl implements UserService {
     User userToBeUpdated = this.userRepository.findById(id)
         .orElseThrow(() -> new ObjectNotFoundException("User not found with provide id: " + id));
 
-    // Test if user is admin or support
     if (userToBeUpdated.getRole().equals(UserRole.ADMIN))
       throw new BusinessException("User is admin and can't be deleted");
 
@@ -133,9 +127,11 @@ public class UserServiceImpl implements UserService {
 
     if (user.getRole().equals(UserRole.CLIENT)) {
       return List.of(this.userMapper.toUserDto(user));
+
     } else if (user.getRole().equals(UserRole.ADMIN) || user.getRole().equals(UserRole.SUPPORT)) {
       return this.userMapper.toUserDto(
           this.userRepository.findAll());
+
     } else {
       throw new BusinessException("User not found with provide id: " + user.getId());
     }

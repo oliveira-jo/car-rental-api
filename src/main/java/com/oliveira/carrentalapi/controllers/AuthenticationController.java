@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 import com.oliveira.carrentalapi.domain.dtos.request.AuthenticationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.LoginResponseDto;
@@ -17,12 +23,6 @@ import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
 import com.oliveira.carrentalapi.domain.models.User;
 import com.oliveira.carrentalapi.services.UserService;
 import com.oliveira.carrentalapi.services.impl.TokenServiceImpl;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/auth", produces = { "application/json" })

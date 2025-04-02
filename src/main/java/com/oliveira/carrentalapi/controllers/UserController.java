@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
-import com.oliveira.carrentalapi.services.UserService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
+import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
+import com.oliveira.carrentalapi.services.UserService;
 
 @RestController
 @RequestMapping(value = "/user", produces = { "application/json" })

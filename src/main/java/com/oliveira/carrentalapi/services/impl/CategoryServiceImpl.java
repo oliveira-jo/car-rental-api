@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
@@ -16,8 +17,6 @@ import com.oliveira.carrentalapi.domain.models.Category;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.services.CategoryService;
 
-import jakarta.transaction.Transactional;
-
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -25,7 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
   private final CategoryMapper categoryMapper;
 
   public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
-
     this.categoryRepository = categoryRepository;
     this.categoryMapper = categoryMapper;
 
@@ -37,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     Category newCategory = new Category(categoryData);
 
-    this.categoryRepository.save(newCategory);
+    this.categoryRepository.save(new Category(categoryData));
 
     return categoryMapper.toCategoryResponseDto(newCategory);
 
@@ -48,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
   public CategoryResponseDto update(UUID id, CategoryRequestDto categoryData) {
 
     Category category = this.categoryRepository.findById(id)
-        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
 
     if (!categoryData.categoryName().isEmpty())
       category.setCategoryName(categoryData.categoryName());
@@ -82,7 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
   public void delete(UUID id) {
 
     Category category = this.categoryRepository.findById(id)
-        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
 
     this.categoryRepository.delete(category);
 
@@ -105,7 +103,7 @@ public class CategoryServiceImpl implements CategoryService {
   public CategoryResponseDto findById(UUID id) {
 
     var existCategory = this.categoryRepository.findById(id)
-        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
 
     return categoryMapper.toCategoryResponseDto(existCategory);
 
@@ -115,7 +113,7 @@ public class CategoryServiceImpl implements CategoryService {
   public CategoryVehicleResponseDto findVehiclesByCategoryId(UUID id) {
 
     var existCategory = this.categoryRepository.findById(id)
-        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
 
     return categoryMapper.toCategoryVehicleResponseDto(existCategory);
 
@@ -125,7 +123,7 @@ public class CategoryServiceImpl implements CategoryService {
   public CategoryResponseDto findByName(String name) {
 
     var existCategory = this.categoryRepository.findByCategoryName(name)
-        .orElseThrow(() -> new ObjectNotFoundException("Category not found"));
+        .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
 
     return categoryMapper.toCategoryResponseDto(existCategory);
 

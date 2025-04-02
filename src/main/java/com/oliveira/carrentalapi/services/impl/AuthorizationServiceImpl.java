@@ -18,11 +18,6 @@ public class AuthorizationServiceImpl implements UserDetailsService {
     this.userRepository = userRepository;
   }
 
-  /*
-   * Spring Security search here the users
-   * In this method we can get the user auth in a other api like google or
-   * same in a Database table
-   */
   @Override
   public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
     return userRepository.findByLogin(login);

@@ -1,8 +1,5 @@
 package com.oliveira.carrentalapi.controllers;
 
-import com.oliveira.carrentalapi.domain.exceptions.StandardError;
-import com.oliveira.carrentalapi.domain.exceptions.ValidationError;
-
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -14,20 +11,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
+import com.oliveira.carrentalapi.domain.exceptions.StandardError;
+import com.oliveira.carrentalapi.domain.exceptions.ValidationError;
 import com.oliveira.carrentalapi.domain.exceptions.AuthorizationException;
 import com.oliveira.carrentalapi.domain.exceptions.BusinessException;
 import com.oliveira.carrentalapi.domain.exceptions.InvalidDataException;
 import com.oliveira.carrentalapi.domain.exceptions.InternalServerErrorException;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 
-/**
- * 400 Bad request: An error as an invalid parameter
- * 401 Unauthorized: An invalid access token
- * 403 Forbidden: Access denied - No Applicable
- * 404 Not found: The requested was not found
- * 409 Conflict: A conflict occurred - NOt Applicable
- * 500 Internal Server Error: An error occurred on the server
- */
 @ControllerAdvice
 public class ControllerExceptionHandler {
 

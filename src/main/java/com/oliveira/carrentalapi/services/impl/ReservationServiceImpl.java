@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
@@ -26,8 +27,6 @@ import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.repositories.ReservationRepository;
 import com.oliveira.carrentalapi.repositories.UserRepository;
 import com.oliveira.carrentalapi.services.ReservationService;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -99,8 +98,6 @@ public class ReservationServiceImpl implements ReservationService {
   @Override
   public ReservationResponseDto cancel(UUID reservationId, UUID userId) {
 
-    // Optional<User> userFomDB =
-    // userRepository.getUserByLogin(userLogged.getLogin());
     Optional<User> userFomDB = userRepository.findById(userId);
     if (!userFomDB.isPresent()) {
       throw new ObjectNotFoundException("User not found with provide id");
