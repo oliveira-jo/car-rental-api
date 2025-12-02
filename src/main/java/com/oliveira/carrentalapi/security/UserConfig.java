@@ -3,7 +3,6 @@ package com.oliveira.carrentalapi.security;
 import java.time.LocalDate;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import com.oliveira.carrentalapi.domain.enums.UserRole;
 import com.oliveira.carrentalapi.domain.models.User;
@@ -13,7 +12,7 @@ import com.oliveira.carrentalapi.repositories.UserRepository;
  * Create a Admin User in the database, case it's not exist.
  * Create a Support User in the database, case it's not exist.
  */
-@Component
+// @Component
 public class UserConfig {
 
   private final UserRepository userRepository;

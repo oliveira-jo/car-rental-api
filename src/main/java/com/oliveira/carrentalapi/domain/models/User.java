@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.oliveira.carrentalapi.domain.enums.UserRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,12 +20,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Table(name = "USERS")
-@Entity(name = "USERS")
+@Entity
+@Table(name = "tb_user")
 public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(columnDefinition = "CHAR(36)")
   private UUID id;
   private String login;
   private String password;
@@ -53,11 +55,6 @@ public class User implements UserDetails {
     this.birthDate = birthDate;
   }
 
-  /*
-   * what roles each user have,
-   * return what is the role of each user to know with
-   * securituy block or not the expecificly endpoint
-   */
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
 

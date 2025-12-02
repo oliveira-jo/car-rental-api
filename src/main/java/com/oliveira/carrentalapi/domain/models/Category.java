@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,20 +13,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity(name = "CATEGORYS")
-@Table(name = "CATEGORYS")
+@Entity
+@Table(name = "tb_category")
 public class Category {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(columnDefinition = "CHAR(36)")
   private UUID id;
   private String categoryName;
-  private String datails;
-  private Integer numBigSuitCases;
-  private Integer numSmallSuitCases;
+
+  @Column(columnDefinition = "TEXT")
+  private String details;
+  private Integer numSuitcase;
   private Integer numOfPeople;
   private Boolean complete;
+
+  @Column(name = "categoryValue")
   private Float value;
+
   @OneToMany(mappedBy = "category")
   private List<Vehicle> vehicles;
 
@@ -34,9 +40,8 @@ public class Category {
 
   public Category(CategoryRequestDto categoryDate) {
     this.categoryName = categoryDate.categoryName();
-    this.datails = categoryDate.datails();
-    this.numBigSuitCases = categoryDate.numBigSuitCases();
-    this.numSmallSuitCases = categoryDate.numSmallSuitCases();
+    this.details = categoryDate.details();
+    this.numSuitcase = categoryDate.numSuitcase();
     this.numOfPeople = categoryDate.numOfPeople();
     this.complete = categoryDate.complete();
     this.value = categoryDate.value();
@@ -58,28 +63,20 @@ public class Category {
     this.categoryName = categoryName;
   }
 
-  public String getDatails() {
-    return datails;
+  public String getDetails() {
+    return details;
   }
 
-  public void setDatails(String datails) {
-    this.datails = datails;
+  public void setDetails(String datails) {
+    this.details = datails;
   }
 
-  public Integer getNumBigSuitCases() {
-    return numBigSuitCases;
+  public Integer getNumSuitcase() {
+    return numSuitcase;
   }
 
-  public void setNumBigSuitCases(Integer numBigSuitCases) {
-    this.numBigSuitCases = numBigSuitCases;
-  }
-
-  public Integer getNumSmallSuitCases() {
-    return numSmallSuitCases;
-  }
-
-  public void setNumSmallSuitCases(Integer numSmallSuitCases) {
-    this.numSmallSuitCases = numSmallSuitCases;
+  public void setNumSuitcase(Integer numBigSuitCases) {
+    this.numSuitcase = numBigSuitCases;
   }
 
   public Integer getNumOfPeople() {
@@ -112,6 +109,31 @@ public class Category {
 
   public void setVehicles(List<Vehicle> vehicles) {
     this.vehicles = vehicles;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Category other = (Category) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
+    return true;
   }
 
 }

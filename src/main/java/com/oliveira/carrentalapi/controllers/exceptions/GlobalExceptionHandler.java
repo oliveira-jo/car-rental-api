@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.controllers;
+package com.oliveira.carrentalapi.controllers.exceptions;
 
 import java.util.stream.Collectors;
 
@@ -21,7 +21,7 @@ import com.oliveira.carrentalapi.domain.exceptions.InternalServerErrorException;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
-public class ControllerExceptionHandler {
+public class GlobalExceptionHandler {
 
   @ExceptionHandler(AuthorizationException.class)
   public ResponseEntity<StandardError> authorizationException(AuthorizationException e) {

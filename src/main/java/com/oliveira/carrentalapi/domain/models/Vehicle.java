@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,19 +13,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity(name = "VEHICLES")
-@Table(name = "VEHICLES")
+@Entity
+@Table(name = "tb_vehicle")
 public class Vehicle {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(columnDefinition = "CHAR(36)")
   private UUID id;
   private String model;
+  private String imgUrl;
   private String plate;
   private String color;
   private Boolean complete;
   private Integer mileage;
   private Boolean ative;
+
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false)
   private Category category;
@@ -55,6 +59,14 @@ public class Vehicle {
 
   public void setModel(String model) {
     this.model = model;
+  }
+
+  public String getImgRrl() {
+    return imgUrl;
+  }
+
+  public void setImgRrl(String img) {
+    this.imgUrl = img;
   }
 
   public String getPlate() {

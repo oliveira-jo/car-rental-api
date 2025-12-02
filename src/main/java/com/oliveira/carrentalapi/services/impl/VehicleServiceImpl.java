@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
@@ -15,6 +14,8 @@ import com.oliveira.carrentalapi.domain.models.Vehicle;
 import com.oliveira.carrentalapi.repositories.CategoryRepository;
 import com.oliveira.carrentalapi.repositories.VehicleRepository;
 import com.oliveira.carrentalapi.services.VehicleService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {

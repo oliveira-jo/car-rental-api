@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,12 +17,13 @@ import jakarta.persistence.Table;
 
 import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
 
-@Entity(name = "RESERVATION")
-@Table(name = "RESERVATION")
+@Entity
+@Table(name = "tb_reservation")
 public class Reservation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(columnDefinition = "CHAR(36)")
   private UUID id;
 
   private LocalDateTime pickUpDate;

@@ -50,14 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     Category category = this.categoryRepository.findById(id)
         .orElseThrow(() -> new ObjectNotFoundException("Category not found with provide id"));
 
-    if (!categoryData.datails().isEmpty())
-      category.setDatails(categoryData.datails());
+    if (!categoryData.details().isEmpty())
+      category.setDetails(categoryData.details());
 
-    if (Optional.ofNullable(categoryData.numBigSuitCases()).orElse(0) != 0)
-      category.setNumBigSuitCases(categoryData.numBigSuitCases());
-
-    if (Optional.ofNullable(categoryData.numSmallSuitCases()).orElse(0) != 0)
-      category.setNumSmallSuitCases(categoryData.numSmallSuitCases());
+    if (Optional.ofNullable(categoryData.numSuitcase()).orElse(0) != 0)
+      category.setNumSuitcase(categoryData.numSuitcase());
 
     if (Optional.ofNullable(categoryData.numOfPeople()).orElse(0) != 0)
       category.setNumOfPeople(categoryData.numOfPeople());

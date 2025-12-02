@@ -4,13 +4,12 @@ import java.util.UUID;
 import java.util.List;
 
 public record CategoryVehicleResponseDto(
-    UUID id,
-    String categoryName,
-    String datails,
-    Integer numBigSuitCases,
-    Integer numSmallSuitCases,
-    Integer numOfPeople,
-    Boolean complete,
-    Float value,
-    List<VehicleWithoutCategoryResponseDto> vehicles) {
+        UUID id,
+        String categoryName,
+        String details,
+        Integer numSuitcase,
+        Integer numOfPeople,
+        Boolean complete,
+        Float value,
+        List<VehicleWithoutCategoryResponseDto> vehicles) {
 }
