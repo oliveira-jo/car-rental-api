@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.UserRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.UserResponseDto;
@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
     this.userMapper = userMapper;
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public UserResponseDto save(UserRequestDto request) {
 
@@ -65,7 +66,8 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public UserResponseDto update(UUID userId, UserRequestDto request) {
 
@@ -104,7 +106,8 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public void delete(UUID id) {
 
@@ -121,6 +124,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Transactional(readOnly = true)
   public List<UserResponseDto> findUsers(Authentication auth) {
 
     User user = (User) auth.getPrincipal();
@@ -137,6 +141,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Transactional(readOnly = true)
   public UserDetails findByLogin(String login) {
 
     this.userRepository.getUserByLogin(login)
@@ -146,6 +151,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Transactional(readOnly = true)
   public UserResponseDto getUserByLogin(String login) {
 
     this.userRepository.getUserByLogin(login)

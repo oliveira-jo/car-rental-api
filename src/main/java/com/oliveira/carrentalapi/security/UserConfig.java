@@ -3,6 +3,7 @@ package com.oliveira.carrentalapi.security;
 import java.time.LocalDate;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import com.oliveira.carrentalapi.domain.enums.UserRole;
 import com.oliveira.carrentalapi.domain.models.User;
@@ -12,7 +13,7 @@ import com.oliveira.carrentalapi.repositories.UserRepository;
  * Create a Admin User in the database, case it's not exist.
  * Create a Support User in the database, case it's not exist.
  */
-// @Component
+@Component
 public class UserConfig {
 
   private final UserRepository userRepository;
@@ -42,6 +43,13 @@ public class UserConfig {
       user.setRole(UserRole.ADMIN);
 
       var userFromBd = userRepository.save(user);
+      // System.out.println("--------------------< LOGIN >-------------------- "
+      // + this.userRepository.getUserByLogin("admin"));
+      // System.out.println("--------------------< PASSWORD MATCH
+      // >-------------------- "
+      // + passwordEncoder.matches("admin",
+      // this.userRepository.getUserByLogin("admin").get().getPassword()));
+
       System.out.println("--------------------< ADMINISTRATOR CREATE AND SAVE IN BD >-------------------- "
           + userFromBd.getLogin());
     } else {

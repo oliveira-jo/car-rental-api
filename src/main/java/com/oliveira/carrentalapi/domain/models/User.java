@@ -1,6 +1,7 @@
 package com.oliveira.carrentalapi.domain.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -11,13 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.oliveira.carrentalapi.domain.enums.UserRole;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,7 +27,6 @@ public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(columnDefinition = "CHAR(36)")
   private UUID id;
   private String login;
   private String password;
@@ -39,6 +39,9 @@ public class User implements UserDetails {
   private String phone;
   private String cnh;
   private LocalDate birthDate;
+
+  @OneToMany(mappedBy = "user")
+  private List<Reservation> reservations = new ArrayList<>();
 
   public User() {
   }
@@ -170,6 +173,10 @@ public class User implements UserDetails {
     this.birthDate = birthDate;
   }
 
+  public List<Reservation> getReservations() {
+    return reservations;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -200,5 +207,4 @@ public class User implements UserDetails {
     return "User [id=" + id + ", login=" + login + ", role=" + role + ", email=" + email + ", username=" + username
         + ", phone=" + phone + ", cnh=" + cnh + ", birthDate=" + birthDate + "]";
   }
-
 }

@@ -132,7 +132,7 @@ public class CategoryController {
   public ResponseEntity<List<CategoryResponseDto>> getAll() {
 
     return ResponseEntity.ok().body(
-        this.categoryService.getAll());
+        this.categoryService.findAll());
 
   }
 

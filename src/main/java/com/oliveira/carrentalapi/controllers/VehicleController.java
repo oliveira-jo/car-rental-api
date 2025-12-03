@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.response.VehicleWithoutCategoryResponseDto;
 import com.oliveira.carrentalapi.services.VehicleService;
 
 @RestController
@@ -113,10 +114,10 @@ public class VehicleController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()
-  public ResponseEntity<List<VehicleResponseDto>> getAll() {
+  public ResponseEntity<List<VehicleWithoutCategoryResponseDto>> getAll() {
 
     return ResponseEntity.ok().body(
-        this.vehicleService.getAll());
+        this.vehicleService.findAll());
 
   }
 

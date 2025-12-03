@@ -42,12 +42,12 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasAnyRole("ADMIN", "SUPPORT", "CLIENT")
             // -> CATEGORY
-            .requestMatchers(HttpMethod.GET, "/category").permitAll()
+            .requestMatchers(HttpMethod.GET, "/category/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/category").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.PUT, "/category/{id}").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.DELETE, "/category/{id}").hasAnyRole("ADMIN", "SUPPORT")
             // -> VEHICLE
-            .requestMatchers(HttpMethod.GET, "/vehicle").permitAll()
+            .requestMatchers(HttpMethod.GET, "/vehicle/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/vehicle").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.PUT, "/vehicle/{id}").hasAnyRole("ADMIN", "SUPPORT")
             .requestMatchers(HttpMethod.DELETE, "/vehicle/{id}").hasAnyRole("ADMIN", "SUPPORT")

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.ReservationRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.ReservationResponseDto;
@@ -44,7 +44,8 @@ public class ReservationServiceImpl implements ReservationService {
     this.reservationMapper = reservationMapper;
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UUID userId) {
 
@@ -53,7 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
       throw new ObjectNotFoundException("User not found with provide id");
     }
 
-    Optional<Category> category = categoryRepository.findById(reservationRequestDto.groupID());
+    Optional<Category> category = categoryRepository.findById(reservationRequestDto.categoryId());
     if (!category.isPresent()) {
       throw new ObjectNotFoundException("Category not found with a provide id");
     }
@@ -82,8 +83,8 @@ public class ReservationServiceImpl implements ReservationService {
     reservation.setQtdDays(qtdReservation);
     reservation.setDailyRentalValue(category.get().getValue());
     reservation.setTotalValue(totalValue);
-    reservation.setUser(userFomDB.get());
-    reservation.setCategory(category.get());
+    // reservation.setUser(userFomDB.get());
+    // reservation.setCategory(category.get());
 
     reservation.setCreatedAt(LocalDateTime.now());
     reservation.setCreateBy(userFomDB.get().getId());
@@ -94,7 +95,8 @@ public class ReservationServiceImpl implements ReservationService {
 
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public ReservationResponseDto cancel(UUID reservationId, UUID userId) {
 
@@ -117,6 +119,7 @@ public class ReservationServiceImpl implements ReservationService {
 
   }
 
+  @Transactional(readOnly = true)
   @Override
   public List<ReservationResponseDto> getAll(Authentication auth) {
 
@@ -139,6 +142,7 @@ public class ReservationServiceImpl implements ReservationService {
 
   }
 
+  @Transactional(readOnly = true)
   @Override
   public ReservationResponseDto findById(Authentication auth, UUID id) {
 
@@ -151,10 +155,11 @@ public class ReservationServiceImpl implements ReservationService {
       return reservationFromDB.map(reservationMapper::toReservationResponseDto)
           .orElseThrow(() -> new ObjectNotFoundException("Reservation not found with provided id"));
 
-    } else if (userLogged.getRole().equals(UserRole.CLIENT)
-        && reservationFromDB.get().getUser().getId().equals(userLogged.getId())) {
+      // } else if (userLogged.getRole().equals(UserRole.CLIENT)
+      // && reservationFromDB.get().getUser().getId().equals(userLogged.getId())) {
 
-      return reservationFromDB.map(reservationMapper::toReservationResponseDto).get();
+      // return
+      // reservationFromDB.map(reservationMapper::toReservationResponseDto).get();
 
     } else {
       throw new BusinessException("UNAUTHORIZED Access to resercation id: " + id);

@@ -1,5 +1,6 @@
 package com.oliveira.carrentalapi.domain.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class Category {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(columnDefinition = "CHAR(36)")
+  // @Column(columnDefinition = "VARCHAR(36)")
   private UUID id;
   private String categoryName;
 
@@ -33,9 +34,23 @@ public class Category {
   private Float value;
 
   @OneToMany(mappedBy = "category")
-  private List<Vehicle> vehicles;
+  private List<Vehicle> vehicles = new ArrayList<>();
+
+  @OneToMany(mappedBy = "category")
+  private List<Reservation> reservations = new ArrayList<>();
 
   public Category() {
+  }
+
+  public Category(UUID id, String categoryName, String details, Integer numSuitcase, Integer numOfPeople,
+      Boolean complete, Float value) {
+    this.id = id;
+    this.categoryName = categoryName;
+    this.details = details;
+    this.numSuitcase = numSuitcase;
+    this.numOfPeople = numOfPeople;
+    this.complete = complete;
+    this.value = value;
   }
 
   public Category(CategoryRequestDto categoryDate) {
@@ -107,8 +122,8 @@ public class Category {
     return vehicles;
   }
 
-  public void setVehicles(List<Vehicle> vehicles) {
-    this.vehicles = vehicles;
+  public List<Reservation> getReservation() {
+    return reservations;
   }
 
   @Override

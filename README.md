@@ -321,6 +321,18 @@ Cancel a Reservation in the api passing the identification id
 | `id` | `string` | **Required**. Reservation UUID |
 
 
-
+## Fix in project
+- ABOUT IMPORT.SQL AND UUID
+- One essue is that the jpa generate a 16bits UUID, and need to add
+````
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(columnDefinition = "CHAR(36)") // <--
+  private UUID id;
+````
+- After generate the import.sql, one issue that appear is the UUID null because the import execute before jpa
+- for resolve this problem need the generate the UUID and put it in import.sql
+- 
+- ABOUT ...
 
 

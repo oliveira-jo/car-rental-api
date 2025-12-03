@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
@@ -29,7 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public CategoryResponseDto save(CategoryRequestDto categoryData) {
 
@@ -43,7 +44,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public CategoryResponseDto update(UUID id, CategoryRequestDto categoryData) {
 
@@ -70,7 +72,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
-  @Transactional(rollbackOn = Exception.class)
+  // @Transactional(rollbackOn = Exception.class)
+  @Transactional
   @Override
   public void delete(UUID id) {
 
@@ -81,14 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
-  @Override
-  public List<CategoryResponseDto> getAll() {
-
-    return this.categoryRepository.findAll().stream()
-        .map(categoryMapper::toCategoryResponseDto).toList();
-
-  }
-
+  @Transactional(readOnly = true)
   @Override
   public CategoryResponseDto findById(UUID id) {
 
@@ -97,6 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
+  @Transactional(readOnly = true)
   @Override
   public CategoryVehicleResponseDto findVehiclesByCategoryId(UUID id) {
 
@@ -105,11 +102,20 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
+  @Transactional(readOnly = true)
   @Override
   public CategoryResponseDto findByName(String name) {
 
     return this.categoryRepository.findByCategoryName(name).map(categoryMapper::toCategoryResponseDto).orElseThrow(
         () -> new ObjectNotFoundException("Category not found with provide name"));
+
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<CategoryResponseDto> findAll() {
+
+    return this.categoryRepository.findAll().stream().map(categoryMapper::toCategoryResponseDto).toList();
 
   }
 

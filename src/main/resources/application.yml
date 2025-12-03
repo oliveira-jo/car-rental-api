@@ -6,7 +6,6 @@ server:
     include-message: always  
     include-binding-errors: always 
     include-stacktrace: on-param 
-
 management:
   endpoints:
     web:
@@ -27,7 +26,6 @@ info:
     description: "API for Rent your a car"
   metrics: 
     tags: rental-car-api
-
 spring:
   application:
     name: car-rental-api
@@ -37,15 +35,10 @@ spring:
     password: ${env.DATABASE_PASSWORD}
   jpa:
     hibernate:
-      # ddl-auto: update
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-      hbm2ddl:
-        "import_files": import.sql
-
 springdoc:
   swagger-ui:
     enabled: true
@@ -53,7 +46,6 @@ springdoc:
   api-docs:
     path: "/v3/api-docs"
   show-actuator: true
-
 api:
   security:
     token:

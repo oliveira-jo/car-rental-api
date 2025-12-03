@@ -1,16 +1,18 @@
 package com.oliveira.carrentalapi.domain.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +21,7 @@ public class Vehicle {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(columnDefinition = "CHAR(36)")
+  // @Column(columnDefinition = "VARCHAR(36)")
   private UUID id;
   private String model;
   private String imgUrl;
@@ -33,16 +35,34 @@ public class Vehicle {
   @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 
+  @OneToMany(mappedBy = "vehicle")
+  private List<Reservation> reservations = new ArrayList<>();
+
   public Vehicle() {
   }
 
-  public Vehicle(VehicleRequestDto vehicleData) {
-    this.model = vehicleData.model();
-    this.plate = vehicleData.plate();
-    this.color = vehicleData.color();
-    this.complete = vehicleData.complete();
-    this.mileage = vehicleData.mileage();
-    this.ative = vehicleData.ative();
+  public Vehicle(UUID id, String model, String imgUrl, String plate, String color, Boolean complete, Integer mileage,
+      Boolean ative, Category category) {
+    this.id = id;
+    this.model = model;
+    this.imgUrl = imgUrl;
+    this.plate = plate;
+    this.color = color;
+    this.complete = complete;
+    this.mileage = mileage;
+    this.ative = ative;
+    this.category = category;
+  }
+
+  public Vehicle(VehicleRequestDto dto) {
+    this.model = dto.model();
+    this.imgUrl = dto.imgUrl();
+    this.plate = dto.plate();
+    this.color = dto.plate();
+    this.complete = dto.complete();
+    this.mileage = dto.mileage();
+    this.ative = dto.ative();
+    this.category = new Category(dto.categoryId(), null, null, null, null, null, null);
   }
 
   public UUID getId() {
@@ -115,6 +135,43 @@ public class Vehicle {
 
   public void setCategory(Category category) {
     this.category = category;
+  }
+
+  public String getImgUrl() {
+    return imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
+  }
+
+  public List<Reservation> getReservation() {
+    return reservations;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Vehicle other = (Vehicle) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
+    return true;
   }
 
 }

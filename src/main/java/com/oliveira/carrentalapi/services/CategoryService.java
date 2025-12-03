@@ -15,7 +15,7 @@ public interface CategoryService {
 
   public void delete(UUID id);
 
-  public List<CategoryResponseDto> getAll();
+  public List<CategoryResponseDto> findAll();
 
   public CategoryResponseDto findById(UUID id);
 

@@ -6,7 +6,8 @@ import java.util.UUID;
 import jakarta.validation.constraints.NotNull;
 
 public record ReservationRequestDto(
-    @NotNull LocalDateTime pickUpDate,
-    @NotNull LocalDateTime returnDate,
-    @NotNull UUID groupID) {
+        @NotNull LocalDateTime pickUpDate,
+        @NotNull LocalDateTime returnDate,
+        @NotNull UUID categoryId,
+        UUID vehicleId) {
 }

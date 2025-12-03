@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
+import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,15 +16,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import com.oliveira.carrentalapi.domain.enums.ReservationStatus;
-
 @Entity
 @Table(name = "tb_reservation")
 public class Reservation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(columnDefinition = "CHAR(36)")
+  // @Column(columnDefinition = "VARCHAR(36)")
   private UUID id;
 
   private LocalDateTime pickUpDate;
@@ -48,24 +47,37 @@ public class Reservation {
   private UUID updateBy;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
+  @JoinColumn(name = "user_id")
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "category_id", nullable = false)
+  @JoinColumn(name = "category_id")
   private Category category;
+
+  @ManyToOne
+  @JoinColumn(name = "vehicle_id")
+  private Vehicle vehicle;
 
   public Reservation() {
   }
 
-  public Reservation(LocalDateTime pickUpDate, LocalDateTime returnDate, Category category, BigDecimal totalValue,
-      User user, LocalDateTime createdAt) {
+  public Reservation(UUID id, LocalDateTime pickUpDate, LocalDateTime returnDate, Float dailyRentalValue, Long qtdDays,
+      BigDecimal totalValue, ReservationStatus status, LocalDateTime createdAt, LocalDateTime updateAt, UUID createBy,
+      UUID updateBy, User user, Category category, Vehicle vehicle) {
+    this.id = id;
     this.pickUpDate = pickUpDate;
     this.returnDate = returnDate;
-    this.category = category;
+    this.dailyRentalValue = dailyRentalValue;
+    this.qtdDays = qtdDays;
     this.totalValue = totalValue;
-    this.user = user;
+    this.status = status;
     this.createdAt = createdAt;
+    this.updateAt = updateAt;
+    this.createBy = createBy;
+    this.updateBy = updateBy;
+    this.user = user;
+    this.category = category;
+    this.vehicle = vehicle;
   }
 
   public UUID getId() {
@@ -132,14 +144,6 @@ public class Reservation {
     this.dailyRentalValue = dailyRentalValue;
   }
 
-  public Category getCategory() {
-    return category;
-  }
-
-  public void setCategory(Category category) {
-    this.category = category;
-  }
-
   public ReservationStatus getStatus() {
     return status;
   }
@@ -172,6 +176,22 @@ public class Reservation {
     this.updateBy = updateBy;
   }
 
+  public Category getCategory() {
+    return category;
+  }
+
+  public void setCategory(Category category) {
+    this.category = category;
+  }
+
+  public Vehicle getVehicle() {
+    return vehicle;
+  }
+
+  public void setVehicle(Vehicle vehicle) {
+    this.vehicle = vehicle;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -195,13 +215,6 @@ public class Reservation {
     } else if (!id.equals(other.id))
       return false;
     return true;
-  }
-
-  @Override
-  public String toString() {
-    return "Reservation [id=" + id + ", pickUpDate=" + pickUpDate + ", returnDate=" + returnDate + ", dailyRentalValue="
-        + dailyRentalValue + ", qtdDays=" + qtdDays + ", totalValue=" + totalValue + ", user=" + user.getUsername()
-        + ", category=" + category.getCategoryName() + ", status=" + status + "]";
   }
 
 }
