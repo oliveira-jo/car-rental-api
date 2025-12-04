@@ -1,4 +1,4 @@
-package com.oliveira.carrentalapi.security;
+package com.oliveira.carrentalapi.config;
 
 import java.io.IOException;
 
