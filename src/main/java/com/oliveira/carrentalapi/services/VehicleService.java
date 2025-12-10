@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.response.VehicleWithoutCategoryResponseDto;
 
 public interface VehicleService {
 
@@ -13,7 +12,7 @@ public interface VehicleService {
 
   public VehicleResponseDto update(UUID id, VehicleRequestDto vehicleData);
 
-  public List<VehicleWithoutCategoryResponseDto> findAll();
+  public List<VehicleResponseDto> findAll();
 
   public VehicleResponseDto findById(UUID id);
 

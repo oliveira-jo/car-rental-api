@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.response.VehicleWithoutCategoryResponseDto;
 import com.oliveira.carrentalapi.domain.exceptions.ObjectNotFoundException;
 import com.oliveira.carrentalapi.domain.mapper.VehicleMapper;
 import com.oliveira.carrentalapi.domain.models.Vehicle;
@@ -91,12 +90,12 @@ public class VehicleServiceImpl implements VehicleService {
 
   @Transactional(readOnly = true)
   @Override
-  public List<VehicleWithoutCategoryResponseDto> findAll() {
+  public List<VehicleResponseDto> findAll() {
 
     List<Vehicle> response = this.vehicleRepository.findAll();
 
-    List<VehicleWithoutCategoryResponseDto> dto = response.stream()
-        .map(vehicleMapper::toVehicleWithoutCategoryResponseDto).toList();
+    List<VehicleResponseDto> dto = response.stream()
+        .map(vehicleMapper::toVehicleResponseDto).toList();
 
     return dto;
 
