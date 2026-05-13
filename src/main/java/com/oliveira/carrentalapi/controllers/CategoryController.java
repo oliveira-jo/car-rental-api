@@ -1,9 +1,8 @@
 package com.oliveira.carrentalapi.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
+import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
+import com.oliveira.carrentalapi.domain.dtos.response.CategoryVehicleResponseDto;
+import com.oliveira.carrentalapi.services.CategoryService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
-import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
-import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
-import com.oliveira.carrentalapi.domain.dtos.response.CategoryVehicleResponseDto;
-import com.oliveira.carrentalapi.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/category", produces = { "application/json" })
@@ -130,10 +129,10 @@ public class CategoryController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()
-  public ResponseEntity<Page<CategoryResponseDto>> getAll(Pageable pageable) {
+  public ResponseEntity<List<CategoryResponseDto>> getAll() {
 
     return ResponseEntity.ok().body(
-        this.categoryService.findAll(pageable));
+        this.categoryService.findAll());
 
   }
 

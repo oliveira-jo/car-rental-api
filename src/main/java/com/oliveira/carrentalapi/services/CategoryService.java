@@ -1,9 +1,7 @@
 package com.oliveira.carrentalapi.services;
 
+import java.util.List;
 import java.util.UUID;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.oliveira.carrentalapi.domain.dtos.request.CategoryRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.CategoryResponseDto;
@@ -17,7 +15,7 @@ public interface CategoryService {
 
   public void delete(UUID id);
 
-  public Page<CategoryResponseDto> findAll(Pageable pageable);
+  public List<CategoryResponseDto> findAll();
 
   public CategoryResponseDto findById(UUID id);
 
