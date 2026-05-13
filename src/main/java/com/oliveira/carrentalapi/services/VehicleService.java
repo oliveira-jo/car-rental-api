@@ -3,6 +3,9 @@ package com.oliveira.carrentalapi.services;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.oliveira.carrentalapi.domain.dtos.request.VehicleRequestDto;
 import com.oliveira.carrentalapi.domain.dtos.response.VehicleResponseDto;
 
@@ -12,7 +15,7 @@ public interface VehicleService {
 
   public VehicleResponseDto update(UUID id, VehicleRequestDto vehicleData);
 
-  public List<VehicleResponseDto> findAll();
+  public Page<VehicleResponseDto> findAll(Pageable pageable);
 
   public VehicleResponseDto findById(UUID id);
 

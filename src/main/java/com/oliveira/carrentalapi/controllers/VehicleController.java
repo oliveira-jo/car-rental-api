@@ -3,6 +3,8 @@ package com.oliveira.carrentalapi.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,10 +115,10 @@ public class VehicleController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()
-  public ResponseEntity<List<VehicleResponseDto>> getAll() {
+  public ResponseEntity<Page<VehicleResponseDto>> getAll(Pageable pageable) {
 
     return ResponseEntity.ok().body(
-        this.vehicleService.findAll());
+        this.vehicleService.findAll(pageable));
 
   }
 

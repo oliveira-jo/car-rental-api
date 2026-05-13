@@ -1,9 +1,10 @@
 package com.oliveira.carrentalapi.services.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,14 +91,13 @@ public class VehicleServiceImpl implements VehicleService {
 
   @Transactional(readOnly = true)
   @Override
-  public List<VehicleResponseDto> findAll() {
+  public Page<VehicleResponseDto> findAll(Pageable pageable) {
 
-    List<Vehicle> response = this.vehicleRepository.findAll();
+    Page<Vehicle> response = this.vehicleRepository.findAll(pageable);
 
-    List<VehicleResponseDto> dto = response.stream()
-        .map(vehicleMapper::toVehicleResponseDto).toList();
+    Page<VehicleResponseDto> dtos = response.map(vehicleMapper::toVehicleResponseDto);
 
-    return dto;
+    return dtos;
 
   }
 

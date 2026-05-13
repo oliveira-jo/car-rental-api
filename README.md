@@ -33,7 +33,7 @@ Facilitate the presentation of the company and it's services to the customer thr
 ## Clone Project and Run Using Docker
 Clone the project
 ```bash
-  git clone https://link-para-o-projeto
+  git clone https://github.com/oliveira-jo/car-rental-api
 ```
 
 Enter the project diretory
