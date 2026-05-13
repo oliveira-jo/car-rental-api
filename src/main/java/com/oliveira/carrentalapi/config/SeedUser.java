@@ -60,7 +60,6 @@ public class SeedUser implements ApplicationRunner {
           "00000000000",
           LocalDate.now());
       userRepository.save(user);
-      userRepository.save(user);
     }
 
   }
