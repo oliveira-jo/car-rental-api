@@ -44,7 +44,6 @@ public class ReservationServiceImpl implements ReservationService {
     this.reservationMapper = reservationMapper;
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public ReservationResponseDto save(ReservationRequestDto reservationRequestDto, UUID userId) {
@@ -95,7 +94,6 @@ public class ReservationServiceImpl implements ReservationService {
 
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public ReservationResponseDto cancel(UUID reservationId, UUID userId) {

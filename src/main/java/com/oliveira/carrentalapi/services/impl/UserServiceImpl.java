@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     this.userMapper = userMapper;
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public UserResponseDto save(UserRequestDto request) {
@@ -66,7 +65,6 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public UserResponseDto update(UUID userId, UserRequestDto request) {
@@ -106,7 +104,6 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public void delete(UUID id) {
