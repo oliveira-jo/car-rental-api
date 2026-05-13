@@ -3,6 +3,8 @@ package com.oliveira.carrentalapi.controllers;
 import java.util.UUID;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -129,10 +131,10 @@ public class CategoryController {
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
   @GetMapping()
-  public ResponseEntity<List<CategoryResponseDto>> getAll() {
+  public ResponseEntity<Page<CategoryResponseDto>> getAll(Pageable pageable) {
 
     return ResponseEntity.ok().body(
-        this.categoryService.findAll());
+        this.categoryService.findAll(pageable));
 
   }
 

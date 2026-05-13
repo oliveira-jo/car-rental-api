@@ -1,9 +1,10 @@
 package com.oliveira.carrentalapi.services.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,9 +114,9 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Transactional(readOnly = true)
   @Override
-  public List<CategoryResponseDto> findAll() {
+  public Page<CategoryResponseDto> findAll(Pageable pageable) {
 
-    return this.categoryRepository.findAll().stream().map(categoryMapper::toCategoryResponseDto).toList();
+    return this.categoryRepository.findAll(pageable).map(categoryMapper::toCategoryResponseDto);
 
   }
 
