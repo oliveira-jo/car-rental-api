@@ -30,7 +30,6 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public CategoryResponseDto save(CategoryRequestDto categoryData) {
@@ -45,7 +44,6 @@ public class CategoryServiceImpl implements CategoryService {
 
   }
 
-  // @Transactional(rollbackOn = Exception.class)
   @Transactional
   @Override
   public CategoryResponseDto update(UUID id, CategoryRequestDto categoryData) {

@@ -1,7 +1,6 @@
 package com.oliveira.carrentalapi.controllers;
 
 import java.util.UUID;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
