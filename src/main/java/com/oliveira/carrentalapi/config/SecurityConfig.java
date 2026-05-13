@@ -94,9 +94,11 @@ public class SecurityConfig {
         "http://localhost:3000",
         "http://localhost:5173"));
 
-    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
     config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
     config.setExposedHeaders(Arrays.asList("Authorization"));
+
+    config.setAllowCredentials(true);
 
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
