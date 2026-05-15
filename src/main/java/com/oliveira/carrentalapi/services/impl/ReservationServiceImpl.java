@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,8 +53,8 @@ public class ReservationServiceImpl implements ReservationService {
       throw new ObjectNotFoundException("User not found with provide id");
     }
 
-    Optional<Category> category = categoryRepository.findById(reservationRequestDto.categoryId());
-    if (!category.isPresent()) {
+    Optional<Category> categoryFromDB = categoryRepository.findById(reservationRequestDto.categoryId());
+    if (!categoryFromDB.isPresent()) {
       throw new ObjectNotFoundException("Category not found with a provide id");
     }
 
@@ -72,7 +72,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     // CALCULATE RESERVATION REANTAL VALUES
     Long qtdReservation = reservationRequestDto.pickUpDate().until(reservationRequestDto.returnDate(), ChronoUnit.DAYS);
-    float preValue = qtdReservation * category.get().getValue();
+    float preValue = qtdReservation * categoryFromDB.get().getValue();
     BigDecimal totalValue = BigDecimal.valueOf(preValue).setScale(2, RoundingMode.HALF_UP);
 
     // CREATE A RESERVATION
@@ -80,10 +80,11 @@ public class ReservationServiceImpl implements ReservationService {
     reservation.setPickUpDate(reservationRequestDto.pickUpDate());
     reservation.setReturnDate(reservationRequestDto.returnDate());
     reservation.setQtdDays(qtdReservation);
-    reservation.setDailyRentalValue(category.get().getValue());
+    reservation.setDailyRentalValue(categoryFromDB.get().getValue());
     reservation.setTotalValue(totalValue);
-    // reservation.setUser(userFomDB.get());
-    // reservation.setCategory(category.get());
+
+    reservation.setCategory(categoryFromDB.get());
+    reservation.setUser(userFomDB.get());
 
     reservation.setCreatedAt(LocalDateTime.now());
     reservation.setCreateBy(userFomDB.get().getId());
@@ -119,22 +120,20 @@ public class ReservationServiceImpl implements ReservationService {
 
   @Transactional(readOnly = true)
   @Override
-  public List<ReservationResponseDto> getAll(Authentication auth) {
+  public Page<ReservationResponseDto> getAll(Authentication auth, Pageable pageable) {
 
     User userLogged = (User) auth.getPrincipal();
 
     if (userLogged.getRole().equals(UserRole.CLIENT)) {
-      return this.reservationRepository.getAllByUserId(userLogged.getId()).stream()
-          .map(reservationMapper::toReservationResponseDto)
-          .toList();
+      return this.reservationRepository.getAllByUserId(userLogged.getId(), pageable)
+          .map(reservationMapper::toReservationResponseDto);
 
     } else if (userLogged.getRole().equals(UserRole.ADMIN) || userLogged.getRole().equals(UserRole.SUPPORT)) {
-      return this.reservationRepository.findAll().stream()
-          .map(reservationMapper::toReservationResponseDto)
-          .toList();
+      return this.reservationRepository.findAll(pageable)
+          .map(reservationMapper::toReservationResponseDto);
 
     } else {
-      return new ArrayList<ReservationResponseDto>();
+      return Page.empty();
 
     }
 

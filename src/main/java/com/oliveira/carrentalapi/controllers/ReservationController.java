@@ -1,8 +1,9 @@
 package com.oliveira.carrentalapi.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,10 +61,10 @@ public class ReservationController {
       @ApiResponse(responseCode = "404", description = "Not Found in the System"),
       @ApiResponse(responseCode = "500", description = "Server Internal Error"),
   })
-  public ResponseEntity<List<ReservationResponseDto>> getAllReservations(Authentication auth) {
+  public ResponseEntity<Page<ReservationResponseDto>> getAllReservations(Authentication auth, Pageable pageable) {
 
     return ResponseEntity.ok().body(
-        reservationService.getAll(auth));
+        reservationService.getAll(auth, pageable));
 
   }
 
